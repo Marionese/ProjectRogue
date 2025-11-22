@@ -68,5 +68,5 @@
         "*.slnx": "*.csproj"
     },
     "dotnet.defaultSolution": "ProjectRogue.slnx",
-   
+    "omnisharp.useModernNet": false,
 }
