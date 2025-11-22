@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
@@ -12,7 +13,14 @@ public class PlayerMovement : MonoBehaviour
     InputAction jumpAction;
     InputAction dropAction;
     private float jumpforce = 15f;
+
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckRadius = 0.1f;
+    [SerializeField] private LayerMask groundLayer;
+
     private Boolean isGrounded;
+    public float coyoteTime = 0.15f;
+    private float coyoteTimeCounter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,12 +37,25 @@ public class PlayerMovement : MonoBehaviour
         //Move X accis
         Vector2 moveValue = moveAction.ReadValue<Vector2>();
         rb.linearVelocity = new Vector2(moveValue.x * moveSpeed, rb.linearVelocityY);
-
-        //Jump
-        if (jumpAction.WasPressedThisFrame() && isGrounded)
+        //check coyote
+        checkGrounded();
+        if (isGrounded)
         {
-            rb.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
+            Debug.Log("i am grounded");
         }
+
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+        //Jump
+
+
+
         if (dropAction.WasPressedThisFrame())
         {
             if (currentPlattform != null)
@@ -43,7 +64,18 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
+        if (jumpAction.WasPressedThisFrame() && coyoteTimeCounter > 0f)
+        {
+            isGrounded = false;
+            rb.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
+            Debug.Log("i jump");
+            coyoteTimeCounter = 0f;
+
+        }
+
+
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -52,16 +84,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (contact.normal.y > 0.5f)
                 {
-                    isGrounded = true;
-                    break;
+                    currentPlattform = collision.gameObject;
                 }
             }
-
         }
-        if (collision.gameObject.GetComponent<Plattform>())
-        {
-            currentPlattform = collision.gameObject;
-        }
+    }
+    private void checkGrounded()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
     private void OnCollisionExit2D(Collision2D collision)
