@@ -12,12 +12,16 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D playerColider;
     InputAction jumpAction;
     InputAction dropAction;
-    private float jumpforce = 15f;
-
+    public float jumpforce = 15f;
+    public bool hasDoubleJump = true; //double jump 
+    private int jumpsLeft;
+    [SerializeField] private float normalGravityMultiplier = 4.5f;
+    [SerializeField] private float fallGravityMultiplier = 2.2f;
+    [SerializeField] private float lowJumpGravityMultiplier = 2f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
-
+    private bool isDoubleJumping;
     private Boolean isGrounded;
     public float coyoteTime = 0.15f;
     private float coyoteTimeCounter;
@@ -44,8 +48,9 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("i am grounded");
         }
 
-        if (isGrounded)
+        if (isGrounded && rb.linearVelocity.y <= 0f)
         {
+            jumpsLeft = hasDoubleJump ? 2 : 1;
             coyoteTimeCounter = coyoteTime;
         }
         else
@@ -64,14 +69,33 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-        if (jumpAction.WasPressedThisFrame() && coyoteTimeCounter > 0f && rb.linearVelocity.y <= 0f)
+        bool canGroundJump = coyoteTimeCounter > 0f && rb.linearVelocity.y <= 0f;
+        bool canDoubleJump = hasDoubleJump && jumpsLeft > 1 && !isGrounded;
+        if (jumpAction.WasPressedThisFrame() && (canDoubleJump || canGroundJump))
         {
             isGrounded = false;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);
 
-            Debug.Log("i jump");
+            isDoubleJumping = !canGroundJump;
+
+            if (!canGroundJump)  // only use a jump if it's NOT a ground/coyote jump
+            {
+                jumpsLeft -= 1;
+            }
             coyoteTimeCounter = 0f;
 
+        }
+        if (rb.linearVelocity.y < 0f) // Fallen
+        {
+            rb.gravityScale = normalGravityMultiplier * fallGravityMultiplier;
+        }
+        else if (rb.linearVelocity.y > 0f && !jumpAction.IsPressed()) // Früh loslassen
+        {
+            rb.gravityScale = normalGravityMultiplier * lowJumpGravityMultiplier;
+        }
+        else // Aufsteigend oder Boden
+        {
+            rb.gravityScale = normalGravityMultiplier;
         }
 
 
@@ -79,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.GetComponent<Plattform>())
         {
             foreach (ContactPoint2D contact in collision.contacts)
             {
