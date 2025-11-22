@@ -64,10 +64,11 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-        if (jumpAction.WasPressedThisFrame() && coyoteTimeCounter > 0f)
+        if (jumpAction.WasPressedThisFrame() && coyoteTimeCounter > 0f && rb.linearVelocity.y <= 0f)
         {
             isGrounded = false;
-            rb.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);
+
             Debug.Log("i jump");
             coyoteTimeCounter = 0f;
 
@@ -91,8 +92,22 @@ public class PlayerMovement : MonoBehaviour
     }
     private void checkGrounded()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        Collider2D col = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        if (col != null)
+        {
+            // only grounded if platform is under your feet, not inside it
+            float platformY = col.bounds.max.y; // top of platform
+            float feetY = groundCheck.position.y;
+
+            isGrounded = feetY > platformY - 0.01f; // tiny tolerance
+        }
+        else
+        {
+            isGrounded = false;
+        }
     }
+
 
     private void OnCollisionExit2D(Collision2D collision)
     {
