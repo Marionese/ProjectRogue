@@ -1,40 +1,27 @@
-using System.Reflection.Emit;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class BulletScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private Vector3 mousePos;
-    private Camera mainCam;
     private Rigidbody2D rb;
-    public float force;
-    public int damage;
-    void Start()
+    private int damage;
+    private float speed;
+
+    public void Initialize(int damage, float speed, Vector2 direction)
     {
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rb = GetComponent<Rigidbody2D>();
-        mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector3 direction = mousePos - transform.position;
-        Vector3 rotation = transform.position - mousePos;
-        rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
-        float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, rot + 90);
+        this.damage = damage;
+        this.speed = speed;
+        rb.linearVelocity = direction * speed;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<EnemyScript>().DamageEnemy(damage);
-            Debug.Log("hit!");
-            Destroy(gameObject); //destroy the bullet :)
+            collision.GetComponent<EnemyScript>().DamageEnemy(damage);
+            Destroy(gameObject);
         }
     }
 }
