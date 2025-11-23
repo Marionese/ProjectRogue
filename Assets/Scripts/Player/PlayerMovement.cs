@@ -5,29 +5,29 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
+    public PlayerStats stats;  // This is your asset reference
+    private PlayerStats runtimeStats; // This will be the copy used in-game
+
     private Rigidbody2D rb;
-    public float moveSpeed = 5f;
+
     InputAction moveAction;
     private GameObject currentPlattform;
     private BoxCollider2D playerColider;
     InputAction jumpAction;
     InputAction dropAction;
-    public float jumpforce = 15f;
-    public bool hasDoubleJump = true; //double jump 
+
     private int jumpsLeft;
-    [SerializeField] private float normalGravityMultiplier = 4.5f;
-    [SerializeField] private float fallGravityMultiplier = 2.2f;
-    [SerializeField] private float lowJumpGravityMultiplier = 2f;
+
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
     private bool isDoubleJumping;
     private Boolean isGrounded;
-    public float coyoteTime = 0.15f;
     private float coyoteTimeCounter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        runtimeStats = Instantiate(stats);
         rb = GetComponent<Rigidbody2D>();
         playerColider = GetComponent<BoxCollider2D>();
         moveAction = InputSystem.actions.FindAction("Move");
@@ -40,14 +40,14 @@ public class PlayerMovement : MonoBehaviour
     {
         //Move X accis
         Vector2 moveValue = moveAction.ReadValue<Vector2>();
-        rb.linearVelocity = new Vector2(moveValue.x * moveSpeed, rb.linearVelocityY);
+        rb.linearVelocity = new Vector2(moveValue.x * runtimeStats.moveSpeed, rb.linearVelocityY);
         //check coyote
         checkGrounded();
 
         if (isGrounded && rb.linearVelocity.y <= 0f)
         {
-            jumpsLeft = hasDoubleJump ? 2 : 1;
-            coyoteTimeCounter = coyoteTime;
+            jumpsLeft = runtimeStats.hasDoubleJump ? 2 : 1;
+            coyoteTimeCounter = runtimeStats.coyoteTime;
         }
         else
         {
@@ -66,11 +66,11 @@ public class PlayerMovement : MonoBehaviour
 
         }
         bool canGroundJump = coyoteTimeCounter > 0f && rb.linearVelocity.y <= 0f;
-        bool canDoubleJump = hasDoubleJump && jumpsLeft > 1 && !isGrounded;
+        bool canDoubleJump = runtimeStats.hasDoubleJump && jumpsLeft > 1 && !isGrounded;
         if (jumpAction.WasPressedThisFrame() && (canDoubleJump || canGroundJump))
         {
             isGrounded = false;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpforce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, runtimeStats.jumpForce);
 
             isDoubleJumping = !canGroundJump;
 
@@ -83,15 +83,15 @@ public class PlayerMovement : MonoBehaviour
         }
         if (rb.linearVelocity.y < 0f) // Fallen
         {
-            rb.gravityScale = normalGravityMultiplier * fallGravityMultiplier;
+            rb.gravityScale = runtimeStats.gravity * runtimeStats.fallGravityMultiplier;
         }
         else if (rb.linearVelocity.y > 0f && !jumpAction.IsPressed()) // Früh loslassen
         {
-            rb.gravityScale = normalGravityMultiplier * lowJumpGravityMultiplier;
+            rb.gravityScale = runtimeStats.gravity * runtimeStats.lowJumpGravityMultiplier;
         }
         else // Aufsteigend oder Boden
         {
-            rb.gravityScale = normalGravityMultiplier;
+            rb.gravityScale = runtimeStats.gravity;
         }
 
 
