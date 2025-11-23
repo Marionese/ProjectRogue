@@ -7,4 +7,5 @@ public abstract class WeaponBase : MonoBehaviour
 
     // Jedes Weapon-Kind muss Attack() haben:
     public abstract void Attack();
+    public virtual void SetAim(Vector2 aim) { }
 }
