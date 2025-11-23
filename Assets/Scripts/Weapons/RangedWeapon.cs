@@ -4,6 +4,8 @@ using System.Collections;
 
 public class RangedWeapon : WeaponBase
 {
+    private bool usingController;
+
     private Camera cam;
     private bool canShoot = true;
     private float timer;
@@ -51,9 +53,18 @@ public class RangedWeapon : WeaponBase
 
         if (stick.sqrMagnitude > 0.1f)
         {
+            usingController = true;
             float stickAngle = Mathf.Atan2(stick.y, stick.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, stickAngle);
             return;
+        }
+        if (!Mouse.current.delta.ReadValue().Equals(Vector2.zero))
+        {
+            usingController = false;
+        }
+        if (usingController)
+        {
+            return; // keep last controller rotation!
         }
         Vector2 dir = GetMouseWorldPos() - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
