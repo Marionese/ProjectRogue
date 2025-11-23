@@ -23,5 +23,9 @@ public class BulletScript : MonoBehaviour
             collision.GetComponent<EnemyScript>().DamageEnemy(damage);
             Destroy(gameObject);
         }
+        else if ((collision.CompareTag("Ground") || collision.CompareTag("Wall")) && !collision.gameObject.GetComponent<Plattform>())
+        {
+            Destroy(gameObject);
+        }
     }
 }
