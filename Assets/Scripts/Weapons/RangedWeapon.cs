@@ -6,7 +6,7 @@ using System.Collections;
 public class RangedWeapon : WeaponBase
 {
     private bool usingController;
-
+    private bool allowMouse;
     private Camera cam;
     private bool canShoot = true;
     private float timer;
@@ -15,6 +15,8 @@ public class RangedWeapon : WeaponBase
     {
 
         cam = Camera.main;
+        var input = GetComponentInParent<PlayerInput>();
+        allowMouse = input != null && input.currentControlScheme == "Keyboard&Mouse";
     }
     //inputs
     public override void SetAim(Vector2 input)
@@ -49,9 +51,22 @@ public class RangedWeapon : WeaponBase
         canShoot = false;
 
         // Aktuelle Richtung basierend auf aktivem Modus
-        Vector2 direction = usingController
-            ? aimInput                                 // Controller benutzt letzte Stick-Richtung
-            : (GetMouseWorldPos() - attackPoint.position); // Maus benutzt aktuelle Cursor-Position
+        Vector2 direction;
+
+        if (usingController)
+        {
+            if (aimInput.sqrMagnitude > 0.1f)
+                direction = aimInput;  // Stick aktiv
+            else
+                direction = transform.right;  // letzte Waffenrotation verwenden
+        }
+        else
+        {
+            direction = allowMouse ? (GetMouseWorldPos() - attackPoint.position) : Vector2.zero;
+        }
+
+        if (direction == Vector2.zero)
+            return;
 
         // Wenn zu nah am Spieler, nichts schießen
         if (direction.sqrMagnitude < 0.22f)
@@ -79,11 +94,11 @@ public class RangedWeapon : WeaponBase
             return;
         }
         var mouse = Mouse.current;
-        if (mouse != null && mouse.delta.ReadValue().sqrMagnitude > 2f) // threshold
+        if (allowMouse && mouse != null && mouse.delta.ReadValue().sqrMagnitude > 2f) // threshold
         {
             usingController = false;
         }
-        if (usingController)
+        if (usingController || !allowMouse)
         {
             return; // keep last controller rotation!
         }
