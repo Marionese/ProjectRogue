@@ -43,10 +43,6 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(moveValue.x * moveSpeed, rb.linearVelocityY);
         //check coyote
         checkGrounded();
-        if (isGrounded)
-        {
-            Debug.Log("i am grounded");
-        }
 
         if (isGrounded && rb.linearVelocity.y <= 0f)
         {
