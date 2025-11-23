@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
+
 public class RangedWeapon : WeaponBase
 {
     private bool usingController;
@@ -9,13 +10,20 @@ public class RangedWeapon : WeaponBase
     private Camera cam;
     private bool canShoot = true;
     private float timer;
-    InputAction aimAction;
+    private Vector2 aimInput;
     void Start()
     {
-        aimAction = InputSystem.actions.FindAction("Aim");
+
         cam = Camera.main;
     }
+    //inputs
+    public override void SetAim(Vector2 input)
+    {
+        aimInput = input;
 
+        if (input.sqrMagnitude > 0.1f)
+            usingController = true;
+    }
     void Update()
     {
         RotateWeapon();
@@ -40,25 +48,18 @@ public class RangedWeapon : WeaponBase
         if (!canShoot) return;
         canShoot = false;
 
-        Vector2 stick = aimAction.ReadValue<Vector2>();
-        Vector2 direction;
+        // Aktuelle Richtung basierend auf aktivem Modus
+        Vector2 direction = usingController
+            ? aimInput                                 // Controller benutzt letzte Stick-Richtung
+            : (GetMouseWorldPos() - attackPoint.position); // Maus benutzt aktuelle Cursor-Position
 
-        if (stick.sqrMagnitude > 0.1f)         // controller aiming
-        {
-            usingController = true;
-            direction = stick;
-        }
-        else                                   // mouse aiming
-        {
-            usingController = false;
-            direction = (GetMouseWorldPos() - attackPoint.position);
-        }
-
+        // Wenn zu nah am Spieler, nichts schießen
         if (direction.sqrMagnitude < 0.22f)
             return;
 
         direction.Normalize();
 
+        // Kleiner Offset, damit Kugeln nicht im Spieler spawnen
         Vector3 spawnPos = attackPoint.position + (Vector3)(direction * 0.1f);
 
         GameObject bullet = Instantiate(data.bulletPrefab, spawnPos, Quaternion.identity);
@@ -68,16 +69,17 @@ public class RangedWeapon : WeaponBase
 
     void RotateWeapon()
     {
-        Vector2 stick = aimAction.ReadValue<Vector2>();
 
-        if (stick.sqrMagnitude > 0.1f)
+
+        if (aimInput.sqrMagnitude > 0.1f)
         {
             usingController = true;
-            float stickAngle = Mathf.Atan2(stick.y, stick.x) * Mathf.Rad2Deg;
+            float stickAngle = Mathf.Atan2(aimInput.y, aimInput.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, stickAngle);
             return;
         }
-        if (!Mouse.current.delta.ReadValue().Equals(Vector2.zero))
+        var mouse = Mouse.current;
+        if (mouse != null && mouse.delta.ReadValue().sqrMagnitude > 2f) // threshold
         {
             usingController = false;
         }
