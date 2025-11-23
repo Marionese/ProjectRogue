@@ -40,12 +40,31 @@ public class RangedWeapon : WeaponBase
         if (!canShoot) return;
         canShoot = false;
 
-        GameObject bullet = Instantiate(data.bulletPrefab, attackPoint.position, Quaternion.identity);
-        Vector2 direction = (GetMouseWorldPos() - transform.position).normalized;
+        Vector2 stick = aimAction.ReadValue<Vector2>();
+        Vector2 direction;
 
-        // Bullet initialisieren
+        if (stick.sqrMagnitude > 0.1f)         // controller aiming
+        {
+            usingController = true;
+            direction = stick;
+        }
+        else                                   // mouse aiming
+        {
+            usingController = false;
+            direction = (GetMouseWorldPos() - attackPoint.position);
+        }
+
+        if (direction.sqrMagnitude < 0.22f)
+            return;
+
+        direction.Normalize();
+
+        Vector3 spawnPos = attackPoint.position + (Vector3)(direction * 0.1f);
+
+        GameObject bullet = Instantiate(data.bulletPrefab, spawnPos, Quaternion.identity);
         bullet.GetComponent<BulletScript>().Initialize(data.damage, data.bulletSpeed, direction);
     }
+
 
     void RotateWeapon()
     {
