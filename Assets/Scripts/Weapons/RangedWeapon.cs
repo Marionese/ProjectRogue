@@ -15,7 +15,7 @@ public class RangedWeapon : WeaponBase
 
     void Update()
     {
-        RotateToMouse();
+        RotateWeapon();
         HandleCooldown();
     }
 
@@ -44,7 +44,7 @@ public class RangedWeapon : WeaponBase
         bullet.GetComponent<BulletScript>().Initialize(data.damage, data.bulletSpeed, direction);
     }
 
-    void RotateToMouse()
+    void RotateWeapon()
     {
         Vector2 dir = GetMouseWorldPos() - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
