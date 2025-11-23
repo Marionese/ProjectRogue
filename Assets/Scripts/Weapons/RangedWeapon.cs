@@ -7,9 +7,10 @@ public class RangedWeapon : WeaponBase
     private Camera cam;
     private bool canShoot = true;
     private float timer;
-
+    InputAction aimAction;
     void Start()
     {
+        aimAction = InputSystem.actions.FindAction("Aim");
         cam = Camera.main;
     }
 
@@ -46,6 +47,14 @@ public class RangedWeapon : WeaponBase
 
     void RotateWeapon()
     {
+        Vector2 stick = aimAction.ReadValue<Vector2>();
+
+        if (stick.sqrMagnitude > 0.1f)
+        {
+            float stickAngle = Mathf.Atan2(stick.y, stick.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, stickAngle);
+            return;
+        }
         Vector2 dir = GetMouseWorldPos() - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);

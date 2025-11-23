@@ -544,17 +544,6 @@
                     "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7ac23ca4-d93d-4117-a53c-b94e17ba3323",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
