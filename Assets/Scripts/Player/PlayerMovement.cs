@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using NUnit.Framework;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
@@ -10,18 +10,19 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    InputAction moveAction;
+
     private GameObject currentPlattform;
     private BoxCollider2D playerColider;
-    InputAction jumpAction;
-    InputAction dropAction;
+    private Vector2 moveInput;
+    private bool jumpPressed;
+
 
     private int jumpsLeft;
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
-    private bool isDoubleJumping;
+
     private Boolean isGrounded;
     private float coyoteTimeCounter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,17 +31,38 @@ public class PlayerMovement : MonoBehaviour
         runtimeStats = Instantiate(stats);
         rb = GetComponent<Rigidbody2D>();
         playerColider = GetComponent<BoxCollider2D>();
-        moveAction = InputSystem.actions.FindAction("Move");
-        jumpAction = InputSystem.actions.FindAction("Jump");
-        dropAction = InputSystem.actions.FindAction("Drop");
+    }
+    //inputs
+    public void OnMove(InputValue val)
+    {
+
+        moveInput = val.Get<Vector2>();
+    }
+
+    void OnJump(InputValue val)
+    {
+        jumpPressed = val.isPressed;
+        if (jumpPressed)
+        {
+            TryJump();
+        }
+    }
+
+    void OnDrop()
+    {
+        if (currentPlattform != null)
+        {
+            StartCoroutine(DissableCollision());
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
         //Move X accis
-        Vector2 moveValue = moveAction.ReadValue<Vector2>();
-        rb.linearVelocity = new Vector2(moveValue.x * runtimeStats.moveSpeed, rb.linearVelocityY);
+
+        rb.linearVelocity = new Vector2(moveInput.x * runtimeStats.moveSpeed, rb.linearVelocityY);
         //check coyote
         checkGrounded();
 
@@ -55,37 +77,11 @@ public class PlayerMovement : MonoBehaviour
         }
         //Jump
 
-
-
-        if (dropAction.WasPressedThisFrame())
-        {
-            if (currentPlattform != null)
-            {
-                StartCoroutine(DissableCollision());
-            }
-
-        }
-        bool canGroundJump = coyoteTimeCounter > 0f && rb.linearVelocity.y <= 0f;
-        bool canDoubleJump = runtimeStats.hasDoubleJump && jumpsLeft > 1 && !isGrounded;
-        if (jumpAction.WasPressedThisFrame() && (canDoubleJump || canGroundJump))
-        {
-            isGrounded = false;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, runtimeStats.jumpForce);
-
-            isDoubleJumping = !canGroundJump;
-
-            if (!canGroundJump)  // only use a jump if it's NOT a ground/coyote jump
-            {
-                jumpsLeft -= 1;
-            }
-            coyoteTimeCounter = 0f;
-
-        }
         if (rb.linearVelocity.y < 0f) // Fallen
         {
             rb.gravityScale = runtimeStats.gravity * runtimeStats.fallGravityMultiplier;
         }
-        else if (rb.linearVelocity.y > 0f && !jumpAction.IsPressed()) // Früh loslassen
+        else if (rb.linearVelocity.y > 0f && !jumpPressed) // Früh loslassen
         {
             rb.gravityScale = runtimeStats.gravity * runtimeStats.lowJumpGravityMultiplier;
         }
@@ -95,6 +91,22 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
+    }
+    void TryJump()
+    {
+        bool canGroundJump = coyoteTimeCounter > 0f && rb.linearVelocity.y <= 0f;
+        bool canDoubleJump = runtimeStats.hasDoubleJump && jumpsLeft > 1 && !isGrounded;
+        if (canDoubleJump || canGroundJump)
+        {
+            isGrounded = false;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, runtimeStats.jumpForce);
+
+            if (!canGroundJump)  // only use a jump if it's NOT a ground/coyote jump
+            {
+                jumpsLeft -= 1;
+            }
+            coyoteTimeCounter = 0f;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
