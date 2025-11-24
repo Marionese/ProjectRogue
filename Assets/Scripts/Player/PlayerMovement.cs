@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
     private int jumpsLeft;
 
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask groundLayer;
 
     private Boolean isGrounded;
@@ -75,20 +74,20 @@ public class PlayerMovement : MonoBehaviour
             TryJump();
         }
         applyJumpGravity();
-        
+        jumpBufferCounter -= Time.deltaTime;
 
     }
     void handleGroundEvents()
     {
         if (isGrounded && rb.linearVelocity.y <= 0f)
         {
-            
+
             jumpsLeft = runtimeStats.hasDoubleJump ? 2 : 1;
             coyoteTimeCounter = runtimeStats.coyoteTime;
         }
         else
         {
-            
+
             coyoteTimeCounter -= Time.deltaTime;
         }
     }
@@ -118,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
             jumpBufferCounter = 0f;
             isGrounded = false;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, runtimeStats.jumpForce);
-            
+
             if (!canGroundJump)  // only use a jump if it's NOT a ground/coyote jump
             {
                 jumpsLeft -= 1;
@@ -142,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void checkGrounded()
     {
-        Collider2D col = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        Collider2D col = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.98f, 0.05f), CapsuleDirection2D.Horizontal, 0, groundLayer);
 
         if (col != null)
         {
