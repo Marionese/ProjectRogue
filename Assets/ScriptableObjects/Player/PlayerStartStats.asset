@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PlayerStartStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   moveSpeed: 7
-  jumpForce: 15
-  hasDoubleJump: 1
-  gravity: 4
-  fallGravityMultiplier: 3
+  jumpForce: 17
+  hasDoubleJump: 0
+  gravity: 5
+  fallGravityMultiplier: 2.2
   lowJumpGravityMultiplier: 2
   coyoteTime: 0.15
