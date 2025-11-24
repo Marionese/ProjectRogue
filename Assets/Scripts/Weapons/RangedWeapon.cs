@@ -80,7 +80,7 @@ public class RangedWeapon : WeaponBase
         atk.direction = direction;
 
         // Später kommen hier Buffs hin:
-        GetComponentInParent<PlayerModifierManager>()?.Apply(ref atk);
+        GetComponentInParent<PlayerModifierManager>()?.ApplyAttack(ref atk);
         
 
         // Offset

@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public PlayerStats stats;  // This is your asset reference
     private PlayerStats runtimeStats; // This will be the copy used in-game
-
+    public PlayerStats RuntimeStats => runtimeStats;
     private Rigidbody2D rb;
 
 
