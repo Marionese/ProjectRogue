@@ -22,7 +22,7 @@ public class PlayerJoinControl : MonoBehaviour
         if (playerIndex == 0)
         {
             // Spieler 1 bekommt Tastatur + Maus (falls vorhanden) UND Controller
-            player.SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current, Mouse.current);
+            
         }
         else
         {
