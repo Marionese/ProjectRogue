@@ -50,13 +50,13 @@ public class RangedWeapon : WeaponBase
         if (!canShoot) return;
         canShoot = false;
 
-        // Aktuelle Richtung basierend auf aktivem Modus
+        // Richtungslogik bleibt 100% wie bei dir!
         Vector2 direction;
 
         if (usingController)
         {
             if (aimInput.sqrMagnitude > 0.1f)
-                direction = aimInput;  // Stick aktiv
+                direction = aimInput;         // Stick aktiv
             else
                 direction = transform.right;  // letzte Waffenrotation verwenden
         }
@@ -68,17 +68,27 @@ public class RangedWeapon : WeaponBase
         if (direction == Vector2.zero)
             return;
 
-        // Wenn zu nah am Spieler, nichts schießen
         if (direction.sqrMagnitude < 0.22f)
             return;
 
         direction.Normalize();
 
-        // Kleiner Offset, damit Kugeln nicht im Spieler spawnen
+        // AttackData erstellen
+        AttackData atk = new AttackData();
+        atk.damage = data.damage;
+        atk.speed = data.bulletSpeed;
+        atk.direction = direction;
+
+        // Später kommen hier Buffs hin:
+        GetComponentInParent<PlayerModifierManager>()?.Apply(ref atk);
+        
+
+        // Offset
         Vector3 spawnPos = attackPoint.position + (Vector3)(direction * 0.1f);
 
+        // Bullet Spawn bleibt, aber Initialize nimmt jetzt AttackData!
         GameObject bullet = Instantiate(data.bulletPrefab, spawnPos, Quaternion.identity);
-        bullet.GetComponent<BulletScript>().Initialize(data.damage, data.bulletSpeed, direction);
+        bullet.GetComponent<BulletScript>().Initialize(atk);
     }
 
 
