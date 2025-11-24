@@ -28,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        CameraTarget camTarget = FindFirstObjectByType<CameraTarget>();
+        camTarget.Register(transform);
         runtimeStats = Instantiate(stats);
         rb = GetComponent<Rigidbody2D>();
         playerColider = GetComponent<BoxCollider2D>();
