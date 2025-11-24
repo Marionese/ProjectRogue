@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7062332d7b991224083a4f436d235e6a, type: 3}
   m_Name: New Speed Up Modifier
   m_EditorClassIdentifier: Assembly-CSharp::SpeedUpModifier
-  speedup: 20
+  speedup: 2
