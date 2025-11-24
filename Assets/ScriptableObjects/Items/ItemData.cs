@@ -6,5 +6,5 @@ public class ItemData : ScriptableObject
 {
     public string itemName;
     public Sprite icon;
-    public List<AttackModifier> modifiers;
+    public List<BaseModifier> modifiers;
 }
