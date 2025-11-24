@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     private Boolean isGrounded;
+    private float jumpBuffer = 0.15f;
+    private float jumpBufferCounter;
     private float coyoteTimeCounter;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
     //inputs
     public void OnMove(InputValue val)
     {
-
         moveInput = val.Get<Vector2>();
     }
 
@@ -46,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         jumpPressed = val.isPressed;
         if (jumpPressed)
         {
-            TryJump();
+            jumpBufferCounter = jumpBuffer;  // SAVE INTENTION
         }
     }
 
@@ -65,20 +66,34 @@ public class PlayerMovement : MonoBehaviour
         //Move X accis
 
         rb.linearVelocity = new Vector2(moveInput.x * runtimeStats.moveSpeed, rb.linearVelocityY);
-        //check coyote
+        //Check if Player is on the Ground
         checkGrounded();
+        //If Player is on Ground reset jumpsleft,coyoteTime and jumpBuffer
+        handleGroundEvents();
+        if (jumpBufferCounter > 0f)
+        {
+            TryJump();
+        }
+        applyJumpGravity();
+        
 
+    }
+    void handleGroundEvents()
+    {
         if (isGrounded && rb.linearVelocity.y <= 0f)
         {
+            
             jumpsLeft = runtimeStats.hasDoubleJump ? 2 : 1;
             coyoteTimeCounter = runtimeStats.coyoteTime;
         }
         else
         {
+            
             coyoteTimeCounter -= Time.deltaTime;
         }
-        //Jump
-
+    }
+    void applyJumpGravity()
+    {
         if (rb.linearVelocity.y < 0f) // Fallen
         {
             rb.gravityScale = runtimeStats.gravity * runtimeStats.fallGravityMultiplier;
@@ -86,12 +101,12 @@ public class PlayerMovement : MonoBehaviour
         else if (rb.linearVelocity.y > 0f && !jumpPressed) // Früh loslassen
         {
             rb.gravityScale = runtimeStats.gravity * runtimeStats.lowJumpGravityMultiplier;
+            //rb.linearVelocity = new Vector2(moveInput.x * runtimeStats.moveSpeed, rb.linearVelocity.y / 4);
         }
         else // Aufsteigend oder Boden
         {
             rb.gravityScale = runtimeStats.gravity;
         }
-
 
     }
     void TryJump()
@@ -100,9 +115,10 @@ public class PlayerMovement : MonoBehaviour
         bool canDoubleJump = runtimeStats.hasDoubleJump && jumpsLeft > 1 && !isGrounded;
         if (canDoubleJump || canGroundJump)
         {
+            jumpBufferCounter = 0f;
             isGrounded = false;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, runtimeStats.jumpForce);
-
+            
             if (!canGroundJump)  // only use a jump if it's NOT a ground/coyote jump
             {
                 jumpsLeft -= 1;
@@ -145,7 +161,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isGrounded = false;
         currentPlattform = null;
     }
 
