@@ -3,8 +3,8 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public int maxHealth;
-    int currentHealt;
+    public float maxHealth;
+    float currentHealt;
     void Start()
     {
         currentHealt = maxHealth;
@@ -17,7 +17,7 @@ public class EnemyScript : MonoBehaviour
     }
 
     //Helper Funktions
-    public void DamageEnemy(int amount)
+    public void DamageEnemy(float amount)
     {
         currentHealt -= amount;
         if (currentHealt <= 0)
