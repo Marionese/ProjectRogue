@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerJoinControl : MonoBehaviour
 {
+    [SerializeField] private GameObject playerDummy;
     [SerializeField] private PlayerInput player1InScene;   // Assign in inspector
 
     void OnEnable()
@@ -24,7 +25,10 @@ public class PlayerJoinControl : MonoBehaviour
             return;
         // Assign Gamepad only to Player 2+
         if (newPlayer.devices.Count > 0)
+        {
+            Destroy(playerDummy); //DestroyDummy
             newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
+        }
         else
             Debug.LogWarning("Second player tried to join without a controller!");
     }

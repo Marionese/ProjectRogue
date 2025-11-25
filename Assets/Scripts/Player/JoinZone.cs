@@ -5,7 +5,7 @@ public class JoinZone : MonoBehaviour , IInteractable
 {
     public bool joinEnabled;
 
-      public void Interact(PlayerInput player)
+      public void Interact(GameObject player)
     {
         if (!joinEnabled) return;
 
@@ -21,7 +21,6 @@ public class JoinZone : MonoBehaviour , IInteractable
 
         // enable new players to join
         joinEnabled = true;
-        Debug.Log("Join enabled");
 
     }
 

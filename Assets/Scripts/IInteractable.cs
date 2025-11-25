@@ -3,5 +3,5 @@ using UnityEngine.InputSystem;
 
 public interface IInteractable
 {
-    void Interact(PlayerInput player);
+    void Interact(GameObject player);
 }

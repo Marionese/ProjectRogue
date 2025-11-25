@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (interactTarget != null)
         {
-            interactTarget.Interact(GetComponent<PlayerInput>());
+            interactTarget.Interact(gameObject);
         }
 
     }
