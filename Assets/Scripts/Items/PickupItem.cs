@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PickupItem : MonoBehaviour
 {
@@ -6,11 +7,15 @@ public class PickupItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        var pm = col.GetComponent<PlayerModifierManager>();
-        if (pm)
+        var input = col.GetComponent<PlayerInput>();
+        if (input)
         {
-            pm.AddItem(item);
-            Destroy(gameObject);
+            int unityIndex = input.playerIndex; // 0 = erster Spieler, 1 = zweiter
+            int sessionIndex = unityIndex + 1;  // → 1 oder 2
+
+            GameSession.Instance.RegisterRunItem(sessionIndex, item);
         }
+        Destroy(gameObject);
     }
 }
+
