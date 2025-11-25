@@ -3,14 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerJoinControl : MonoBehaviour
 {
-    public float maxJoinDistance = 8f;
     [SerializeField] private PlayerInput player1InScene;   // Assign in inspector
-    private Transform player1;
-
-    void Awake()
-    {
-        player1 = player1InScene.transform;
-    }
 
     void OnEnable()
     {
@@ -29,16 +22,6 @@ public class PlayerJoinControl : MonoBehaviour
         // Ignore join event if this is the pre-existing Player 1
         if (newPlayer == player1InScene)
             return;
-
-        // Block joins too far away from Player 1
-        float distance = Vector2.Distance(newPlayer.transform.position, player1.position);
-        if (distance > maxJoinDistance)
-        {
-            Debug.Log("Join denied: too far from Player 1");
-            Destroy(newPlayer.gameObject);
-            return;
-        }
-
         // Assign Gamepad only to Player 2+
         if (newPlayer.devices.Count > 0)
             newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
