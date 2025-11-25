@@ -3,7 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerJoinControl : MonoBehaviour
 {
-    private int playerIndex = 0;
+    public float maxJoinDistance = 8f;
+    [SerializeField] private PlayerInput player1InScene;   // Assign in inspector
+    private Transform player1;
+
+    void Awake()
+    {
+        player1 = player1InScene.transform;
+    }
 
     void OnEnable()
     {
@@ -17,22 +24,25 @@ public class PlayerJoinControl : MonoBehaviour
             PlayerInputManager.instance.onPlayerJoined -= OnPlayerJoined;
     }
 
-    private void OnPlayerJoined(PlayerInput player)
+    private void OnPlayerJoined(PlayerInput newPlayer)
     {
-        if (playerIndex == 0)
+        // Ignore join event if this is the pre-existing Player 1
+        if (newPlayer == player1InScene)
+            return;
+
+        // Block joins too far away from Player 1
+        float distance = Vector2.Distance(newPlayer.transform.position, player1.position);
+        if (distance > maxJoinDistance)
         {
-            // Spieler 1 bekommt Tastatur + Maus (falls vorhanden) UND Controller
-            
-        }
-        else
-        {
-            // Spieler 2+ bekommt NUR Controller
-            if (player.devices.Count > 0)
-                player.SwitchCurrentControlScheme("Gamepad", player.devices[0]);
-            else
-                Debug.LogWarning("Zweiter Spieler ohne Controller versucht zu joinen!");
+            Debug.Log("Join denied: too far from Player 1");
+            Destroy(newPlayer.gameObject);
+            return;
         }
 
-        playerIndex++;
+        // Assign Gamepad only to Player 2+
+        if (newPlayer.devices.Count > 0)
+            newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
+        else
+            Debug.LogWarning("Second player tried to join without a controller!");
     }
 }
