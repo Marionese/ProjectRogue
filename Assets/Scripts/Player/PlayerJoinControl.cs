@@ -5,7 +5,7 @@ public class PlayerJoinControl : MonoBehaviour
 {
     [SerializeField] private GameObject playerDummy;
     [SerializeField] private PlayerInput player1InScene;   // Assign in inspector
-
+    public Transform playersParent;
     void OnEnable()
     {
         if (PlayerInputManager.instance != null)
@@ -28,6 +28,7 @@ public class PlayerJoinControl : MonoBehaviour
         {
             Destroy(playerDummy); //DestroyDummy
             newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
+            newPlayer.transform.SetParent(playersParent);
         }
         else
             Debug.LogWarning("Second player tried to join without a controller!");
