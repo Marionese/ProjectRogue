@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class JoinZone : MonoBehaviour , IInteractable
+public class JoinZone : MonoBehaviour, IInteractable
 {
     public bool joinEnabled;
 
-      public void Interact(GameObject player)
+    public void Interact(GameObject player)
     {
         if (!joinEnabled) return;
 
@@ -34,5 +34,5 @@ public class JoinZone : MonoBehaviour , IInteractable
         joinEnabled = false;
     }
 
-   
+
 }
