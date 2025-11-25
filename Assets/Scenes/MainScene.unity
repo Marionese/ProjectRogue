@@ -671,6 +671,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSession
   twoPlayer: 0
+  player1RunItems: []
+  player2RunItems: []
 --- !u!4 &533526269
 Transform:
   m_ObjectHideFlags: 0
