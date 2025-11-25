@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpPressed;
 
+    private IInteractable interactTarget;
 
     private int jumpsLeft;
 
@@ -55,6 +56,14 @@ public class PlayerMovement : MonoBehaviour
         if (currentPlattform != null)
         {
             StartCoroutine(DissableCollision());
+        }
+
+    }
+    void OnInterract(InputValue val)
+    {
+        if (interactTarget != null)
+        {
+            interactTarget.Interact(GetComponent<PlayerInput>());
         }
 
     }
@@ -169,6 +178,16 @@ public class PlayerMovement : MonoBehaviour
         Physics2D.IgnoreCollision(playerColider, plattformCollider);
         yield return new WaitForSeconds(0.25f);
         Physics2D.IgnoreCollision(playerColider, plattformCollider, false);
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        interactTarget = other.GetComponent<IInteractable>();
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (interactTarget == other.GetComponent<IInteractable>())
+            interactTarget = null;
     }
 
 }
