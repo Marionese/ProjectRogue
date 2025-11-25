@@ -5,6 +5,7 @@ public class PlayerJoinControl : MonoBehaviour
 {
     [SerializeField] private GameObject playerDummy;
     [SerializeField] private PlayerInput player1InScene;   // Assign in inspector
+    
     public Transform playersParent;
     void OnEnable()
     {
@@ -26,6 +27,7 @@ public class PlayerJoinControl : MonoBehaviour
         // Assign Gamepad only to Player 2+
         if (newPlayer.devices.Count > 0)
         {
+            GameSession.Instance.JoinCoop();
             Destroy(playerDummy); //DestroyDummy
             newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
             newPlayer.transform.SetParent(playersParent);
