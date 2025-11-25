@@ -7,15 +7,24 @@ public class PickupItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        var input = col.GetComponent<PlayerInput>();
-        if (input)
+        var pm = col.GetComponent<PlayerModifierManager>();
+        if (pm)
         {
-            int unityIndex = input.playerIndex; // 0 = erster Spieler, 1 = zweiter
-            int sessionIndex = unityIndex + 1;  // → 1 oder 2
+            pm.AddItem(item);
 
-            GameSession.Instance.RegisterRunItem(sessionIndex, item);
+            // Spieler herausfinden
+            var input = col.GetComponent<PlayerInput>();
+            if (input)
+            {
+                int unityIndex = input.playerIndex; // 0 = erster Spieler, 1 = zweiter
+                int sessionIndex = unityIndex + 1;  // → 1 oder 2
+
+                GameSession.Instance.RegisterRunItem(sessionIndex, item);
+            }
+
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+
     }
 }
 
