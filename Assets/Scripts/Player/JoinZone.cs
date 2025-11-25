@@ -1,8 +1,17 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class JoinZone : MonoBehaviour
+public class JoinZone : MonoBehaviour , IInteractable
 {
+    public bool joinEnabled;
+
+      public void Interact(PlayerInput player)
+    {
+        if (!joinEnabled) return;
+
+        PlayerInputManager.instance.EnableJoining();
+        Debug.Log("Co-op enabled via interact!");
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
@@ -11,9 +20,8 @@ public class JoinZone : MonoBehaviour
             return;
 
         // enable new players to join
-        PlayerInputManager.instance.EnableJoining();
+        joinEnabled = true;
         Debug.Log("Join enabled");
-
 
     }
 
@@ -24,7 +32,8 @@ public class JoinZone : MonoBehaviour
         if (PlayerInputManager.instance == null)
             return;
 
-        PlayerInputManager.instance.DisableJoining();
-        Debug.Log("Join disabled");
+        joinEnabled = false;
     }
+
+   
 }
