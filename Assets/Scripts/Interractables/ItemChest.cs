@@ -27,7 +27,7 @@ public class Chest : MonoBehaviour, IInteractable
 
         // PickupItem bekommt das Item inside
         var pi = pickup.GetComponent<Item>();
-        ItemData chosenItem = GameSession.Instance.PickItemFromRunPool(); ;
+        ItemData chosenItem = GameSession.Instance.PickItemFromRunPool();
         if (chosenItem == null)
         {
             Debug.Log("Keine Items mehr im Pool!");
