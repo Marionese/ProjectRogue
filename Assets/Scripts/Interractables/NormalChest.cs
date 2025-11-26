@@ -1,6 +1,6 @@
 public class NormalChest : BaseChest
 {
-    protected override ItemData DecideItem(int playerIndex)
+    protected override ItemData DecideItem()
     {
         return GameSession.Instance.PickFromPool(GameSession.Instance.normalPool);
     }
