@@ -34,40 +34,42 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
     {
         if (!GameSession.Instance.twoPlayer)
         {
-            ItemData chosen = DecideItem();
-
-            if (chosen == null)
-            {
-                Debug.Log("No item available for this chest.");
-                return;
-            }
-
-            SpawnItem(chosen, itemSpawnPoint.position);
+            SpawnOneItem();
+            return;
         }
-        else if (GameSession.Instance.twoPlayer)
+
+        SpawnTwoItems();
+    }
+
+    void SpawnOneItem()
+    {
+        var itemChosen = DecideItem();
+        if (itemChosen != null)
         {
-            {
-                ItemData chosen1 = DecideItem();
-                ItemData chosen2 = DecideItem();
-                switch ((chosen1, chosen2))
-                {
-                    case (null, null): 
-                    Debug.Log("No Items Left in Pool");
-                    break;
-                    case (not null,null):
-                    SpawnItem(chosen1,itemSpawnPoint.position);
-                    Debug.Log("No Items Left in Pool for two items");
-                    break;
-                    case (not null,not null): 
-                    SpawnItem(chosen1,itemSpawnPoint.position);
-                    Vector2 temp = itemSpawnPoint.position;
-                    temp.x += 4;
-                    SpawnItem(chosen2,temp);
-                    break;
-                }
+            SpawnItem(itemChosen, itemSpawnPoint.position);
+        }
+    }
 
+    void SpawnTwoItems()
+    {
+        var itemChosen1 = DecideItem();
+        var ItemChosen2 = DecideItem();
 
-            }
+        if (itemChosen1 == null && ItemChosen2 == null)
+        {
+            Debug.Log("No Item Left in Pool");
+            return;
+        }
+        if (itemChosen1 != null)
+        {
+            SpawnItem(itemChosen1, itemSpawnPoint.position);
+        }
+        if (ItemChosen2 != null)
+        {
+            Vector2 offsetItemPostion = itemSpawnPoint.position;
+            offsetItemPostion.x += 3.5f;
+            SpawnItem(ItemChosen2, offsetItemPostion);
         }
     }
 }
+
