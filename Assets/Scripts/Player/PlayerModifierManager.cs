@@ -38,4 +38,15 @@ public class PlayerModifierManager : MonoBehaviour
                 atk.ApplyAttack(ref data);
         }
     }
+    public List<AttackModifier> GetAttackModifiers()
+    {
+        List<AttackModifier> modifiers = new();
+        foreach (var m in activeItems)
+        {
+            if (m is AttackModifier atk)
+                modifiers.Add(atk);
+        }
+
+        return modifiers;
+    }
 }
