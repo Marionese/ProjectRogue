@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4299b7c352d311a428a70fedeb7f0a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSession
-  twoPlayer: 0
+  twoPlayer: 1
   normalPool: []
   shopPool: []
   bossPool: []
@@ -1812,18 +1812,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1844426483}
     m_Modifications:
-    - target: {fileID: 2273949650537971759, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2273949650537971759, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_Color.g
-      value: 0.4539698
-      objectReference: {fileID: 0}
-    - target: {fileID: 2273949650537971759, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_Color.r
-      value: 0.6415094
-      objectReference: {fileID: 0}
     - target: {fileID: 6550265232815757024, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_Name
       value: NormalChest
