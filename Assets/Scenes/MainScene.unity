@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4299b7c352d311a428a70fedeb7f0a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameSession
-  twoPlayer: 1
+  twoPlayer: 0
   normalPool: []
   shopPool: []
   bossPool: []
