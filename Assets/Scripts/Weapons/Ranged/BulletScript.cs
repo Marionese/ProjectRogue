@@ -1,13 +1,16 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BulletScript : MonoBehaviour
 {
     private Rigidbody2D rb;
     private AttackData data;  // <--- wir speichern das ganze AttackData
+    private List<AttackModifier> attackModifiers = new();
 
-    public void Initialize(AttackData data)
+    public void Initialize(AttackData data, List<AttackModifier> attackModifiers)
     {
         this.data = data;
+        this.attackModifiers = attackModifiers != null ? new List<AttackModifier>(attackModifiers) : new List<AttackModifier>();
         rb = GetComponent<Rigidbody2D>();
 
         // Geschwindigkeit und Richtung wie vorher!
@@ -23,7 +26,17 @@ public class BulletScript : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             // Schadenssystem bleibt identisch
-            collision.GetComponent<EnemyScript>().DamageEnemy(data.damage);
+            EnemyScript enemy = collision.GetComponent<EnemyScript>();
+
+            if (enemy != null)
+            {
+                enemy.DamageEnemy(data.damage);
+
+                foreach (var mod in attackModifiers)
+                {
+                    mod.OnHit(enemy, data);
+                }
+            }
 
             // später hier: bounce, pierce, poison
             Destroy(gameObject);

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class RangedWeapon : WeaponBase
@@ -79,8 +80,10 @@ public class RangedWeapon : WeaponBase
         atk.speed = data.bulletSpeed;
         atk.direction = direction;
 
+        PlayerModifierManager modifierManager = GetComponentInParent<PlayerModifierManager>();
+
         // Später kommen hier Buffs hin:
-        GetComponentInParent<PlayerModifierManager>()?.ApplyAttack(ref atk);
+        modifierManager?.ApplyAttack(ref atk);
         
 
         // Offset
@@ -88,7 +91,10 @@ public class RangedWeapon : WeaponBase
 
         // Bullet Spawn bleibt, aber Initialize nimmt jetzt AttackData!
         GameObject bullet = Instantiate(data.bulletPrefab, spawnPos, Quaternion.identity);
-        bullet.GetComponent<BulletScript>().Initialize(atk);
+        List<AttackModifier> attackModifiers = modifierManager != null
+            ? modifierManager.GetAttackModifiers()
+            : new List<AttackModifier>();
+        bullet.GetComponent<BulletScript>().Initialize(atk, attackModifiers);
     }
 
 
