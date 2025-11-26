@@ -124,6 +124,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4122684828331466298, guid: 6fc4cfc4916ef497bb54544d804c78e5, type: 3}
   m_PrefabInstance: {fileID: 420979773}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &93970792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 93970794}
+  - component: {fileID: 93970793}
+  m_Layer: 0
+  m_Name: GameSession
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &93970793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93970792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4299b7c352d311a428a70fedeb7f0a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameSession
+  twoPlayer: 0
+  normalPool: []
+  shopPool: []
+  bossPool: []
+  player1RunItems: []
+  player2RunItems: []
+--- !u!4 &93970794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93970792}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.26884, y: 0.34608, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &113944496 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3855146656530767403, guid: ac2ab326d55d1ba41a807107ad228edd, type: 3}
@@ -1881,3 +1931,4 @@ SceneRoots:
   - {fileID: 1423787770}
   - {fileID: 1844426483}
   - {fileID: 1991898689}
+  - {fileID: 93970794}
