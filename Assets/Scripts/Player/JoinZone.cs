@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class JoinZone : MonoBehaviour, IInteractable
 {
     public bool joinEnabled;
-
+    public Vector3 Position => transform.position;
+    [SerializeField] private GameObject highlightIcon;
     public void Interact(GameObject player)
     {
         if (!joinEnabled) return;
@@ -33,6 +34,11 @@ public class JoinZone : MonoBehaviour, IInteractable
 
         joinEnabled = false;
     }
+    public void SetHighlight(bool state)
+    {
+        highlightIcon.SetActive(state);
+    }
+
 
 
 }
