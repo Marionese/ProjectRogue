@@ -16,7 +16,7 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
         if (!opened)
         {
             opened = true;
-            OnChestOpened(input.playerIndex);
+            OnChestOpened();
         }
     }
 
@@ -30,7 +30,7 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
     // Child entscheidet über den Pool
     protected abstract ItemData DecideItem();
 
-    protected virtual void OnChestOpened(int playerIndex)
+    protected virtual void OnChestOpened()
     {
         if (!GameSession.Instance.twoPlayer)
         {
