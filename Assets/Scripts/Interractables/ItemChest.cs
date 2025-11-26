@@ -1,22 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Chest : MonoBehaviour , IInteractable
+public class Chest : MonoBehaviour, IInteractable
 {
     public ItemData itemInside;           // Welches Item gibt die Kiste raus?
     public GameObject pickupPrefab;       // Dein Universal-Pickup (PickupItem)
 
     private bool opened = false;
 
-     public void Interact(GameObject player)
+    public void Interact(GameObject player)
     {
         // PlayerInput holen
         var input = player.GetComponent<PlayerInput>();
         if (input == null) return;
 
-        int sessionIndex = input.playerIndex + 1; // 0 → 1, 1 → 2
-
-        OpenChest(sessionIndex);
+        OpenChest(input.playerIndex);
     }
     public void OpenChest(int playerIndex)
     {
@@ -27,7 +25,7 @@ public class Chest : MonoBehaviour , IInteractable
         var pickup = Instantiate(pickupPrefab, transform.position, Quaternion.identity);
 
         // PickupItem bekommt das Item inside
-        var pi = pickup.GetComponent<PickupItem>();
+        var pi = pickup.GetComponent<Item>();
         pi.item = itemInside;
 
         // Optional: Visuelle Änderung

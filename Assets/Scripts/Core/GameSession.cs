@@ -28,12 +28,12 @@ public class GameSession : MonoBehaviour
     }
     public void RegisterRunItem(int playerIndex, ItemData item)
     {
-        if (playerIndex == 1) player1RunItems.Add(item);
-        if (playerIndex == 2) player2RunItems.Add(item);
+        if (playerIndex == 0) player1RunItems.Add(item);
+        if (playerIndex == 1) player2RunItems.Add(item);
     }
     public bool PlayerHasItem(int playerIndex, string itemID)
     {
-        if (playerIndex == 1)
+        if (playerIndex == 0)
             return player1RunItems.Exists(i => i.itemID == itemID);
 
         return player2RunItems.Exists(i => i.itemID == itemID);
