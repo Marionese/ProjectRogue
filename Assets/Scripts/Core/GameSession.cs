@@ -6,7 +6,9 @@ public class GameSession : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public bool twoPlayer;
     public static GameSession Instance;
-    public List<ItemData> runItemPool = new();
+    public List<ItemData> normalPool = new();
+    public List<ItemData> shopPool = new();
+    public List<ItemData> bossPool = new();
     public List<ItemData> player1RunItems = new();
     public List<ItemData> player2RunItems = new();
     private void Awake()
@@ -46,16 +48,14 @@ public class GameSession : MonoBehaviour
         // Niemand besitzt es
         return false;
     }
-    public ItemData PickItemFromRunPool()
+    public ItemData PickFromPool(List<ItemData> pool)
     {
-        if (runItemPool.Count == 0)
+        if (pool.Count == 0)
             return null;
 
-        int index = Random.Range(0, runItemPool.Count);
-        ItemData chosen = runItemPool[index];
-
-        // Item aus dem Pool entfernen = einzigartig im Run
-        runItemPool.RemoveAt(index);
+        int index = Random.Range(0, pool.Count);
+        ItemData chosen = pool[index];
+        pool.RemoveAt(index);
 
         return chosen;
     }
@@ -64,8 +64,22 @@ public class GameSession : MonoBehaviour
         // liest ALLE ItemData Assets im Projekt
         ItemData[] allItems = Resources.LoadAll<ItemData>("Items");
 
-        runItemPool = new List<ItemData>(allItems);
+        foreach (var item in allItems)
+        {
+            switch (item.category)
+            {
+                case ItemCategory.Normal:
+                    normalPool.Add(item);
+                    break;
 
-        Debug.Log("Run pool created with " + runItemPool.Count + " items.");
+                case ItemCategory.Shop:
+                    shopPool.Add(item);
+                    break;
+
+                case ItemCategory.Boss:
+                    bossPool.Add(item);
+                    break;
+            }
+        }
     }
 }
