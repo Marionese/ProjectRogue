@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class Item : MonoBehaviour, IInteractable
 {
     public ItemData item;
-
+    public Vector3 Position => transform.position;
+    [SerializeField] private GameObject highlightIcon;
     public void Interact(GameObject player)
     {
         // PlayerInput → SessionIndex
@@ -39,4 +40,9 @@ public class Item : MonoBehaviour, IInteractable
         // Objekt zerstören
         Destroy(gameObject);
     }
+    public void SetHighlight(bool state)
+    {
+        highlightIcon.SetActive(state);
+    }
+
 }

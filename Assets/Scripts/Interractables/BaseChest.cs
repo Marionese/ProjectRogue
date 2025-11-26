@@ -7,7 +7,8 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
     public GameObject pickupPrefab;
     public Transform itemSpawnPoint;
     protected bool opened = false;
-
+    public Vector3 Position => transform.position;
+    [SerializeField] private GameObject highlightIcon;
     public void Interact(GameObject player)
     {
         var input = player.GetComponent<PlayerInput>();
@@ -70,6 +71,10 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
             offsetItemPostion.x += 3.5f;
             SpawnItem(ItemChosen2, offsetItemPostion);
         }
+    }
+    public void SetHighlight(bool state)
+    {
+        highlightIcon.SetActive(state);
     }
 }
 
