@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 public class PlayerMovement : MonoBehaviour
 {
     public PlayerStats stats;  // This is your asset reference
@@ -16,7 +19,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpPressed;
 
-    private IInteractable interactTarget;
+    private List<IInteractable> interactTargetList = new();
+    private IInteractable currentFocused;
+
 
     private int jumpsLeft;
 
@@ -61,12 +66,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnInterract(InputValue val)
     {
-        if (interactTarget != null)
-        {
-            interactTarget.Interact(gameObject);
-        }
-
+        currentFocused?.Interact(gameObject);
     }
+
 
     // Update is called once per frame
     void Update()
@@ -181,14 +183,58 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        interactTarget = other.GetComponent<IInteractable>();
+        var interactable = other.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            interactTargetList.Add(interactable);
+            UpdateFocusedTarget();
+        }
     }
+
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (interactTarget == other.GetComponent<IInteractable>())
-            interactTarget = null;
+        var interactable = other.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            interactTargetList.Remove(interactable);
+
+            // Wenn wir das fokussierte Objekt verlieren → neu bestimmen
+            if (currentFocused == interactable)
+            {
+                UpdateFocusedTarget();
+            }
+        }
     }
 
+
+    void UpdateFocusedTarget()
+    {
+        // Highlight vom alten Fokus ausschalten
+        if (currentFocused != null)
+            currentFocused.SetHighlight(false);
+
+        IInteractable newFocus = null;
+        float closestDist = Mathf.Infinity;
+        Vector3 playerPos = transform.position;
+
+        foreach (var target in interactTargetList)
+        {
+            if (target == null) continue;
+
+            float dist = Vector3.Distance(playerPos, target.Position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                newFocus = target;
+            }
+        }
+
+        currentFocused = newFocus;
+
+        // Highlight vom neuen Fokus einschalten
+        if (currentFocused != null)
+            currentFocused.SetHighlight(true);
+    }
 }
 
