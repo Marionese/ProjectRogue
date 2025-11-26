@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class Chest : MonoBehaviour, IInteractable
 {
-    public ItemData itemInside;           // Welches Item gibt die Kiste raus?
+    public ItemData[] itemPool;           // Welches Item gibt die Kiste raus?
     public GameObject pickupPrefab;       // Dein Universal-Pickup (PickupItem)
 
     private bool opened = false;
@@ -26,7 +27,13 @@ public class Chest : MonoBehaviour, IInteractable
 
         // PickupItem bekommt das Item inside
         var pi = pickup.GetComponent<Item>();
-        pi.item = itemInside;
+        ItemData chosenItem = GameSession.Instance.PickItemFromRunPool(); ;
+        if (chosenItem == null)
+        {
+            Debug.Log("Keine Items mehr im Pool!");
+            return;
+        }
+        pi.item = chosenItem;
 
         // Optional: Visuelle Änderung
         // z.B. Sprite wechseln, Animator triggern usw.
