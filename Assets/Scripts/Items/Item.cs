@@ -17,6 +17,24 @@ public class Item : MonoBehaviour, IInteractable
 
         // GameSession merkt sich das Item
         GameSession.Instance.RegisterRunItem(input.playerIndex, item);
+        if (item.isUnique)
+        {
+            var category = item.category;
+
+            if (category == ItemCategory.Normal)
+            {
+                GameSession.Instance.normalPool.Remove(item);
+            }
+            if (category == ItemCategory.Shop)
+            {
+                GameSession.Instance.shopPool.Remove(item);
+            }
+            if (category == ItemCategory.Boss)
+            {
+                GameSession.Instance.bossPool.Remove(item);
+            }
+        }
+
 
         // Objekt zerstören
         Destroy(gameObject);

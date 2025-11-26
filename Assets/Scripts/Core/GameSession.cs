@@ -55,8 +55,10 @@ public class GameSession : MonoBehaviour
 
         int index = Random.Range(0, pool.Count);
         ItemData chosen = pool[index];
-        pool.RemoveAt(index);
-
+        if (chosen.isUnique)
+        {
+            pool.RemoveAt(index);
+        }
         return chosen;
     }
     private void BuildRunPool()
