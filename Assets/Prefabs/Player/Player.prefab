@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3855146656530767403}
   - component: {fileID: -5241631600104744905}
   m_Layer: 0
-  m_Name: Player2
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,8 +256,8 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: a495a62e-4e89-444b-8a3b-5210f8654234
     m_ActionName: 'Player/Jump[/Keyboard/space,/XInputControllerWindows1/leftShoulder]'
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: Gamepad
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
