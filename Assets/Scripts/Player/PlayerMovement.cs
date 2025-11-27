@@ -201,13 +201,7 @@ public class PlayerMovement : MonoBehaviour
             interactTargetList.Add(interactable);
             UpdateFocusedTarget();
         }
-        if (other.gameObject.CompareTag("Finish"))
-        {
-
-            // Beispiel: Chest löst SceneLoad aus
-            SceneManager.LoadScene("Test");
-
-        }
+        
     }
 
 
