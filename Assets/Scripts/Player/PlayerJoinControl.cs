@@ -30,6 +30,7 @@ public class PlayerJoinControl : MonoBehaviour
             GameSession.Instance.JoinCoop();
             Destroy(playerDummy); //DestroyDummy
             newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
+            newPlayer.GetComponent<PlayerMovement>().SetPlayerID(1);
             newPlayer.transform.SetParent(playersParent);
         }
         else
