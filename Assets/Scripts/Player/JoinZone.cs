@@ -9,7 +9,7 @@ public class JoinZone : MonoBehaviour, IInteractable
     public void Interact(GameObject player)
     {
         if (!joinEnabled) return;
-
+        highlightIcon.SetActive(false);
         PlayerInputManager.instance.EnableJoining();
         Debug.Log("Co-op enabled via interact!");
     }
@@ -36,7 +36,8 @@ public class JoinZone : MonoBehaviour, IInteractable
     }
     public void SetHighlight(bool state)
     {
-        highlightIcon.SetActive(state);
+        if (!PlayerInputManager.instance.joiningEnabled)
+            highlightIcon.SetActive(state);
     }
 
 
