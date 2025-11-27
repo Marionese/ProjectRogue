@@ -7,10 +7,10 @@ public class Door : MonoBehaviour
 {
     [SerializeField] private string nextScene;
 
-    private void OTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        SceneManager.LoadScene(nextScene);
+            SceneManager.LoadScene(nextScene);
     }
 
 }
