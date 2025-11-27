@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+
 public class PlayerMovement : MonoBehaviour
 {
     public PlayerStats stats;  // This is your asset reference
@@ -24,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
 
     private int jumpsLeft;
-
+    public int PlayerID => playerID;
+    [SerializeField] private int playerID;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
@@ -36,10 +39,18 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         CameraTarget camTarget = FindFirstObjectByType<CameraTarget>();
-        camTarget.Register(transform);
-        runtimeStats = Instantiate(stats);
+        if (camTarget != null)
+        {
+            camTarget.Register(transform);
+        }
+        if (runtimeStats == null)
+            runtimeStats = Instantiate(stats);
         rb = GetComponent<Rigidbody2D>();
         playerColider = GetComponent<BoxCollider2D>();
+    }
+    public void SetRuntimeStats(PlayerStats stats)
+    {
+        runtimeStats = stats;
     }
     //inputs
     public void OnMove(InputValue val)
@@ -149,6 +160,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+
     }
     private void checkGrounded()
     {
@@ -188,6 +200,13 @@ public class PlayerMovement : MonoBehaviour
         {
             interactTargetList.Add(interactable);
             UpdateFocusedTarget();
+        }
+        if (other.gameObject.CompareTag("Finish"))
+        {
+
+            // Beispiel: Chest löst SceneLoad aus
+            SceneManager.LoadScene("Test");
+
         }
     }
 
@@ -235,6 +254,10 @@ public class PlayerMovement : MonoBehaviour
         // Highlight vom neuen Fokus einschalten
         if (currentFocused != null)
             currentFocused.SetHighlight(true);
+    }
+    public void SetPlayerID(int id)
+    {
+        playerID = id;
     }
 }
 
