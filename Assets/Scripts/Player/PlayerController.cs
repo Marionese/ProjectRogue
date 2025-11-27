@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public PlayerStats stats;  // This is your asset reference
     private PlayerStats runtimeStats; // This will be the copy used in-game
