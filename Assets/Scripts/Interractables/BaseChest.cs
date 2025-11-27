@@ -36,6 +36,7 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
         if (!GameSession.Instance.twoPlayer)
         {
             SpawnOneItem();
+            highlightIcon.SetActive(false);
             return;
         }
 
@@ -74,7 +75,8 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
     }
     public void SetHighlight(bool state)
     {
-        highlightIcon.SetActive(state);
+        if (!opened)
+            highlightIcon.SetActive(state);
     }
 }
 
