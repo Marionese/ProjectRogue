@@ -49,4 +49,33 @@ public class PlayerModifierManager : MonoBehaviour
 
         return modifiers;
     }
+    public void InitializeFromSession(int playerIndex)
+    {
+        // Clear old modifiers if the object existed before (shouldn't, but safe)
+        activeItems.Clear();
+
+        // 1. Fresh runtimeStats für den neuen Player holen
+        var movement = GetComponent<PlayerMovement>();
+        movement.SetRuntimeStats(Instantiate(movement.stats));
+
+        // 2. Items aus der GameSession laden
+        var items = (playerIndex == 0)
+            ? GameSession.Instance.player1RunItems
+            : GameSession.Instance.player2RunItems;
+
+        // 3. Für jedes Item: Modifier anwenden
+        foreach (var item in items)
+        {
+            activeItems.AddRange(item.modifiers);
+
+            foreach (var m in item.modifiers)
+            {
+                if (m is PlayerStatModifier stat)
+                    stat.ApplyStats(movement.RuntimeStats);
+            }
+        }
+
+        Debug.Log($"Player {playerIndex} initialized with {activeItems.Count} modifiers.");
+    }
+
 }
