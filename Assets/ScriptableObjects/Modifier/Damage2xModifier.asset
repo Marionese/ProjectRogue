@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b509fe99f288c24cb3841532ac42425, type: 3}
   m_Name: Damage2xModifier
   m_EditorClassIdentifier: Assembly-CSharp::DamageUpMultiplierMofidier
-  priority: 0
+  priority: 1
   multiplier: 2

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   isUnique: 0
   category: 0
-  itemID: ad
-  itemName: ad
+  itemID: knockback_up
+  itemName: Knockback Plus
   icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   modifiers:
   - {fileID: 11400000, guid: b0cbc983469a3d64194a45f1e2f92c36, type: 2}

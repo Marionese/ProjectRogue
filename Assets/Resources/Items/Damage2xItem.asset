@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   isUnique: 0
   category: 0
-  itemID: 
-  itemName: 
+  itemID: damage_2x
+  itemName: Damage 2x
   icon: {fileID: 0}
-  modifiers: []
+  modifiers:
+  - {fileID: 11400000, guid: 6ddbef18bb7322e4b841fd079b009119, type: 2}
