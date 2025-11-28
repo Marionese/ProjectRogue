@@ -1010,6 +1010,10 @@ PrefabInstance:
       propertyPath: playerID
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3855146656530767403, guid: ac2ab326d55d1ba41a807107ad228edd, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6441986754606794565, guid: ac2ab326d55d1ba41a807107ad228edd, type: 3}
       propertyPath: m_Name
       value: Player1
