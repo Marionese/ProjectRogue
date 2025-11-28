@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private float jumpBuffer = 0.15f;
     private float jumpBufferCounter;
     private float coyoteTimeCounter;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -76,6 +77,11 @@ public class PlayerController : MonoBehaviour
         currentFocused?.Interact(gameObject);
     }
 
+    void OnDestroy()
+    {
+        if (CameraTarget.Instance != null)
+            CameraTarget.Instance.Unregister(transform);
+    }
 
     // Update is called once per frame
     void Update()
@@ -135,7 +141,6 @@ public class PlayerController : MonoBehaviour
             jumpBufferCounter = 0f;
             isGrounded = false;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, runtimeStats.jumpForce);
-
             if (!canGroundJump)  // only use a jump if it's NOT a ground/coyote jump
             {
                 jumpsLeft -= 1;
@@ -252,6 +257,19 @@ public class PlayerController : MonoBehaviour
     public void ResetRuntimeStats()
     {
         runtimeStats = new PlayerRuntimeStats(baseStats);
+    }
+    public void takeDamage(int dmg)
+    {
+        runtimeStats.currentHP -= dmg;
+        if (runtimeStats.currentHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        GameSession.Instance.OnPlayerDied(this);
     }
 }
 
