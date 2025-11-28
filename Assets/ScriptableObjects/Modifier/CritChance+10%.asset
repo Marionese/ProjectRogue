@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cffdc99c824d34ea61979cd1c527f0, type: 3}
   m_Name: CritChance+10%
   m_EditorClassIdentifier: Assembly-CSharp::CritChanceModifier
-  extraCritChance: 0
+  extraCritChance: 0.1
