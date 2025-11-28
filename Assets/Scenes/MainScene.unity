@@ -194,16 +194,8 @@ MonoBehaviour:
   player2RunItems: []
   player1Snapshot:
     hp: 0
-    maxHP: 0
-    moveSpeed: 0
-    jumpForce: 0
-    gravity: 0
   player2Snapshot:
     hp: 0
-    maxHP: 0
-    moveSpeed: 0
-    jumpForce: 0
-    gravity: 0
 --- !u!4 &93970794
 Transform:
   m_ObjectHideFlags: 0
