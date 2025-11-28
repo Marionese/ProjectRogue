@@ -11,8 +11,8 @@ public class GameSession : MonoBehaviour
     public List<ItemData> bossPool = new();
     public List<ItemData> player1RunItems = new();
     public List<ItemData> player2RunItems = new();
-    public PlayerRuntimeStats.Snapshot player1Snapshot = default;
-    public PlayerRuntimeStats.Snapshot player2Snapshot = default;
+    public PlayerRuntimeStats.Snapshot player1Snapshot;
+    public PlayerRuntimeStats.Snapshot player2Snapshot;
     private void Awake()
     {
         if (Instance != null)
