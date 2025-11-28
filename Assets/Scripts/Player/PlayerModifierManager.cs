@@ -8,7 +8,7 @@ public class PlayerModifierManager : MonoBehaviour
     public void AddItem(ItemData item)
     {
         activeItems.AddRange(item.modifiers);
-        SortModifiers(); 
+       
         var controller = GetComponent<PlayerController>();
 
         foreach (var m in item.modifiers)
@@ -67,7 +67,6 @@ public class PlayerModifierManager : MonoBehaviour
         foreach (var item in items)
         {
             activeItems.AddRange(item.modifiers);
-            SortModifiers(); 
             foreach (var m in item.modifiers)
             {
                 if (m is PlayerStatModifier stat)
@@ -76,9 +75,5 @@ public class PlayerModifierManager : MonoBehaviour
         }
 
         Debug.Log($"Player {playerID} initialized from session with {activeItems.Count} modifiers.");
-    }
-    private void SortModifiers()
-    {
-        activeItems.Sort((a, b) => a.priority.CompareTo(b.priority));
     }
 }
