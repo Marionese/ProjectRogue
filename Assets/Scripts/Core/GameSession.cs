@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Collections;
 public class GameSession : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -11,8 +11,8 @@ public class GameSession : MonoBehaviour
     public List<ItemData> bossPool = new();
     public List<ItemData> player1RunItems = new();
     public List<ItemData> player2RunItems = new();
-    public PlayerRuntimeStats.Snapshot player1Snapshot;
-    public PlayerRuntimeStats.Snapshot player2Snapshot;
+    public PlayerRuntimeStats.Snapshot player1Snapshot = default;
+    public PlayerRuntimeStats.Snapshot player2Snapshot = default;
     private void Awake()
     {
         if (Instance != null)
@@ -106,6 +106,63 @@ public class GameSession : MonoBehaviour
     public PlayerRuntimeStats.Snapshot GetPlayerSnapshot(int playerID)
     {
         return (playerID == 0) ? player1Snapshot : player2Snapshot;
+    }
+    public void ResetSession()
+    {
+        player1RunItems.Clear();
+        player2RunItems.Clear();
+
+        player1Snapshot = default;
+        player2Snapshot = default;
+
+        twoPlayer = false;
+
+        normalPool.Clear();
+        shopPool.Clear();
+        bossPool.Clear();
+        BuildRunPool();
+
+        Debug.Log("GameSession reset!");
+    }
+    public void OnPlayerDied(PlayerController deadPlayer)
+    {
+        // Wenn Coop NICHT aktiv: sofort Game Over
+        if (!twoPlayer)
+        {
+            StartCoroutine(HandleGameOver());
+            return;
+        }
+
+        // Coop aktiv → checken ob zweiter Spieler noch lebt
+        bool otherAlive = false;
+
+        var players = FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+        foreach (var p in players)
+        {
+            if (p != deadPlayer && p.runtimeStats.currentHP > 0)
+                otherAlive = true;
+        }
+
+        if (otherAlive)
+        {
+            // Einer tot – Coop geht weiter
+            // später: Resurrection Item, Revive System, etc.
+            Destroy(deadPlayer.gameObject);
+            return;
+        }
+
+        // Beide tot → Game Over
+        StartCoroutine(HandleGameOver());
+    }
+    private IEnumerator HandleGameOver()
+    {
+        Debug.Log("GAME OVER");
+
+        ResetSession();
+
+        yield return new WaitForSeconds(0.2f); // verhindert Race-Conditions
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 
 
