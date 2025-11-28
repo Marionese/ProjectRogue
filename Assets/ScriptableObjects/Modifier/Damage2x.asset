@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4ae25fc24096f745a29de8623a1f579, type: 3}
-  m_Name: DamagePercentUpModifier
-  m_EditorClassIdentifier: Assembly-CSharp::DamaePercentUpModifier
-  percent: 0.2
+  m_Script: {fileID: 11500000, guid: 6b509fe99f288c24cb3841532ac42425, type: 3}
+  m_Name: Damage2x
+  m_EditorClassIdentifier: Assembly-CSharp::DamageUpMultiplierMofidier
+  priority: 2
+  multiplier: 2
