@@ -14,7 +14,7 @@ public class PlayerModifierManager : MonoBehaviour
         foreach (var m in item.modifiers)
         {
             if (m is PlayerStatModifier stat)
-                stat.ApplyStats(GetComponent<PlayerMovement>().RuntimeStats);
+                stat.ApplyStats(GetComponent<PlayerController>().RuntimeStats);
         }
     }
 
@@ -55,8 +55,8 @@ public class PlayerModifierManager : MonoBehaviour
         activeItems.Clear();
 
         // 1. Fresh runtimeStats für den neuen Player holen
-        var movement = GetComponent<PlayerMovement>();
-        movement.SetRuntimeStats(Instantiate(movement.stats));
+        var controller = GetComponent<PlayerController>();
+        controller.SetRuntimeStats(Instantiate(controller.stats));
 
         // 2. Items aus der GameSession laden
         var items = (playerIndex == 0)
@@ -71,7 +71,7 @@ public class PlayerModifierManager : MonoBehaviour
             foreach (var m in item.modifiers)
             {
                 if (m is PlayerStatModifier stat)
-                    stat.ApplyStats(movement.RuntimeStats);
+                    stat.ApplyStats(controller.RuntimeStats);
             }
         }
 
