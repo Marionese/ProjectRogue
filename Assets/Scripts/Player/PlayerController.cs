@@ -10,11 +10,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerStats stats;  // This is your asset reference
-    private PlayerStats runtimeStats; // This will be the copy used in-game
-    public PlayerStats RuntimeStats => runtimeStats;
     private Rigidbody2D rb;
 
+    public PlayerBaseStats baseStats; // Drag in Inspector
+    public PlayerRuntimeStats runtimeStats { get; private set; }
 
     private GameObject currentPlattform;
     private BoxCollider2D playerColider;
@@ -44,14 +43,11 @@ public class PlayerController : MonoBehaviour
             camTarget.Register(transform);
         }
         if (runtimeStats == null)
-            runtimeStats = Instantiate(stats);
+            runtimeStats = new PlayerRuntimeStats(baseStats);
         rb = GetComponent<Rigidbody2D>();
         playerColider = GetComponent<BoxCollider2D>();
     }
-    public void SetRuntimeStats(PlayerStats stats)
-    {
-        runtimeStats = stats;
-    }
+
     //inputs
     public void OnMove(InputValue val)
     {
@@ -201,7 +197,7 @@ public class PlayerController : MonoBehaviour
             interactTargetList.Add(interactable);
             UpdateFocusedTarget();
         }
-        
+
     }
 
 
@@ -252,6 +248,10 @@ public class PlayerController : MonoBehaviour
     public void SetPlayerID(int id)
     {
         playerID = id;
+    }
+    public void ResetRuntimeStats()
+    {
+        runtimeStats = new PlayerRuntimeStats(baseStats);
     }
 }
 

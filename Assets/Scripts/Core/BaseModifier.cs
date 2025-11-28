@@ -8,5 +8,5 @@ public abstract class AttackModifier : BaseModifier {
 }
 
 public abstract class PlayerStatModifier : BaseModifier {
-    public abstract void ApplyStats(PlayerStats stats);
+    public abstract void ApplyStats(PlayerRuntimeStats stats);
 }

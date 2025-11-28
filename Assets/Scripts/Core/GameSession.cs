@@ -11,6 +11,8 @@ public class GameSession : MonoBehaviour
     public List<ItemData> bossPool = new();
     public List<ItemData> player1RunItems = new();
     public List<ItemData> player2RunItems = new();
+    public PlayerRuntimeStats.Snapshot player1Snapshot;
+    public PlayerRuntimeStats.Snapshot player2Snapshot;
     private void Awake()
     {
         if (Instance != null)
@@ -84,4 +86,25 @@ public class GameSession : MonoBehaviour
             }
         }
     }
+    public void SavePlayerSnapshot(int playerID, PlayerRuntimeStats.Snapshot snapshot)
+    {
+        if (playerID == 0) player1Snapshot = snapshot;
+        else player2Snapshot = snapshot;
+    }
+    public void SaveAllSnapshots()
+    {
+        var players = FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+
+        foreach (var p in players)
+        {
+            var snap = p.runtimeStats.CreateSnapshot();
+            SavePlayerSnapshot(p.PlayerID, snap);
+        }
+    }
+    public PlayerRuntimeStats.Snapshot GetPlayerSnapshot(int playerID)
+    {
+        return (playerID == 0) ? player1Snapshot : player2Snapshot;
+    }
+
+
 }

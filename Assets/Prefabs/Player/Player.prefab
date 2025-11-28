@@ -183,7 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aac9491743d0453e903ebb29697fde2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  stats: {fileID: 11400000, guid: 4baecf6e7f0b94496be7d6800d481c1a, type: 2}
+  baseStats: {fileID: 11400000, guid: 4baecf6e7f0b94496be7d6800d481c1a, type: 2}
+  playerID: 0
   groundCheck: {fileID: 7487927564142723298}
   groundLayer:
     serializedVersion: 2

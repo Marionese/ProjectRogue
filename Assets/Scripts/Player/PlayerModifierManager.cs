@@ -5,31 +5,25 @@ public class PlayerModifierManager : MonoBehaviour
 {
     private List<BaseModifier> activeItems = new();
 
-    // When an item is picked up
     public void AddItem(ItemData item)
     {
         activeItems.AddRange(item.modifiers);
 
-        // Apply permanent stat bonuses
+        var controller = GetComponent<PlayerController>();
+
         foreach (var m in item.modifiers)
         {
             if (m is PlayerStatModifier stat)
-                stat.ApplyStats(GetComponent<PlayerController>().RuntimeStats);
+                stat.ApplyStats(controller.runtimeStats);
         }
     }
 
-    // When an item is removed
     public void RemoveItem(ItemData item)
     {
         foreach (var m in item.modifiers)
-        {
             activeItems.Remove(m);
-        }
-
-        // OPTIONAL: Undo stat modifiers (only if you want removable items)
     }
 
-    // Called by weapons when firing
     public void ApplyAttack(ref AttackData data)
     {
         foreach (var m in activeItems)
@@ -38,6 +32,7 @@ public class PlayerModifierManager : MonoBehaviour
                 atk.ApplyAttack(ref data);
         }
     }
+
     public List<AttackModifier> GetAttackModifiers()
     {
         List<AttackModifier> modifiers = new();
@@ -46,24 +41,29 @@ public class PlayerModifierManager : MonoBehaviour
             if (m is AttackModifier atk)
                 modifiers.Add(atk);
         }
-
         return modifiers;
     }
-    public void InitializeFromSession(int playerIndex)
+
+    // Use PlayerID from the controller, not external playerIndex
+    public void InitializeFromSession()
     {
-        // Clear old modifiers if the object existed before (shouldn't, but safe)
         activeItems.Clear();
 
-        // 1. Fresh runtimeStats für den neuen Player holen
         var controller = GetComponent<PlayerController>();
-        controller.SetRuntimeStats(Instantiate(controller.stats));
+        int playerID = controller.PlayerID;
 
-        // 2. Items aus der GameSession laden
-        var items = (playerIndex == 0)
+        // 1. Reset runtime stats to baseStats
+        controller.ResetRuntimeStats();
+
+        // 2. Restore snapshot (HP, temp buffs)
+        var snapshot = GameSession.Instance.GetPlayerSnapshot(playerID);
+        controller.runtimeStats.ApplySnapshot(snapshot);
+
+        // 3. Restore permanent item upgrades ONCE
+        var items = (playerID == 0)
             ? GameSession.Instance.player1RunItems
             : GameSession.Instance.player2RunItems;
 
-        // 3. Für jedes Item: Modifier anwenden
         foreach (var item in items)
         {
             activeItems.AddRange(item.modifiers);
@@ -71,11 +71,10 @@ public class PlayerModifierManager : MonoBehaviour
             foreach (var m in item.modifiers)
             {
                 if (m is PlayerStatModifier stat)
-                    stat.ApplyStats(controller.RuntimeStats);
+                    stat.ApplyStats(controller.runtimeStats);
             }
         }
 
-        Debug.Log($"Player {playerIndex} initialized with {activeItems.Count} modifiers.");
+        Debug.Log($"Player {playerID} initialized from session with {activeItems.Count} modifiers.");
     }
-
 }
