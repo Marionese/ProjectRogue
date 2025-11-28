@@ -85,7 +85,7 @@ public class RangedWeapon : WeaponBase
         atk.percentAdd = 0f;
         atk.multiplier = 1f;
 
-        atk.critChance = 0.1f; //10% critChance test
+        atk.critChance = 0f; 
         atk.isCrit = false;
         atk.critMultiplier = 2f;
 
