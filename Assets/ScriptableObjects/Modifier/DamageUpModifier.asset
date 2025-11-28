@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef400915b3dc4646a8b6030bf516bc2, type: 3}
   m_Name: DamageUpModifier
   m_EditorClassIdentifier: Assembly-CSharp::DamageUpModifier
-  flatDamage: 20
+  flatDamage: 5
