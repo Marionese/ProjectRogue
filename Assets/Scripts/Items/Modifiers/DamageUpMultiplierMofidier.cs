@@ -1,12 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Modifiers/Damage 2x")]
+[CreateAssetMenu(menuName = "Modifiers/Damage Multiplier")]
 public class DamageUpMultiplierMofidier : AttackModifier
 {
-    public float multiplier = 2f;
+    public float multiplier;
 
     public override void ApplyAttack(ref AttackData data)
     {
-        data.damage *= 2;
+        data.multiplier *= multiplier;
     }
 }

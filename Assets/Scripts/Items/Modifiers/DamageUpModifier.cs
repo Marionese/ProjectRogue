@@ -1,12 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Modifiers/Damage Up")]
+[CreateAssetMenu(menuName = "Modifiers/Damage Flat Up")]
 public class DamageUpModifier : AttackModifier
 {
-    public float flatDamage = 20f;
+    public float flatDamage;
 
     public override void ApplyAttack(ref AttackData data)
     {
-        data.damage += flatDamage;
+        data.flatAdd += flatDamage;
     }
 }
