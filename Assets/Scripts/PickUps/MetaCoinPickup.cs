@@ -1,21 +1,14 @@
 using UnityEngine;
 
-public class MetaCoinPickup : MonoBehaviour
+public class MetaCoinPickup : BasePickup
 {
     public int amount = 1;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void OnPickup(GameObject player)
     {
-        if (other.CompareTag("Player"))
-        {
-            GameSession.Instance.metaCoins += amount;
+        GameSession.Instance.metaCoins += amount;
+        SaveSystem.SaveGame(GameSession.Instance.currentSlot);
 
-            // Sofort speichern
-            SaveSystem.SaveGame(GameSession.Instance.currentSlot);
-
-            Debug.Log("Picked up MetaCoin! New total: " + GameSession.Instance.metaCoins);
-
-            Destroy(gameObject);
-        }
+        Debug.Log($"Picked up {amount} MetaCoin(s)! Total now: {GameSession.Instance.metaCoins}");
     }
 }
