@@ -75,21 +75,48 @@ public class RangedWeapon : WeaponBase
 
         // AttackData erstellen
         AttackData atk = new AttackData();
-        atk.damage = data.damage;
+
+        // Base weapon values
+        atk.baseDamage = data.damage;
         atk.speed = data.bulletSpeed;
-        atk.direction = direction;
+
+        // Initialize pipeline fields
+        atk.flatAdd = 0f;
+        atk.percentAdd = 0f;
+        atk.multiplier = 1f;
+
+        atk.critChance = 0.1f; //10% critChance test
+        atk.isCrit = false;
+        atk.critMultiplier = 2f;
+
+        // Bullet properties
+        atk.size = 0.2f;
+        atk.knockback = 0f;
+        atk.pierce = 0;
+        atk.bounce = 0;
+
+        // Modifiers anwenden
         PlayerModifierManager modifierManager = GetComponentInParent<PlayerModifierManager>();
-        // Später kommen hier Buffs hin:
         modifierManager?.ApplyAttack(ref atk);
+        if (!atk.isCrit)
+        {
+            if (Random.value <= atk.critChance)
+            {
+                atk.isCrit = true;
+            }
+        }
 
+        // rotation for bullet direction
+        Quaternion rot = Quaternion.FromToRotation(Vector3.right, direction);
 
-        // Offset
+        // spawn position with small offset
         Vector3 spawnPos = attackPoint.position + (Vector3)(direction * 0.1f);
 
-        // Bullet Spawn bleibt, aber Initialize nimmt jetzt AttackData!
-        GameObject bullet = Instantiate(data.bulletPrefab, spawnPos, Quaternion.identity);
+        // Bullet Spawn + Initialize
+        GameObject bullet = Instantiate(data.bulletPrefab, spawnPos, rot);
         List<AttackModifier> attackModifiers = modifierManager != null ? modifierManager.GetAttackModifiers() : new List<AttackModifier>();
         bullet.GetComponent<BulletScript>().Initialize(atk, attackModifiers);
+
     }
 
 
