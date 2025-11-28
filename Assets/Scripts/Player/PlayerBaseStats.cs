@@ -17,4 +17,8 @@ public class PlayerBaseStats : ScriptableObject
 
     [Header("Coyote Time")]
     public float coyoteTime = 0.15f;
+
+    [Header("Max Hp")]
+    public int maxHP = 3;
+    
 }
