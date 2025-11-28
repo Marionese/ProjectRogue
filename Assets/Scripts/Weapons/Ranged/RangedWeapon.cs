@@ -1,49 +1,10 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 using System.Collections.Generic;
 
 
 public class RangedWeapon : WeaponBase
 {
-    private bool usingController;
-    private bool allowMouse;
-    private Camera cam;
-    private bool canShoot = true;
-    private float timer;
-    private Vector2 aimInput;
-    void Start()
-    {
-
-        cam = Camera.main;
-        var input = GetComponentInParent<PlayerInput>();
-        allowMouse = input != null && input.currentControlScheme == "Keyboard&Mouse";
-    }
-    //inputs
-    public override void SetAim(Vector2 input)
-    {
-        aimInput = input;
-
-        if (input.sqrMagnitude > 0.1f)
-            usingController = true;
-    }
-    void Update()
-    {
-        RotateWeapon();
-        HandleCooldown();
-    }
-
-    void HandleCooldown()
-    {
-        if (!canShoot)
-        {
-            timer += Time.deltaTime;
-            if (timer >= data.fireRate)
-            {
-                canShoot = true;
-                timer = 0;
-            }
-        }
-    }
 
     public override void Attack()
     {
@@ -117,36 +78,5 @@ public class RangedWeapon : WeaponBase
         List<AttackModifier> attackModifiers = modifierManager != null ? modifierManager.GetAttackModifiers() : new List<AttackModifier>();
         bullet.GetComponent<BulletScript>().Initialize(atk, attackModifiers);
 
-    }
-
-
-    void RotateWeapon()
-    {
-
-
-        if (aimInput.sqrMagnitude > 0.1f)
-        {
-            usingController = true;
-            float stickAngle = Mathf.Atan2(aimInput.y, aimInput.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, stickAngle);
-            return;
-        }
-        var mouse = Mouse.current;
-        if (allowMouse && mouse != null && mouse.delta.ReadValue().sqrMagnitude > 2f) // threshold
-        {
-            usingController = false;
-        }
-        if (usingController || !allowMouse)
-        {
-            return; // keep last controller rotation!
-        }
-        Vector2 dir = GetMouseWorldPos() - transform.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
-
-    Vector3 GetMouseWorldPos()
-    {
-        return cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
     }
 }
