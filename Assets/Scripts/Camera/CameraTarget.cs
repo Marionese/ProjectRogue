@@ -11,7 +11,13 @@ public class CameraTarget : MonoBehaviour
     private Vector3 velocity;
     private List<Transform> targets = new List<Transform>();
     private Camera cam;
-
+    public static CameraTarget Instance;
+    
+    void Awake()
+    {
+        Instance = this;
+    }
+    
     void Start()
     {
         cam = Camera.main;
