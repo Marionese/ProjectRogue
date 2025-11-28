@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public abstract class BaseModifier : ScriptableObject
-{
-    [Tooltip("Lower = applied earlier. Example: Flat bonuses (0), then percent (1), then multipliers (2).")]
-    public int priority = 0;
-}
+public abstract class BaseModifier : ScriptableObject{}
+
 
 public abstract class AttackModifier : BaseModifier
 {
