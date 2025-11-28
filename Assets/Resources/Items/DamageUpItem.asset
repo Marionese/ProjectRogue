@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e715ff3e9a255544b8080fb1f0d012b, type: 3}
   m_Name: DamageUpItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  isUnique: 1
+  category: 0
   itemID: damage_up
   itemName: DamageUp!
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}

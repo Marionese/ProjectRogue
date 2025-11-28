@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e715ff3e9a255544b8080fb1f0d012b, type: 3}
   m_Name: DamagePercentUpItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  isUnique: 0
+  isUnique: 1
   category: 0
   itemID: damage_percent_up
   itemName: Damage +20%
