@@ -13,6 +13,10 @@ public class GameSession : MonoBehaviour
     public List<ItemData> player2RunItems = new();
     public PlayerRuntimeStats.Snapshot player1Snapshot;
     public PlayerRuntimeStats.Snapshot player2Snapshot;
+    
+    //MetaProgression + SaveSlot
+    public int metaCoins;
+    public int currentSlot = 1; // default
     private void Awake()
     {
         if (Instance != null)
