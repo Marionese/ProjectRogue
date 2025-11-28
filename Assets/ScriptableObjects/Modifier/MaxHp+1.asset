@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f02ae76334115b439fd366ab2a60a54, type: 3}
   m_Name: MaxHp+1
   m_EditorClassIdentifier: Assembly-CSharp::MaxHpModifier
-  amount: 0
+  amount: 1
