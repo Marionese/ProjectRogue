@@ -21,19 +21,36 @@ public class PlayerJoinControl : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput newPlayer)
     {
-        // Ignore join event if this is the pre-existing Player 1
+        // Ignore pre-existing Player1
         if (newPlayer == player1InScene)
             return;
-        // Assign Gamepad only to Player 2+
-        if (newPlayer.devices.Count > 0)
+
+        // Check if the joining device is a GAMEPAD
+        bool joinedWithGamepad = false;
+        foreach (var dev in newPlayer.devices)
         {
-            GameSession.Instance.JoinCoop();
-            Destroy(playerDummy); //DestroyDummy
-            newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
-            newPlayer.GetComponent<PlayerController>().SetPlayerID(1);
-            newPlayer.transform.SetParent(playersParent);
+            if (dev is Gamepad)
+            {
+                joinedWithGamepad = true;
+                break;
+            }
         }
-        else
-            Debug.LogWarning("Second player tried to join without a controller!");
+
+        // If NOT gamepad → Reject the join attempt instantly
+        if (!joinedWithGamepad)
+        {
+            Debug.Log("Rejected Player 2 join: must use a gamepad.");
+            Destroy(newPlayer.gameObject);   // IMPORTANT: destroy the accidental player object
+            return;
+        }
+
+        // At this point, we know it's a gamepad join
+        GameSession.Instance.JoinCoop();
+        Destroy(playerDummy);
+
+        newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
+        newPlayer.GetComponent<PlayerController>().SetPlayerID(1);
+        newPlayer.transform.SetParent(playersParent);
     }
+
 }
