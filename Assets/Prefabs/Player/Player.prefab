@@ -12,10 +12,13 @@ GameObject:
   - component: {fileID: 4250724799871419802}
   - component: {fileID: 8999777917110841467}
   - component: {fileID: 8700170452637321014}
+  - component: {fileID: 3855146656530767403}
   - component: {fileID: 3705044330597289998}
   - component: {fileID: 6037309414078123028}
-  - component: {fileID: 3855146656530767403}
   - component: {fileID: -5241631600104744905}
+  - component: {fileID: 6609960238270967444}
+  - component: {fileID: 8360042326632467734}
+  - component: {fileID: 2420817247887560860}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -171,39 +174,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &3705044330597289998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6441986754606794565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aac9491743d0453e903ebb29697fde2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  baseStats: {fileID: 11400000, guid: 4baecf6e7f0b94496be7d6800d481c1a, type: 2}
-  playerID: 0
-  groundCheck: {fileID: 7487927564142723298}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
---- !u!114 &6037309414078123028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6441986754606794565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8aa8c8340956421e9e58e221a769191, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
-  weaponHolder: {fileID: 1279570079668728186}
-  startingWeaponPrefab: {fileID: 6255473062345517319, guid: 7735a6a3d8a3f454481577a59f2767e3, type: 3}
-  currentWeapon: {fileID: 0}
 --- !u!114 &3855146656530767403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,10 +228,42 @@ MonoBehaviour:
     m_ActionId: a495a62e-4e89-444b-8a3b-5210f8654234
     m_ActionName: 'Player/Jump[/Keyboard/space,/XInputControllerWindows1/leftShoulder]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3705044330597289998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6441986754606794565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aac9491743d0453e903ebb29697fde2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  baseStats: {fileID: 11400000, guid: 4baecf6e7f0b94496be7d6800d481c1a, type: 2}
+  playerID: 0
+  movement: {fileID: 0}
+  interaction: {fileID: 0}
+  health: {fileID: 0}
+--- !u!114 &6037309414078123028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6441986754606794565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8aa8c8340956421e9e58e221a769191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponManager
+  weaponHolder: {fileID: 1279570079668728186}
+  startingWeaponPrefab: {fileID: 6255473062345517319, guid: 7735a6a3d8a3f454481577a59f2767e3, type: 3}
+  currentWeapon: {fileID: 0}
 --- !u!114 &-5241631600104744905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +276,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8830a7a8fa6931479b14504a0fc6942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerModifierManager
+--- !u!114 &6609960238270967444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6441986754606794565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8419ab6c62a75c1429b2878632c8d2de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  groundCheck: {fileID: 7487927564142723298}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &8360042326632467734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6441986754606794565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c215257c50b55e4aa130d56a51bc35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+--- !u!114 &2420817247887560860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6441986754606794565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea3c4fd8f33114da50e166d104362f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHP: 3
+  currentHP: 0
 --- !u!1 &7949738539901516397
 GameObject:
   m_ObjectHideFlags: 0
