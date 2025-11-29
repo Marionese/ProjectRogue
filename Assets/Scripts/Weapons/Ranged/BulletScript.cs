@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.Rendering.Analytics;
 
 public class BulletScript : MonoBehaviour
 {
     private Rigidbody2D rb;
     private AttackData data;
     private List<AttackModifier> attackModifiers = new();
+    private float lifetime;
 
     public void Initialize(AttackData data, List<AttackModifier> attackModifiers)
     {
@@ -19,6 +21,19 @@ public class BulletScript : MonoBehaviour
 
         // Skalierung aus AttackData
         transform.localScale = Vector3.one * data.size;
+        lifetime = data.range;
+    }
+    void Update()
+    {
+        if (lifetime <= 0)
+        {
+            BulletPool.Instance.ReturnBullet(gameObject);
+        }
+        else
+        {
+            lifetime -= Time.deltaTime;
+        }
+    
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
