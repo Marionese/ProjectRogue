@@ -33,10 +33,10 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
 
     protected virtual void OnChestOpened()
     {
+        highlightIcon.SetActive(false);
         if (!GameSession.Instance.twoPlayer)
         {
             SpawnOneItem();
-            highlightIcon.SetActive(false);
             return;
         }
 
