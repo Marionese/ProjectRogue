@@ -41,7 +41,7 @@ public class PlayerModifierManager : MonoBehaviour
             activeItems.Remove(m);
     }
 
-    public void ApplyAttack(ref AttackData data)
+    public void ApplyAttackModifiers(ref AttackData data)
     {
         foreach (var m in activeItems)
         {

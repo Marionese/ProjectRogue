@@ -58,7 +58,7 @@ public class RangedWeapon : WeaponBase
         atk.range = data.range;
         // Modifiers anwenden
         PlayerModifierManager modifierManager = GetComponentInParent<PlayerModifierManager>();
-        modifierManager?.ApplyAttack(ref atk);
+        modifierManager?.ApplyAttackModifiers(ref atk);
         if (!atk.isCrit)
         {
             if (Random.value <= atk.critChance)
