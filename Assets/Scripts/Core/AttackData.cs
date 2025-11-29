@@ -20,6 +20,7 @@ public struct AttackData
     public float knockback;
     public int pierce;
     public int bounce;
+    public float range;
 
 }
 
