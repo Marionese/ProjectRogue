@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpBufferCounter = 0f;
             isGrounded = false;
-
+            gameObject.GetComponent<PlayerController>().DamagePlayer(1);
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
                 stats.jumpForce

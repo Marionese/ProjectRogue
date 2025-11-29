@@ -13,14 +13,13 @@ public class PlayerController : MonoBehaviour
     [Header("Modules")]
     [SerializeField] private PlayerMovement movement;
     [SerializeField] private PlayerInteraction interaction;
-    [SerializeField] private Health health;
 
     void Awake()
     {
         // Optional: falls du mal vergisst zuzuweisen
         if (movement == null) movement = GetComponent<PlayerMovement>();
         if (interaction == null) interaction = GetComponent<PlayerInteraction>();
-        if (health == null) health = GetComponent<Health>();
+
     }
 
     void Start()
@@ -33,14 +32,6 @@ public class PlayerController : MonoBehaviour
         if (movement != null)
             movement.Initialize(runtimeStats);
 
-        // Health-Setup (falls du HP in Stats hast, kannst du sie hier setzen)
-        if (health != null)
-        {
-            // Beispiel: falls du sowas hast wie runtimeStats.maxHP
-            // health.SetMaxHP(runtimeStats.maxHP, refill: true);
-            health.OnDied += HandleDeath;
-        }
-
         // Kamera registrieren
         CameraTarget camTarget = FindFirstObjectByType<CameraTarget>();
         if (camTarget != null)
@@ -51,9 +42,6 @@ public class PlayerController : MonoBehaviour
 
     void OnDestroy()
     {
-        if (health != null)
-            health.OnDied -= HandleDeath;
-
         if (CameraTarget.Instance != null)
             CameraTarget.Instance.Unregister(transform);
     }
@@ -105,10 +93,16 @@ public class PlayerController : MonoBehaviour
     }
 
     // Wrapper, damit bestehender Code weiter funktioniert:
-    public void takeDamage(int dmg)
+    public void DamagePlayer(int dmg)
     {
-        if (health != null)
-            health.TakeDamage(dmg);
+        runtimeStats.currentHP -= dmg;
+        if (runtimeStats.currentHP <= 0)
+            HandleDeath();
+    }
+    public void HealPlayer(int healAmount)
+    {
+        if (runtimeStats.currentHP < runtimeStats.maxHP)
+            runtimeStats.currentHP = Mathf.Min(runtimeStats.currentHP + healAmount, runtimeStats.maxHP);
     }
 
     void HandleDeath()
