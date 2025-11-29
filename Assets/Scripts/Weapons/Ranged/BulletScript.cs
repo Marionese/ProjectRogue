@@ -56,12 +56,14 @@ public class BulletScript : MonoBehaviour
                 }
             }
 
-            Destroy(gameObject);
+            BulletPool.Instance.ReturnBullet(gameObject);
+
         }
         else if ((collision.CompareTag("Ground") || collision.CompareTag("Wall"))
                  && !collision.gameObject.GetComponent<Plattform>())
         {
-            Destroy(gameObject);
+            BulletPool.Instance.ReturnBullet(gameObject);
+
         }
     }
 }

@@ -46,7 +46,7 @@ public class RangedWeapon : WeaponBase
         atk.percentAdd = 0f;
         atk.multiplier = 1f;
 
-        atk.critChance = 0f; 
+        atk.critChance = 0f;
         atk.isCrit = false;
         atk.critMultiplier = 2f;
 
@@ -74,7 +74,9 @@ public class RangedWeapon : WeaponBase
         Vector3 spawnPos = attackPoint.position + (Vector3)(direction * 0.1f);
 
         // Bullet Spawn + Initialize
-        GameObject bullet = Instantiate(data.bulletPrefab, spawnPos, rot);
+        GameObject bullet = BulletPool.Instance.GetBullet();
+        bullet.transform.position = spawnPos;
+        bullet.transform.rotation = rot;
         List<AttackModifier> attackModifiers = modifierManager != null ? modifierManager.GetAttackModifiers() : new List<AttackModifier>();
         bullet.GetComponent<BulletScript>().Initialize(atk, attackModifiers);
 
