@@ -10,16 +10,22 @@ public class BulletPool : MonoBehaviour
 
     private Queue<GameObject> pool = new Queue<GameObject>();
 
+    private Transform bulletContainer;
+
     void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Pre-warm the pool
+        // Create a parent object to hold bullets
+        bulletContainer = new GameObject("BulletContainer").transform;
+        bulletContainer.SetParent(transform);
+
+        // Prewarm bullets
         for (int i = 0; i < initialSize; i++)
         {
-            GameObject b = Instantiate(bulletPrefab);
+            GameObject b = Instantiate(bulletPrefab, bulletContainer);
             b.SetActive(false);
             pool.Enqueue(b);
         }
@@ -33,12 +39,10 @@ public class BulletPool : MonoBehaviour
             b.SetActive(true);
             return b;
         }
-        else
-        {
-            // Expand pool if needed
-            GameObject b = Instantiate(bulletPrefab);
-            return b;
-        }
+
+        // Expand pool
+        GameObject nb = Instantiate(bulletPrefab, bulletContainer);
+        return nb;
     }
 
     public void ReturnBullet(GameObject bullet)
