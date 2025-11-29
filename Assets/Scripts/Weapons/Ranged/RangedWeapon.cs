@@ -55,7 +55,7 @@ public class RangedWeapon : WeaponBase
         atk.knockback = 0f;
         atk.pierce = 0;
         atk.bounce = 0;
-
+        atk.range = data.range;
         // Modifiers anwenden
         PlayerModifierManager modifierManager = GetComponentInParent<PlayerModifierManager>();
         modifierManager?.ApplyAttack(ref atk);
