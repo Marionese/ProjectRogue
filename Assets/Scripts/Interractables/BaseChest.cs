@@ -6,6 +6,7 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
 {
     public GameObject pickupPrefab;
     public Transform itemSpawnPoint;
+    public int playerFocused;
     protected bool opened = false;
     public Vector3 Position => transform.position;
     [SerializeField] private GameObject highlightIcon;
@@ -73,10 +74,15 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
             SpawnItem(ItemChosen2, offsetItemPostion);
         }
     }
+    //Set Highlight Icon active if 1 or more players are near
     public void SetHighlight(bool state)
     {
-        if (!opened)
-            highlightIcon.SetActive(state);
+        if (state)
+            playerFocused++;
+        else
+            playerFocused = Mathf.Max(0, playerFocused - 1);
+
+        highlightIcon.SetActive(!opened&&playerFocused >0);
     }
 }
 

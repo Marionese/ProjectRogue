@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class Item : MonoBehaviour, IInteractable
 {
     public ItemData item;
+    public int playerFocused;
     public Vector3 Position => transform.position;
     [SerializeField] private GameObject highlightIcon;
     public void Interact(GameObject player)
@@ -40,9 +41,14 @@ public class Item : MonoBehaviour, IInteractable
         // Objekt zerstören
         Destroy(gameObject);
     }
-    public void SetHighlight(bool state)
+    public void SetHighlight(bool entering)
     {
-        highlightIcon.SetActive(state);
+        if(entering)
+            playerFocused++;
+        else
+            playerFocused = Mathf.Max(0,playerFocused -1); 
+            
+        highlightIcon.SetActive(playerFocused >0);
     }
 
 }
