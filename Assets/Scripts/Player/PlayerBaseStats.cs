@@ -19,6 +19,6 @@ public class PlayerBaseStats : ScriptableObject
     public float coyoteTime = 0.15f;
 
     [Header("Max Hp")]
-    public int maxHP = 3;
+    public int maxHP = 6; //3 full hearts 6 hits 
     
 }

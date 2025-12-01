@@ -19,4 +19,4 @@ MonoBehaviour:
   fallGravityMultiplier: 2.2
   lowJumpGravityMultiplier: 2
   coyoteTime: 0.15
-  maxHP: 3
+  maxHP: 6
