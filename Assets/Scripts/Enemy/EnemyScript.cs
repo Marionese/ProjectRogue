@@ -1,34 +1,33 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Health))]
 public class EnemyScript : MonoBehaviour
 {
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float maxHealth;
+    float currentHealt;
     public Vector2 BulletHitPosition { get; set; }
-
-    private Health health;
-
-    private void Awake()
+    void Start()
     {
-        health = GetComponent<Health>();
+        currentHealt = maxHealth;
     }
 
-    private void OnEnable()
+    // Update is called once per frame
+    void Update()
     {
-        health.OnDied += HandleDeath;
+
     }
 
-    private void OnDisable()
-    {
-        health.OnDied -= HandleDeath;
-    }
-
-    // API für Bullets etc.
+    //Helper Funktions
     public void DamageEnemy(float amount)
     {
-        health.TakeDamage(amount);
+        currentHealt -= amount;
+        if (currentHealt <= 0)
+        {
+            Die();
+        }
     }
 
-    private void HandleDeath()
+    void Die()
     {
         Destroy(gameObject);
     }
