@@ -54,19 +54,6 @@ public class PlayerController : MonoBehaviour
         Vector2 input = val.Get<Vector2>();
         movement.SetMoveInput(input);
     }
-
-    void OnJump(InputValue val)
-    {
-        if (movement == null) return;
-        movement.SetJump(val.isPressed);
-    }
-
-    void OnDrop()
-    {
-        if (movement == null) return;
-        movement.DropThroughPlatform();
-    }
-
     void OnInterract(InputValue val)
     {
         if (interaction == null) return;
