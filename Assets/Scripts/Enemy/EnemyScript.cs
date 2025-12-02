@@ -8,6 +8,7 @@ public class EnemyScript : MonoBehaviour
     public float maxHealth;
     public PlayerController currentTargetPlayer;
     private Rigidbody2D rb;
+    private float knockbackTime;
     private float moveSpeed = 5;
     float currentHealt;
     private Vector2 playerPos;
@@ -36,6 +37,7 @@ public class EnemyScript : MonoBehaviour
     //Helper Funktions
     public void DamageEnemy(float amount)
     {
+        knockbackTime = 0.15f;
         currentHealt -= amount;
         if (currentHealt <= 0)
         {
@@ -53,6 +55,11 @@ public class EnemyScript : MonoBehaviour
     }
     void MoveTo(Vector2 pos)
     {
+        if (knockbackTime > 0)
+        {
+            knockbackTime -= Time.deltaTime;
+            return; // skip AI movement, let physics play out
+        }
         Vector2 dir = (pos - (Vector2)transform.position).normalized;
         rb.linearVelocity = dir * moveSpeed;
     }
