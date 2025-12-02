@@ -228,7 +228,7 @@ MonoBehaviour:
     m_ActionId: a495a62e-4e89-444b-8a3b-5210f8654234
     m_ActionName: 'Player/Jump[/Keyboard/space,/XInputControllerWindows1/leftShoulder]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Gamepad
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -248,7 +248,6 @@ MonoBehaviour:
   playerID: 0
   movement: {fileID: 0}
   interaction: {fileID: 0}
-  health: {fileID: 0}
 --- !u!114 &6037309414078123028
 MonoBehaviour:
   m_ObjectHideFlags: 0
