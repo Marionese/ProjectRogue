@@ -14,7 +14,7 @@ public class PlayerModifierManager : MonoBehaviour
 
         foreach (var m in item.modifiers)
         {
-            if (m is PlayerStatModifier stat)
+            if (m is MaxHpModifier stat)
             {
                 // MaxHP vor dem Modifier merken
                 int beforeMax = stats.maxHP;
