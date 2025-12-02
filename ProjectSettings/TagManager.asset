@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Wall
   - Door
+  - EnemyCollider
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Water
   - UI
   - Bullet
-  - 
-  - 
+  - Enemy
+  - Player
   - 
   - 
   - 
