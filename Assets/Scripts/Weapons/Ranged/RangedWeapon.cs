@@ -56,6 +56,7 @@ public class RangedWeapon : WeaponBase
         atk.pierce = 0;
         atk.bounce = 0;
         atk.range = data.range;
+        atk.forwardDirection = direction;
         // Modifiers anwenden
         PlayerModifierManager modifierManager = GetComponentInParent<PlayerModifierManager>();
         modifierManager?.ApplyAttackModifiers(ref atk);
@@ -76,7 +77,7 @@ public class RangedWeapon : WeaponBase
         // Bullet Spawn + Initialize
         GameObject bullet = BulletPool.Instance.GetBullet();
         bullet.transform.position = spawnPos;
-        bullet.transform.rotation = rot;
+        bullet.transform.rotation = rot;  
         List<AttackModifier> attackModifiers = modifierManager != null ? modifierManager.GetAttackModifiers() : new List<AttackModifier>();
         bullet.GetComponent<BulletScript>().Initialize(atk, attackModifiers);
 
