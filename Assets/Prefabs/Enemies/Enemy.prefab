@@ -109,7 +109,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -120,7 +120,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &6465287938188532069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8d38f650bb1d543b1caf46c246d156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  maxHealth: 1000
+  maxHealth: 100
+  currentTargetPlayer: {fileID: 0}
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &5536215927911159770
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5369564042571984298}
   - component: {fileID: 8514821786293486155}
+  - component: {fileID: 5489439158475760169}
   m_Layer: 0
   m_Name: EnemyVisionCone
   m_TagString: Untagged
@@ -216,6 +221,18 @@ PolygonCollider2D:
       - {x: 6, y: 1}
       - {x: 6, y: -1}
   m_UseDelaunayMesh: 0
+--- !u!114 &5489439158475760169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536215927911159770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b7076c338d7460baa3469a51c85c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisionConeTrigger
 --- !u!1 &8144855290878320035
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +245,7 @@ GameObject:
   - component: {fileID: 201294320565371649}
   m_Layer: 0
   m_Name: EnemyCollider
-  m_TagString: Untagged
+  m_TagString: EnemyCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
