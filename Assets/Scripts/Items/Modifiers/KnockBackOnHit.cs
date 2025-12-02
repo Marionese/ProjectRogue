@@ -14,7 +14,7 @@ public class KnockBackOnHit : AttackModifier
         if (rb == null) return;
 
         // Richtung: vom Bullet zum Enemy (Push-Away)
-        Vector2 dir = ((Vector2)enemy.transform.position - enemy.BulletHitPosition).normalized;
+        Vector2 dir = ((Vector2)enemy.transform.position - data.hitPoint).normalized;
 
 
         rb.linearVelocity += dir * force;
