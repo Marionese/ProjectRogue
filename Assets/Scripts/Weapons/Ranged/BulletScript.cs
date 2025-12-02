@@ -65,7 +65,8 @@ public class BulletScript : MonoBehaviour
 
                 // Schaden anwenden
                 Debug.Log("Damage" + dmg);
-                enemy.DamageEnemy(dmg);
+                enemy.DamageEnemy(dmg,data.isBullet);
+                ApplyKnockback(enemy);
 
                 // ON-HIT MODIFIERS
                 foreach (var mod in attackModifiers)
@@ -85,5 +86,16 @@ public class BulletScript : MonoBehaviour
             BulletPool.Instance.ReturnBullet(gameObject);
 
         }
+    }
+    void ApplyKnockback(EnemyScript enemy)
+    {
+          Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+        if (rb == null) return;
+
+        // Richtung: vom Bullet zum Enemy (Push-Away)
+        Vector2 dir = ((Vector2)enemy.transform.position - data.hitPoint).normalized;
+
+
+        rb.linearVelocity += dir * data.knockback;
     }
 }

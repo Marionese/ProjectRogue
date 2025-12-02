@@ -55,6 +55,8 @@ public class RangedWeapon : WeaponBase
         atk.knockback = 0f;
         atk.pierce = 0;
         atk.bounce = 0;
+        atk.knockback = 5;
+        atk.isBullet = true;
         atk.range = data.range;
         atk.forwardDirection = direction;
         // Modifiers anwenden

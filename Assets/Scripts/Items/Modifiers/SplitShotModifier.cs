@@ -22,6 +22,8 @@ public class SplitShotOnHit : AttackModifier
         Vector3 safeOrigin = hit3 - f3 * offset;
         data.multiplier *= 0.5f;
         data.range = 0.25f;
+        data.knockback = 0;
+        data.isBullet = false;
         SpawnSplitBullet(left, safeOrigin, data);
         SpawnSplitBullet(right, safeOrigin, data);
     }
@@ -35,6 +37,8 @@ public class SplitShotOnHit : AttackModifier
         float offset = 0.25f;
         data.multiplier *= 0.5f;
         data.range = 0.25f;
+        data.knockback = 0;
+        data.isBullet = false;
         Vector3 hit3 = (Vector3)data.hitPoint;
         Vector3 f3 = new Vector3(f.x, f.y, 0);
         Vector3 safeOrigin = hit3 - f3 * offset;
