@@ -18,7 +18,6 @@ public class BulletScript : MonoBehaviour
 
         // Richtung kommt vom Transform (Rotation)
         rb.linearVelocity = transform.right * data.speed;
-
         // Skalierung aus AttackData
         transform.localScale = Vector3.one * data.size;
         lifetime = data.range;
@@ -27,23 +26,27 @@ public class BulletScript : MonoBehaviour
     {
         if (lifetime <= 0)
         {
+            data.hitPoint = transform.position;
+            foreach (var mod in attackModifiers)
+                mod.OnHitEnvironment(data);
             BulletPool.Instance.ReturnBullet(gameObject);
         }
         else
         {
             lifetime -= Time.deltaTime;
         }
-    
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Vector2 surfaceHit = collision.ClosestPoint(transform.position);
+        data.hitPoint = surfaceHit;
         if (collision.CompareTag("Enemy"))
         {
             EnemyScript enemy = collision.GetComponent<EnemyScript>();
             if (enemy != null)
             {
-                enemy.BulletHitPosition = transform.position;
                 // DAMAGE PIPELINE FINAL CALCULATION
                 float dmg = data.baseDamage;
 
@@ -77,6 +80,8 @@ public class BulletScript : MonoBehaviour
         else if ((collision.CompareTag("Ground") || collision.CompareTag("Wall"))
                  && !collision.gameObject.GetComponent<Plattform>())
         {
+            foreach (var mod in attackModifiers)
+                mod.OnHitEnvironment(data);
             BulletPool.Instance.ReturnBullet(gameObject);
 
         }
