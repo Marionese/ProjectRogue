@@ -2460,7 +2460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6783621540514006317, guid: 193dc79e7029b45d79e78c8089722c6c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1128
+      value: 0.56
       objectReference: {fileID: 0}
     - target: {fileID: 6783621540514006317, guid: 193dc79e7029b45d79e78c8089722c6c, type: 3}
       propertyPath: m_LocalScale.y
@@ -3242,6 +3242,10 @@ PrefabInstance:
     - target: {fileID: 6465287938188532069, guid: b74e24ec5726c89478f85bb6d315a10f, type: 3}
       propertyPath: maxHealth
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6465287938188532069, guid: b74e24ec5726c89478f85bb6d315a10f, type: 3}
+      propertyPath: wallMask.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8144855290878320035, guid: b74e24ec5726c89478f85bb6d315a10f, type: 3}
       propertyPath: m_TagString
