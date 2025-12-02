@@ -21,6 +21,8 @@ public struct AttackData
     public int pierce;
     public int bounce;
     public float range;
+    public Vector2 forwardDirection;
+    public Vector2 hitPoint;
 
 }
 
