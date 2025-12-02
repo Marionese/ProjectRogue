@@ -42,9 +42,9 @@ public class BulletScript : MonoBehaviour
     {
         Vector2 surfaceHit = collision.ClosestPoint(transform.position);
         data.hitPoint = surfaceHit;
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("EnemyCollider"))
         {
-            EnemyScript enemy = collision.GetComponent<EnemyScript>();
+            EnemyScript enemy = collision.GetComponentInParent<EnemyScript>();
             if (enemy != null)
             {
                 // DAMAGE PIPELINE FINAL CALCULATION
