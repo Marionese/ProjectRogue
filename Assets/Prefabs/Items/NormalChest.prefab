@@ -78,7 +78,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 5f7f3ed2095b1834c95e129e54dc2482, type: 3}
   m_Color: {r: 0.8773585, g: 0.80885786, b: 0.16967781, a: 1}
   m_FlipX: 0
@@ -172,7 +172,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.6415094, g: 0.4539698, b: 0, a: 1}
   m_FlipX: 0
@@ -198,6 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NormalChest
   pickupPrefab: {fileID: 7976658700182948897, guid: 05938c062c4cb8443a8c424ead9c815b, type: 3}
   itemSpawnPoint: {fileID: 5621236622888847181}
+  playerFocused: 0
   highlightIcon: {fileID: 6302291414945569156}
 --- !u!61 &7776573447347074291
 BoxCollider2D:
