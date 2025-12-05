@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - Door
   - EnemyCollider
+  - PlayerHitBox
   layers:
   - Default
   - TransparentFX
