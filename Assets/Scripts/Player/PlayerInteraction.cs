@@ -3,39 +3,15 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    private readonly List<IInteractable> interactTargetList = new();
-    private IInteractable currentFocused;
+    public readonly List<IInteractable> interactTargetList = new();
+    public IInteractable currentFocused;
 
     public void Interact(GameObject player)
     {
         currentFocused?.Interact(player);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        var interactable = other.GetComponent<IInteractable>();
-        if (interactable != null)
-        {
-            interactTargetList.Add(interactable);
-            UpdateFocusedTarget();
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        var interactable = other.GetComponent<IInteractable>();
-        if (interactable != null)
-        {
-            interactTargetList.Remove(interactable);
-
-            if (currentFocused == interactable)
-            {
-                UpdateFocusedTarget();
-            }
-        }
-    }
-
-    void UpdateFocusedTarget()
+    public void UpdateFocusedTarget()
     {
         // altes Highlight aus
         if (currentFocused != null)
