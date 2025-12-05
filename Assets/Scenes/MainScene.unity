@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d809e761a1cc4d9e5eccc72718c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletPool
-  bulletPrefab: {fileID: 1099946505755252287, guid: c1ea6aab84dc7e94e914ac77eaa890da, type: 3}
+  bulletPrefab: {fileID: 1511103955755973259, guid: 9a0caebc596d87d4386f845e964bdcac, type: 3}
   initialSize: 30
 --- !u!1001 &492373655
 PrefabInstance:
