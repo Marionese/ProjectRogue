@@ -7,9 +7,15 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
     public GameObject pickupPrefab;
     public Transform itemSpawnPoint;
     public int playerFocused;
+    [SerializeField] private Sprite chestOpened;
     protected bool opened = false;
+    SpriteRenderer sr;
     public Vector3 Position => transform.position;
     [SerializeField] private GameObject highlightIcon;
+    void Start()
+    {
+        sr = GetComponent<SpriteRenderer>();
+    }
     public void Interact(GameObject player)
     {
         var input = player.GetComponent<PlayerInput>();
@@ -17,6 +23,7 @@ public abstract class BaseChest : MonoBehaviour, IInteractable
 
         if (!opened)
         {
+            sr.sprite = chestOpened;
             opened = true;
             OnChestOpened();
         }
