@@ -3,7 +3,7 @@ using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Door : MonoBehaviour
+public class LoadNewRoom : MonoBehaviour
 {
     [SerializeField] private string nextScene;
 

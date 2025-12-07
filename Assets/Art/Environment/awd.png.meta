@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9ced7d6481403144fa77598eab535c0b
+guid: 8d93616e66ab3314dba4d5eb09ae7a55
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5092973808634293408
-    second: "T\xFCrSeitlich_0"
+      213: 2002412036112832078
+    second: awd_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 6
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "T\xFCrSeitlich_0"
+      name: awd_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 13
-        height: 88
+        height: 113
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0631cf50e4f1259b0800000000000000
-      internalID: -5092973808634293408
+      spriteID: e46d87a332ff9cb10800000000000000
+      internalID: 2002412036112832078
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "T\xFCrSeitlich_0": -5092973808634293408
+      awd_0: 2002412036112832078
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
