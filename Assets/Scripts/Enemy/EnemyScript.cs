@@ -14,6 +14,7 @@ public class EnemyScript : MonoBehaviour
     private Vector2 playerPos;
     public enum EnemyState { patrol, aggressive }
     private EnemyState currentState = EnemyState.patrol;
+    public event System.Action<EnemyScript> OnDeath;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,7 +62,7 @@ public class EnemyScript : MonoBehaviour
             knockbackTime -= Time.deltaTime;
             return; // skip AI movement, let physics play out
         }
-        
+
         Vector2 dir = (pos - (Vector2)transform.position).normalized;
         Vector2 targetVel = dir * moveSpeed;
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVel, 0.3f);
@@ -76,18 +77,7 @@ public class EnemyScript : MonoBehaviour
     }
     void Die()
     {
+        OnDeath?.Invoke(this);
         Destroy(gameObject);
     }
-    public static Vector2 Rotate(Vector2 v, float degrees)
-    {
-        float rad = degrees * Mathf.Deg2Rad;
-        float sin = Mathf.Sin(rad);
-        float cos = Mathf.Cos(rad);
-
-        return new Vector2(
-            v.x * cos - v.y * sin,
-            v.x * sin + v.y * cos
-        );
-    }
-
 }
