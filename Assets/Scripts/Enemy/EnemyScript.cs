@@ -33,6 +33,7 @@ public class EnemyScript : MonoBehaviour
                 AggroPlayer();
                 break;
         }
+        UpdateFacingDirection();
     }
 
     //Helper Funktions
@@ -79,5 +80,16 @@ public class EnemyScript : MonoBehaviour
     {
         OnDeath?.Invoke(this);
         Destroy(gameObject);
+    }
+    void UpdateFacingDirection()
+    {
+        Vector2 vel = rb.linearVelocity;
+
+        float scale = Mathf.Abs(transform.localScale.x); // keep original size
+
+        if (vel.x > 0.1f)
+            transform.localScale = new Vector3(scale, scale, 1);
+        else if (vel.x < -0.1f)
+            transform.localScale = new Vector3(-scale, scale, 1);
     }
 }
