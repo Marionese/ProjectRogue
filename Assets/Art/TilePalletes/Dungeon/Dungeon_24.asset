@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Chests_0
+  m_Name: Dungeon_24
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.Tilemaps.Tile
-  m_Sprite: {fileID: -2449109871443933174, guid: d534c602fee1d024d918130608cb39d3, type: 3}
+  m_Sprite: {fileID: 181771401, guid: 11eee4ad65e80874bb30390b425bd66f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
