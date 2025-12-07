@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour 
 {
-    void OpenDoor()
+    public void OpenDoor()
     {
         Destroy(gameObject);
     }
