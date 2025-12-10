@@ -40,7 +40,7 @@ public class RoomController : MonoBehaviour
     {
         foreach (var door in doors)
         {
-            door.OpenDoor();
+            door?.OpenDoor();
         }
     }
 }
