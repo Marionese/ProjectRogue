@@ -5,8 +5,15 @@ public class PlayerJoinControl : MonoBehaviour
 {
     [SerializeField] private GameObject playerDummy;
     [SerializeField] private PlayerInput player1InScene;   // Assign in inspector
-    
+
     public Transform playersParent;
+    
+    void Start()
+    {
+        // Player 1 ist schon in der Szene → FlowField aktivieren
+        FlowFieldManager.Instance.RegisterPlayer1(player1InScene.transform);
+    }
+
     void OnEnable()
     {
         if (PlayerInputManager.instance != null)
@@ -51,6 +58,9 @@ public class PlayerJoinControl : MonoBehaviour
         newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
         newPlayer.GetComponent<PlayerController>().SetPlayerID(1);
         newPlayer.transform.SetParent(playersParent);
+        //Flow Field Setzen
+        FlowFieldManager.Instance.RegisterPlayer2(newPlayer.transform);
+
     }
 
 }

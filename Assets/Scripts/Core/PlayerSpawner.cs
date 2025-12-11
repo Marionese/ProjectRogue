@@ -39,7 +39,10 @@ public class PlayerSpawner : MonoBehaviour
         controller.SetPlayerID(0);
 
         var pm = player1.GetComponent<PlayerModifierManager>();
-        pm.InitializeFromSession();  
+        pm.InitializeFromSession();
+
+        // REGISTER IN FLOW FIELD
+        FlowFieldManager.Instance.RegisterPlayer1(player1.transform);
 
         return player1;
     }
@@ -55,8 +58,12 @@ public class PlayerSpawner : MonoBehaviour
         controller.SetPlayerID(1);
 
         var pm = player2.GetComponent<PlayerModifierManager>();
-        pm.InitializeFromSession();  
+        pm.InitializeFromSession();
+
+        // REGISTER IN FLOW FIELD
+        FlowFieldManager.Instance.RegisterPlayer2(player2.transform);
 
         return player2;
     }
+
 }
