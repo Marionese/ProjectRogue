@@ -10,10 +10,11 @@ public class EnemyScript : MonoBehaviour
     private Rigidbody2D rb;
     private float knockbackTime;
     private float moveSpeed = 5;
+    private Vector2 lastMovementDirection;
     float currentHealt;
     private Vector2 playerPos;
     public enum EnemyState { patrol, aggressive }
-    private EnemyState currentState = EnemyState.patrol;
+    public EnemyState currentState = EnemyState.patrol;
     public event System.Action<EnemyScript> OnDeath;
     void Start()
     {
@@ -27,6 +28,7 @@ public class EnemyScript : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.patrol:
+                Patrol();
                 break;
 
             case EnemyState.aggressive:
@@ -67,13 +69,16 @@ public class EnemyScript : MonoBehaviour
         if (knockbackTime > 0)
         {
             knockbackTime -= Time.deltaTime;
-            return; // skip AI movement, let physics play out
+            return;
         }
 
         Vector2 dir = (pos - (Vector2)transform.position).normalized;
+        lastMovementDirection = dir;  // <--- Nur hier updaten!
+
         Vector2 targetVel = dir * moveSpeed;
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVel, 0.3f);
     }
+
     public void SwitchState(EnemyState state)
     {
         currentState = state;
@@ -89,15 +94,18 @@ public class EnemyScript : MonoBehaviour
     }
     void UpdateFacingDirection()
     {
-        Vector2 vel = rb.linearVelocity;
+        if (knockbackTime > 0)
+            return;
 
-        float scale = Mathf.Abs(transform.localScale.x); // keep original size
+        float scale = Mathf.Abs(transform.localScale.x);
 
-        if (vel.x > 0.1f)
+        if (lastMovementDirection.x > 0.1f)
             transform.localScale = new Vector3(scale, scale, 1);
-        else if (vel.x < -0.1f)
+
+        else if (lastMovementDirection.x < -0.1f)
             transform.localScale = new Vector3(-scale, scale, 1);
     }
+
     public PlayerController GetPlayerByID(int id)
     {
         PlayerController[] players =
