@@ -10,6 +10,8 @@ public abstract class WeaponBase : MonoBehaviour
     protected bool usingController;
     protected bool allowMouse;
     protected Camera cam;
+    protected PlayerController owner;
+    protected int SourcePlayerID => owner.PlayerID;
     // Jedes Weapon-Kind muss Attack() haben:
     public abstract void Attack();
     public void SetAim(Vector2 input)
@@ -18,6 +20,10 @@ public abstract class WeaponBase : MonoBehaviour
 
         if (input.sqrMagnitude > 0.1f)
             usingController = true;
+    }
+    public void SetOwner(PlayerController player)
+    {
+        owner = player;
     }
     void Start()
     {

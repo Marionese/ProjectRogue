@@ -42,5 +42,8 @@ public class WeaponManager : MonoBehaviour
 
         GameObject w = Instantiate(weaponPrefab, weaponHolder.position, Quaternion.identity, weaponHolder);
         currentWeapon = w.GetComponent<WeaponBase>();
+        //set player owner to weapon
+        var player = GetComponent<PlayerController>();
+        currentWeapon.SetOwner(player);
     }
 }

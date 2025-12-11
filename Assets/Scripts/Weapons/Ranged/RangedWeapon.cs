@@ -36,7 +36,7 @@ public class RangedWeapon : WeaponBase
 
         // AttackData erstellen
         AttackData atk = new AttackData();
-
+        atk.sourcePlayerID = owner.PlayerID;
         // Base weapon values
         atk.baseDamage = data.damage;
         atk.speed = data.bulletSpeed;

@@ -37,8 +37,14 @@ public class EnemyScript : MonoBehaviour
     }
 
     //Helper Funktions
-    public void DamageEnemy(float amount, bool isBullet)
+    public void DamageEnemy(float amount, bool isBullet, int playerID)
     {
+        if (currentState == EnemyState.patrol)
+        {
+            currentTargetPlayer = GetPlayerByID(playerID);
+            SwitchState(EnemyState.aggressive);
+
+        }
         if (isBullet)
             knockbackTime = 0.25f;
         currentHealt -= amount;
@@ -91,5 +97,16 @@ public class EnemyScript : MonoBehaviour
             transform.localScale = new Vector3(scale, scale, 1);
         else if (vel.x < -0.1f)
             transform.localScale = new Vector3(-scale, scale, 1);
+    }
+    public PlayerController GetPlayerByID(int id)
+    {
+        PlayerController[] players =
+            FindObjectsByType<PlayerController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+
+        foreach (var p in players)
+            if (p.PlayerID == id)
+                return p;
+
+        return null;
     }
 }
