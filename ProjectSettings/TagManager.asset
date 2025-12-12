@@ -51,5 +51,17 @@ TagManager:
   - name: World
     uniqueID: 3031283361
     locked: 0
+  - name: WallsFront
+    uniqueID: 1837546691
+    locked: 0
+  - name: EntitiesFront
+    uniqueID: 3019913879
+    locked: 0
+  - name: EntitiesBehind
+    uniqueID: 1584814609
+    locked: 0
+  - name: Floor
+    uniqueID: 1951045177
+    locked: 0
   m_RenderingLayers:
   - Default
