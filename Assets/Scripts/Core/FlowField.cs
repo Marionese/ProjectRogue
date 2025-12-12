@@ -8,7 +8,7 @@ public class FlowField : MonoBehaviour
     public float cellSize;
     public Vector2 origin = Vector2.zero;
 
-    public LayerMask obstacleMask; // Colliders → block movement
+    public LayerMask obstacleMask;
 
     public FlowNode[,] grid;
 
@@ -20,7 +20,9 @@ public class FlowField : MonoBehaviour
         GenerateGrid();
     }
 
-
+    // --------------------------------------------------
+    // GRID GENERATION (baseWalkable is permanent)
+    // --------------------------------------------------
     public void GenerateGrid()
     {
         grid = new FlowNode[width, height];
@@ -31,22 +33,28 @@ public class FlowField : MonoBehaviour
             {
                 Vector3 worldPos = GridToWorld(x, y);
 
-                bool walkable = !Physics2D.OverlapBox(worldPos,
+                bool walkable = !Physics2D.OverlapBox(
+                    worldPos,
                     Vector2.one * (cellSize * 0.9f),
                     0,
-                    obstacleMask);
+                    obstacleMask
+                );
 
                 grid[x, y] = new FlowNode()
                 {
                     worldPos = worldPos,
                     cost = float.MaxValue,
                     flowDirection = Vector2.zero,
-                    walkable = walkable
+                    baseWalkable = walkable,
+                    walkable = walkable // dynamic layer starts same as base
                 };
             }
         }
     }
 
+    // --------------------------------------------------
+    // FLOWFIELD UPDATE
+    // --------------------------------------------------
     public void UpdateFlowField(Vector3 playerPos)
     {
         Vector2Int cell = WorldToGrid(playerPos);
@@ -54,8 +62,13 @@ public class FlowField : MonoBehaviour
         if (!InBounds(cell))
             return;
 
+        ResetWalkableToBase();
+
+        // Spielerzelle walkable
+        MakeRingWalkable(cell, 1); // Radius 1 = 3x3 Feld
+
         if (cell == lastPlayerCell)
-            return; // no need to update
+            return;
 
         lastPlayerCell = cell;
 
@@ -63,29 +76,59 @@ public class FlowField : MonoBehaviour
         ComputeFlowDirections();
     }
 
+    void MakeRingWalkable(Vector2Int center, int radius)
+    {
+        for (int dx = -radius; dx <= radius; dx++)
+        {
+            for (int dy = -radius; dy <= radius; dy++)
+            {
+                Vector2Int p = new Vector2Int(center.x + dx, center.y + dy);
+
+                if (!InBounds(p))
+                    continue;
+
+                grid[p.x, p.y].walkable = true;
+            }
+        }
+    }
+
+
+    // Reset walkable layer to baseWalkable
+    private void ResetWalkableToBase()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                grid[x, y].walkable = grid[x, y].baseWalkable;
+            }
+        }
+    }
+
+    // --------------------------------------------------
+    // BFS COST FIELD
+    // --------------------------------------------------
     void ComputeDistanceField(Vector2Int start)
     {
         foreach (var node in grid)
-        {
             node.cost = float.MaxValue;
-        }
 
         Queue<Vector2Int> q = new Queue<Vector2Int>();
 
         grid[start.x, start.y].cost = 0;
         q.Enqueue(start);
 
-        Vector2Int[] dirs = {
-    new Vector2Int(1,0),
-    new Vector2Int(-1,0),
-    new Vector2Int(0,1),
-    new Vector2Int(0,-1),
-    new Vector2Int(1,1),
-    new Vector2Int(1,-1),
-    new Vector2Int(-1,1),
-    new Vector2Int(-1,-1)
-};
-
+        Vector2Int[] dirs =
+        {
+            new Vector2Int(1,0),
+            new Vector2Int(-1,0),
+            new Vector2Int(0,1),
+            new Vector2Int(0,-1),
+            new Vector2Int(1,1),
+            new Vector2Int(1,-1),
+            new Vector2Int(-1,1),
+            new Vector2Int(-1,-1)
+        };
 
         while (q.Count > 0)
         {
@@ -100,7 +143,6 @@ public class FlowField : MonoBehaviour
                     continue;
 
                 FlowNode node = grid[n.x, n.y];
-
                 if (!node.walkable)
                     continue;
 
@@ -115,18 +157,22 @@ public class FlowField : MonoBehaviour
         }
     }
 
+    // --------------------------------------------------
+    // FLOW DIRECTIONS
+    // --------------------------------------------------
     void ComputeFlowDirections()
     {
-        Vector2Int[] dirs = {
-        new Vector2Int(1,0),
-        new Vector2Int(-1,0),
-        new Vector2Int(0,1),
-        new Vector2Int(0,-1),
-        new Vector2Int(1,1),
-        new Vector2Int(1,-1),
-        new Vector2Int(-1,1),
-        new Vector2Int(-1,-1)
-    };
+        Vector2Int[] dirs =
+        {
+            new Vector2Int(1,0),
+            new Vector2Int(-1,0),
+            new Vector2Int(0,1),
+            new Vector2Int(0,-1),
+            new Vector2Int(1,1),
+            new Vector2Int(1,-1),
+            new Vector2Int(-1,1),
+            new Vector2Int(-1,-1)
+        };
 
         for (int x = 0; x < width; x++)
         {
@@ -158,7 +204,9 @@ public class FlowField : MonoBehaviour
         }
     }
 
-
+    // --------------------------------------------------
+    // UTILITY
+    // --------------------------------------------------
     public Vector2 GetFlowDirection(Vector3 worldPos)
     {
         Vector2Int g = WorldToGrid(worldPos);
@@ -176,7 +224,6 @@ public class FlowField : MonoBehaviour
         return new Vector2Int(x, y);
     }
 
-
     public Vector3 GridToWorld(int x, int y)
     {
         return new Vector3(
@@ -185,11 +232,11 @@ public class FlowField : MonoBehaviour
         );
     }
 
-
     bool InBounds(Vector2Int g)
     {
         return g.x >= 0 && g.x < width && g.y >= 0 && g.y < height;
     }
+
     void OnDrawGizmos()
     {
         if (grid == null)
@@ -204,16 +251,13 @@ public class FlowField : MonoBehaviour
                 Gizmos.color = n.walkable ? Color.white : Color.red;
 
                 Vector3 pos = GridToWorld(x, y);
-
                 Gizmos.DrawWireCube(pos, Vector3.one * cellSize);
 
-                // Optional: draw flow direction
                 Gizmos.color = Color.cyan;
                 Gizmos.DrawLine(pos, pos + (Vector3)n.flowDirection * (cellSize * 0.4f));
             }
         }
     }
-
 }
 
 public class FlowNode
@@ -221,6 +265,7 @@ public class FlowNode
     public Vector2 worldPos;
     public float cost;
     public Vector2 flowDirection;
-    public bool walkable;
-}
 
+    public bool baseWalkable; // From grid generation
+    public bool walkable;     // Dynamic state
+}

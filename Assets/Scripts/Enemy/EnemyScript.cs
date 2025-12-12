@@ -16,6 +16,8 @@ public class EnemyScript : MonoBehaviour
     public enum EnemyState { patrol, aggressive }
     public EnemyState currentState = EnemyState.patrol;
     public event System.Action<EnemyScript> OnDeath;
+    public LayerMask obstacleMask;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,9 +63,43 @@ public class EnemyScript : MonoBehaviour
     }
     void AggroPlayer()
     {
-        playerPos = currentTargetPlayer.transform.position;
-        MoveTo(playerPos);
+        if (currentTargetPlayer == null)
+            return;
+
+        // Where we VISUALLY want to go (center of player)
+        Vector2 bodyTarget = currentTargetPlayer.transform.position;
+
+
+        // FlowField direction from THIS enemy's position
+        Vector2 flowDir = FlowFieldManager.Instance.flowFieldP1.GetFlowDirection(transform.position);
+
+        // If flow is zero (same cell), move directly toward player
+        if (flowDir == Vector2.zero)
+        {
+            flowDir = (bodyTarget - (Vector2)transform.position).normalized;
+        }
+
+        FlowMove(flowDir);
+
+        // Keep facing the player's body
+        lastMovementDirection = (bodyTarget - (Vector2)transform.position).normalized;
     }
+
+
+    void FlowMove(Vector2 dir)
+    {
+        if (knockbackTime > 0)
+        {
+            knockbackTime -= Time.deltaTime;
+            return;
+        }
+
+        float speed = moveSpeed;
+
+        Vector2 targetVel = dir * speed;
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVel, 0.3f);
+    }
+
     void MoveTo(Vector2 pos)
     {
         if (knockbackTime > 0)

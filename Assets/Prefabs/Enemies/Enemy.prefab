@@ -83,8 +83,8 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -708108256075192886, guid: 0d94d0cd6dc845c41bb7b5ce1ad68b3c, type: 3}
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 3160713915590229262, guid: 7c2a92e8e1f42a84e862a8ddbeed67b7, type: 3}
   m_Color: {r: 0.6223836, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &1396728667129286087
@@ -136,6 +136,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   maxHealth: 100
   currentTargetPlayer: {fileID: 0}
+  currentState: 0
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!95 &8344773709169015369
 Animator:
   serializedVersion: 7
@@ -262,7 +266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6435836316495713464}
-  - component: {fileID: 201294320565371649}
+  - component: {fileID: 6646510090108640334}
   m_Layer: 0
   m_Name: EnemyCollider
   m_TagString: EnemyCollider
@@ -285,8 +289,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3532046582846951521}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &201294320565371649
-BoxCollider2D:
+--- !u!58 &6646510090108640334
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -320,14 +324,4 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.25
