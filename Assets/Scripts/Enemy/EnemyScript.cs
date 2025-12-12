@@ -17,7 +17,7 @@ public class EnemyScript : MonoBehaviour
     public EnemyState currentState = EnemyState.patrol;
     public event System.Action<EnemyScript> OnDeath;
     public LayerMask obstacleMask;
-
+    private float nextFlowUpdate;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -78,6 +78,11 @@ public class EnemyScript : MonoBehaviour
         {
             flowDir = (bodyTarget - (Vector2)transform.position).normalized;
         }
+        flowDir += new Vector2(
+            Random.Range(-0.1f, 0.1f),
+            Random.Range(-0.1f, 0.1f)
+        );
+        flowDir.Normalize();
 
         FlowMove(flowDir);
 
@@ -97,7 +102,7 @@ public class EnemyScript : MonoBehaviour
         float speed = moveSpeed;
 
         Vector2 targetVel = dir * speed;
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVel, 0.3f);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVel, 0.15f);
     }
 
     void MoveTo(Vector2 pos)
