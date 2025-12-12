@@ -65,7 +65,8 @@ public class FlowField : MonoBehaviour
         ResetWalkableToBase();
 
         // Spielerzelle walkable
-        MakeRingWalkable(cell, 1); // Radius 1 = 3x3 Feld
+        MakeBottomAreaWalkable(cell);
+
 
         if (cell == lastPlayerCell)
             return;
@@ -76,13 +77,18 @@ public class FlowField : MonoBehaviour
         ComputeFlowDirections();
     }
 
-    void MakeRingWalkable(Vector2Int center, int radius)
+    void MakeBottomAreaWalkable(Vector2Int center)
     {
-        for (int dx = -radius; dx <= radius; dx++)
+        // dx: left, center, right
+        for (int dx = -1; dx <= 1; dx++)
         {
-            for (int dy = -radius; dy <= radius; dy++)
+            // dy: center cell and one below
+            for (int dy = -1; dy <= 0; dy++)
             {
-                Vector2Int p = new Vector2Int(center.x + dx, center.y + dy);
+                Vector2Int p = new Vector2Int(
+                    center.x + dx,
+                    center.y + dy
+                );
 
                 if (!InBounds(p))
                     continue;
@@ -91,6 +97,7 @@ public class FlowField : MonoBehaviour
             }
         }
     }
+
 
 
     // Reset walkable layer to baseWalkable
