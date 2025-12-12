@@ -17,7 +17,14 @@ public class EnemyScript : MonoBehaviour
     public EnemyState currentState = EnemyState.patrol;
     public event System.Action<EnemyScript> OnDeath;
     public LayerMask obstacleMask;
-    private float nextFlowUpdate;
+    [SerializeField] float patrolRadius = 2.5f;
+    [SerializeField] float patrolChangeTime = 1.5f;
+    [SerializeField] float arriveDistance = 0.2f;
+    [SerializeField] float aggroPauseTime = 0.5f;
+    [SerializeField] GameObject alertIcon;
+    bool isPaused;
+    Vector2 patrolTarget;
+    float patrolTimer;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -30,10 +37,12 @@ public class EnemyScript : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.patrol:
+                moveSpeed = 3;
                 Patrol();
                 break;
 
             case EnemyState.aggressive:
+                moveSpeed = 5;
                 AggroPlayer();
                 break;
         }
@@ -59,10 +68,33 @@ public class EnemyScript : MonoBehaviour
     }
     void Patrol()
     {
-        return;
+        patrolTimer -= Time.deltaTime;
+
+        // If time ran out OR we reached the target → pick new one
+        if (patrolTimer <= 0f ||
+            Vector2.Distance(transform.position, patrolTarget) < arriveDistance)
+        {
+            PickNewPatrolTarget();
+        }
+
+        MoveTo(patrolTarget);
     }
+    void PickNewPatrolTarget()
+    {
+        patrolTimer = patrolChangeTime;
+
+        Vector2 randomOffset = Random.insideUnitCircle * patrolRadius;
+        patrolTarget = (Vector2)transform.position + randomOffset;
+    }
+
+
     void AggroPlayer()
     {
+        if (isPaused)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
         if (currentTargetPlayer == null)
             return;
 
@@ -107,6 +139,12 @@ public class EnemyScript : MonoBehaviour
 
     void MoveTo(Vector2 pos)
     {
+        if (isPaused)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         if (knockbackTime > 0)
         {
             knockbackTime -= Time.deltaTime;
@@ -122,8 +160,32 @@ public class EnemyScript : MonoBehaviour
 
     public void SwitchState(EnemyState state)
     {
+        if (state == EnemyState.aggressive &&
+            currentState != EnemyState.aggressive)
+        {
+            StartCoroutine(AggroPause());
+        }
+
         currentState = state;
     }
+    IEnumerator AggroPause()
+    {
+        isPaused = true;
+        rb.linearVelocity = Vector2.zero;
+
+        if (alertIcon != null)
+            alertIcon.SetActive(true);
+
+        yield return new WaitForSeconds(aggroPauseTime);
+
+        if (alertIcon != null)
+            alertIcon.SetActive(false);
+
+        isPaused = false;
+    }
+
+
+
     public void SetTarget(PlayerController player)
     {
         currentTargetPlayer = player;
