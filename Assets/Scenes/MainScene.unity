@@ -591,6 +591,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorFront
       objectReference: {fileID: 0}
+    - target: {fileID: 6143365637319662647, guid: 01cbf20b3ebed6b4a8ffe3fcf2c3d0a3, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143365637319662647, guid: 01cbf20b3ebed6b4a8ffe3fcf2c3d0a3, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1837546691
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1134,6 +1142,14 @@ PrefabInstance:
     - target: {fileID: 5798059389848224672, guid: 20a12af67516a7248be0a89a6749a49c, type: 3}
       propertyPath: m_Name
       value: DoorSide
+      objectReference: {fileID: 0}
+    - target: {fileID: 6734253413840637761, guid: 20a12af67516a7248be0a89a6749a49c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6734253413840637761, guid: 20a12af67516a7248be0a89a6749a49c, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1275053417
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1872,6 +1888,7 @@ MonoBehaviour:
   - {fileID: 120375285}
   enemyPrefabs:
   - {fileID: 6465287938188532069, guid: b74e24ec5726c89478f85bb6d315a10f, type: 3}
+  - {fileID: 4082441730438295250, guid: 7717ada6687645846b1c07d08db50d25, type: 3}
   doors:
   - {fileID: 406421098}
   - {fileID: 704447498}
