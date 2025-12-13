@@ -76,7 +76,8 @@ public class EnemyScript : MonoBehaviour
         {
             PickNewPatrolTarget();
         }
-
+        if (Physics2D.OverlapBox(patrolTarget, Vector2.one, 0, obstacleMask))
+            PickNewPatrolTarget();
         MoveTo(patrolTarget);
     }
     void PickNewPatrolTarget()
