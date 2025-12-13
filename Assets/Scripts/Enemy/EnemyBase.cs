@@ -11,6 +11,8 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected float patrolSpeed = 3f;
     [SerializeField] protected float aggroSpeed = 5f;
     [SerializeField] protected float knockbackDuration = 0.25f;
+    [SerializeField] protected float minDifficulty;
+    [SerializeField] protected float maxDifficulty;
 
     [Header("Patrol")]
     [SerializeField] protected float patrolRadius = 2.5f;
@@ -242,5 +244,9 @@ public abstract class EnemyBase : MonoBehaviour
             transform.localScale = new Vector3(-scale, scale, 1);
     }
 
+    public bool IsValidForDifficulty(int difficulty)
+    {
+        return difficulty >= minDifficulty && difficulty <= maxDifficulty;
+    }
 
 }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Rendering;
+using UnityEditor.Rendering;
 
 public class GameSession : MonoBehaviour
 
@@ -15,7 +17,7 @@ public class GameSession : MonoBehaviour
     public List<ItemData> player2RunItems = new();
     public PlayerRuntimeStats.Snapshot player1Snapshot;
     public PlayerRuntimeStats.Snapshot player2Snapshot;
-
+    public int difficulty = 1;
     private LootManager lootManager;
     private RoomController currentRoom;
 
@@ -38,7 +40,10 @@ public class GameSession : MonoBehaviour
     {
         currentRoom = room;
     }
-
+    public void SetDifficulty(int diff)
+    {
+        difficulty = diff;
+    }
     // Functions
     public void JoinCoop()
     {

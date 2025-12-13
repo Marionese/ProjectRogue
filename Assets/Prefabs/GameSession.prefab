@@ -54,5 +54,7 @@ MonoBehaviour:
     hp: 0
   player2Snapshot:
     hp: 0
+  difficulty: 2
+  coins: 0
   metaCoins: 0
   currentSlot: 1

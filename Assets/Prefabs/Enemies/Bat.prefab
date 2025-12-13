@@ -161,6 +161,8 @@ MonoBehaviour:
   patrolSpeed: 3
   aggroSpeed: 5
   knockbackDuration: 0.25
+  minDifficulty: 1
+  maxDifficulty: 2
   patrolRadius: 2.5
   patrolChangeTime: 1.5
   arriveDistance: 0.2

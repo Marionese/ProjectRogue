@@ -10,7 +10,7 @@ public class RoomController : MonoBehaviour
     [SerializeField] List<Door> doors;
     public event System.Action<EnemyBase> OnSpawnEnemy;
     private List<EnemyBase> activeEnemies = new List<EnemyBase>();
-
+    List<EnemyBase> validEnemies = new List<EnemyBase>();
     void Awake()
     {
         GameSession.Instance.RegisterRoom(this);
@@ -22,9 +22,16 @@ public class RoomController : MonoBehaviour
 
     public void SpawnEnemies()
     {
+        validEnemies.Clear();
+        int difficulty = GameSession.Instance.difficulty;
+        foreach (var enemy in enemyPrefabs)
+        {
+            if (enemy.IsValidForDifficulty(difficulty))
+                validEnemies.Add(enemy);
+        }
         foreach (var point in spawnPoints)
         {
-            var enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+            var enemy = validEnemies[Random.Range(0, validEnemies.Count)];
 
             EnemyBase spawned = Instantiate(enemy, point.position, Quaternion.identity);
 
