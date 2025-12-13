@@ -885,6 +885,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5156163504051890354, guid: 32b8a0f627e5bf3468409339d40624af, type: 3}
+      propertyPath: enemyPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156163504051890354, guid: 32b8a0f627e5bf3468409339d40624af, type: 3}
       propertyPath: 'spawnPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 1997845335}
@@ -904,6 +908,10 @@ PrefabInstance:
       propertyPath: 'enemyPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 6581685540235824072, guid: 7717ada6687645846b1c07d08db50d25, type: 3}
+    - target: {fileID: 5156163504051890354, guid: 32b8a0f627e5bf3468409339d40624af, type: 3}
+      propertyPath: 'enemyPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 7101939944425352055, guid: 973c2a1634d779b4bb37b3ac7ac2a1ba, type: 3}
     - target: {fileID: 9092236602505179317, guid: 32b8a0f627e5bf3468409339d40624af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.46956
