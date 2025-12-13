@@ -6,7 +6,7 @@ public class SplitShotOnHit : AttackModifier
 {
     public override void ApplyAttack(ref AttackData data) { }
 
-    public override void OnHit(EnemyScript enemy, AttackData data)
+    public override void OnHit(EnemyBase enemy, AttackData data)
     {
         Vector2 f = data.forwardDirection.normalized;
 

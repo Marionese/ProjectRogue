@@ -8,7 +8,7 @@ public class KnockBackOnHit : AttackModifier
     {
         data.knockback += force;
     }
-    public override void OnHit(EnemyScript enemy, AttackData data)
+    public override void OnHit(EnemyBase enemy, AttackData data)
     {
       
     }

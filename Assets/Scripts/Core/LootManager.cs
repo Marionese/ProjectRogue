@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LootManager : MonoBehaviour
 {
-    List<EnemyScript> enemies = new List<EnemyScript>();
+    List<EnemyBase> enemies = new List<EnemyBase>();
     [SerializeField] RoomController roomController;
     [SerializeField] CoinPickup coin;
     RoomController currentRoom;
@@ -12,19 +12,19 @@ public class LootManager : MonoBehaviour
         currentRoom = FindFirstObjectByType<RoomController>();
         currentRoom.OnSpawnEnemy += HandleEnemySpawned;
     }
-    void HandleEnemySpawned(EnemyScript spawned)
+    void HandleEnemySpawned(EnemyBase spawned)
     {
         enemies.Add(spawned);
         Debug.Log("Enemy List right now:" +enemies);
         spawned.OnDeath += HandleEnemyDeath;
 
     }
-    void HandleEnemyDeath(EnemyScript enemy)
+    void HandleEnemyDeath(EnemyBase enemy)
     {
         DropLoot(enemy);
         enemies.Remove(enemy);
     }
-    void DropLoot(EnemyScript enemy)
+    void DropLoot(EnemyBase enemy)
     {
         Instantiate(coin,enemy.transform.position, Quaternion.identity);
     }

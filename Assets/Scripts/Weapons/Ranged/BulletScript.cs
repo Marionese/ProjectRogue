@@ -44,7 +44,7 @@ public class BulletScript : MonoBehaviour
         data.hitPoint = surfaceHit;
         if (collision.CompareTag("EnemyCollider"))
         {
-            EnemyScript enemy = collision.GetComponentInParent<EnemyScript>();
+            EnemyBase enemy = collision.GetComponentInParent<EnemyBase>();
             if (enemy != null)
             {
                 // DAMAGE PIPELINE FINAL CALCULATION
@@ -65,8 +65,8 @@ public class BulletScript : MonoBehaviour
 
                 // Schaden anwenden
                 Debug.Log("Damage" + dmg);
-                enemy.DamageEnemy(dmg,data.isBullet,data.sourcePlayerID);
-                ApplyKnockback(enemy,data.forwardDirection);
+                enemy.DamageEnemy(dmg, data.isBullet, data.sourcePlayerID);
+                ApplyKnockback(enemy, data.forwardDirection);
 
                 // ON-HIT MODIFIERS
                 foreach (var mod in attackModifiers)
@@ -87,13 +87,13 @@ public class BulletScript : MonoBehaviour
 
         }
     }
-    void ApplyKnockback(EnemyScript enemy, Vector2 dir)
+    void ApplyKnockback(EnemyBase enemy, Vector2 dir)
     {
-          Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
         if (rb == null) return;
 
         // Richtung: vom Bullet zum Enemy (Push-Away)
-        
+
 
 
         rb.linearVelocity += dir * data.knockback;

@@ -6,10 +6,10 @@ using UnityEngine;
 public class RoomController : MonoBehaviour
 {
     [SerializeField] List<Transform> spawnPoints;
-    [SerializeField] List<EnemyScript> enemyPrefabs;
+    [SerializeField] List<EnemyBase> enemyPrefabs;
     [SerializeField] List<Door> doors;
-    public event System.Action<EnemyScript> OnSpawnEnemy;
-    private List<EnemyScript> activeEnemies = new List<EnemyScript>();
+    public event System.Action<EnemyBase> OnSpawnEnemy;
+    private List<EnemyBase> activeEnemies = new List<EnemyBase>();
 
     void Awake()
     {
@@ -26,7 +26,7 @@ public class RoomController : MonoBehaviour
         {
             var enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
 
-            EnemyScript spawned = Instantiate(enemy, point.position, Quaternion.identity);
+            EnemyBase spawned = Instantiate(enemy, point.position, Quaternion.identity);
 
             activeEnemies.Add(spawned);
             spawned.OnDeath += HandleEnemyDeath;
@@ -34,7 +34,7 @@ public class RoomController : MonoBehaviour
         }
     }
 
-    void HandleEnemyDeath(EnemyScript e)
+    void HandleEnemyDeath(EnemyBase e)
     {
         activeEnemies.Remove(e);
 

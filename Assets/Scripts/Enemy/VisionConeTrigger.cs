@@ -5,15 +5,13 @@ public class VisionConeTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        EnemyScript enemy = GetComponentInParent<EnemyScript>();
+        EnemyBase enemy = GetComponentInParent<EnemyBase>();
         if (other.CompareTag("PlayerHitBox"))
         {
-            if (enemy.currentState == EnemyScript.EnemyState.patrol)
-            {
-                var player = other.GetComponentInParent<PlayerController>();
-                enemy.SetTarget(player);
-                enemy.SwitchState(EnemyScript.EnemyState.aggressive);
-            }
+
+            var player = other.GetComponentInParent<PlayerController>();
+            enemy.Alert(player);
+
         }
 
     }
