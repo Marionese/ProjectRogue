@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5520979498767914293}
-  - component: {fileID: 1824440823998270435}
+  - component: {fileID: 763210094164360678}
   m_Layer: 0
   m_Name: EnemyCollider
   m_TagString: EnemyCollider
@@ -26,13 +26,13 @@ Transform:
   m_GameObject: {fileID: 525321467042318546}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.006, y: -0.002, z: 0}
+  m_LocalScale: {x: 1, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3903303937205206216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1824440823998270435
+--- !u!58 &763210094164360678
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,8 +66,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.12}
-  m_Radius: 0.34
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.29
 --- !u!1 &3395680888157893344
 GameObject:
   m_ObjectHideFlags: 0
