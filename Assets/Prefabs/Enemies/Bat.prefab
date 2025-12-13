@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3532046582846951521}
   - component: {fileID: 6366556786676766099}
   - component: {fileID: 1396728667129286087}
-  - component: {fileID: 6465287938188532069}
   - component: {fileID: 8344773709169015369}
+  - component: {fileID: -847690377226698879}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Enemy
@@ -123,29 +123,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &6465287938188532069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4911768852552380827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c8d38f650bb1d543b1caf46c246d156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  maxHealth: 100
-  currentTargetPlayer: {fileID: 0}
-  currentState: 0
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
-  patrolRadius: 2.5
-  patrolChangeTime: 1.5
-  arriveDistance: 0.2
-  aggroPauseTime: 0.5
-  alertIcon: {fileID: 8208323962782485469}
 --- !u!95 &8344773709169015369
 Animator:
   serializedVersion: 7
@@ -168,6 +145,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-847690377226698879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4911768852552380827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76e5a1f976b34e4d951decd7165b11b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BatEnemy
+  maxHealth: 10
+  patrolSpeed: 3
+  aggroSpeed: 5
+  knockbackDuration: 0.25
+  patrolRadius: 2.5
+  patrolChangeTime: 1.5
+  arriveDistance: 0.2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  aggroPauseTime: 0.5
+  alertIcon: {fileID: 0}
 --- !u!1 &5536215927911159770
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,9 +342,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5044702916656805331}
   - component: {fileID: 171593742819609638}
+  - component: {fileID: 4648715643932927345}
   m_Layer: 0
-  m_Name: AllertIcon
-  m_TagString: Untagged
+  m_Name: AlertIcon
+  m_TagString: AllertIcon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -421,3 +423,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4648715643932927345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8208323962782485469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c725a5e760f9d04d9837d99b0be03c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

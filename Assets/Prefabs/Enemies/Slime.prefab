@@ -264,8 +264,8 @@ GameObject:
   - component: {fileID: 3903303937205206216}
   - component: {fileID: 8886927804816637782}
   - component: {fileID: 790039309318352058}
-  - component: {fileID: 4082441730438295250}
   - component: {fileID: 7475250831369253530}
+  - component: {fileID: 6581685540235824072}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Enemy
@@ -282,7 +282,7 @@ Transform:
   m_GameObject: {fileID: 7764329379879089939}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.05935, y: 7.11393, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -376,29 +376,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &4082441730438295250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7764329379879089939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c8d38f650bb1d543b1caf46c246d156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  maxHealth: 100
-  currentTargetPlayer: {fileID: 0}
-  currentState: 0
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 512
-  patrolRadius: 2.5
-  patrolChangeTime: 1.5
-  arriveDistance: 0.2
-  aggroPauseTime: 0.5
-  alertIcon: {fileID: 3395680888157893344}
 --- !u!95 &7475250831369253530
 Animator:
   serializedVersion: 7
@@ -421,3 +398,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6581685540235824072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7764329379879089939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18d262f029f1b24493ab3a2dcf5876a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SlimeEnemy
+  maxHealth: 10
+  patrolSpeed: 3
+  aggroSpeed: 5
+  knockbackDuration: 0.25
+  patrolRadius: 2.5
+  patrolChangeTime: 1.5
+  arriveDistance: 0.2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  aggroPauseTime: 0.5
+  alertIcon: {fileID: 0}
