@@ -58,6 +58,7 @@ public class PlayerJoinControl : MonoBehaviour
         newPlayer.SwitchCurrentControlScheme("Gamepad", newPlayer.devices[0]);
         newPlayer.GetComponent<PlayerController>().SetPlayerID(1);
         newPlayer.transform.SetParent(playersParent);
+        newPlayer.transform.position = playerDummy.transform.position;
         //Flow Field Setzen
         FlowFieldManager.Instance.RegisterPlayer2(newPlayer.transform);
 
