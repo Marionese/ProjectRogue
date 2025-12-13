@@ -25,7 +25,7 @@ public struct AttackData
     public Vector2 forwardDirection;
     public Vector2 hitPoint;
 
-    public int sourcePlayerID;
+    public PlayerController sourcePlayer;
 
 }
 

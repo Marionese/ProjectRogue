@@ -44,10 +44,14 @@ public abstract class EnemyBase : MonoBehaviour
     /* =========================
      * UNITY LIFECYCLE
      * ========================= */
+    protected virtual void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        alertIcon = GetComponentInChildren<AlertIconMarker>(true)?.gameObject;
+    }
+
     protected virtual void Start()
     {
-        alertIcon = GetComponentInChildren<AlertIconMarker>(true)?.gameObject;
-        rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         PickNewPatrolTarget();
     }
@@ -131,8 +135,17 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual Vector2 GetAggroDirection(Vector2 targetPos)
     {
-        Vector2 flowDir =
-            FlowFieldManager.Instance.flowFieldP1.GetFlowDirection(transform.position);
+
+        FlowField field = null;
+
+        if (currentTargetPlayer.PlayerID == 0)
+            field = FlowFieldManager.Instance.flowFieldP1;
+        else if (currentTargetPlayer.PlayerID == 1)
+            field = FlowFieldManager.Instance.flowFieldP2;
+
+        Vector2 flowDir = field != null
+            ? field.GetFlowDirection(transform.position)
+            : Vector2.zero;
 
         if (flowDir == Vector2.zero)
             flowDir = (targetPos - (Vector2)transform.position).normalized;
@@ -144,11 +157,11 @@ public abstract class EnemyBase : MonoBehaviour
     /* =========================
      * DAMAGE / DEATH
      * ========================= */
-    public virtual void DamageEnemy(float amount, bool isBullet, int playerID)
+    public virtual void DamageEnemy(float amount, bool isBullet, PlayerController player)
     {
         if (CurrentState == EnemyState.Patrol)
         {
-            currentTargetPlayer = GetPlayerByID(playerID);
+            currentTargetPlayer = player;
             SwitchState(EnemyState.Aggressive);
         }
 
@@ -229,18 +242,5 @@ public abstract class EnemyBase : MonoBehaviour
             transform.localScale = new Vector3(-scale, scale, 1);
     }
 
-    protected PlayerController GetPlayerByID(int id)
-    {
-        PlayerController[] players =
-            FindObjectsByType<PlayerController>(
-                FindObjectsInactive.Exclude,
-                FindObjectsSortMode.None
-            );
 
-        foreach (var p in players)
-            if (p.PlayerID == id)
-                return p;
-
-        return null;
-    }
 }

@@ -65,7 +65,7 @@ public class BulletScript : MonoBehaviour
 
                 // Schaden anwenden
                 Debug.Log("Damage" + dmg);
-                enemy.DamageEnemy(dmg, data.isBullet, data.sourcePlayerID);
+                enemy.DamageEnemy(dmg, data.isBullet, data.sourcePlayer);
                 ApplyKnockback(enemy, data.forwardDirection);
 
                 // ON-HIT MODIFIERS
