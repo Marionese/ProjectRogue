@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7bcc464bb2bd44fbe3b7741e3afd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashingEnemy
-  maxHealth: 10
+  maxHealth: 100
   patrolSpeed: 3
   aggroSpeed: 5
   knockbackDuration: 0.25
@@ -518,4 +518,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 2.81
+  m_Radius: 2.17

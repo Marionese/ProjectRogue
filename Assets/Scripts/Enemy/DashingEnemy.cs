@@ -5,14 +5,15 @@ public class DashingEnemy : EnemyBase
 {
     // Intentionally empty.
     // All behavior comes from EnemyBase.
-    private float dashSpeed = 12f;
+    private float dashSpeed = 10f;
     private float dashDuration = 0.15f;
-    private float dashLag = 0.25f;
+    private float dashLag = 0.3f;
     protected override IEnumerator Attack()
     {
         knockbackTimer = 0f;
         isPaused = true;
-        yield return new WaitForSeconds(0.2f);
+        rb.linearVelocity = Vector2.zero;
+        yield return new WaitForSeconds(0.3f);
 
         Vector2 dir =
             ((Vector2)currentTargetPlayer.transform.position
