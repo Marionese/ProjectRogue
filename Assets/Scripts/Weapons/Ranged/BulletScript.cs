@@ -22,6 +22,18 @@ public class BulletScript : MonoBehaviour
         // Skalierung aus AttackData
         transform.localScale = Vector3.one * data.size;
         lifetime = data.range;
+
+        //set Bullet Sprite
+        var sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            if (data.bulletSprite != null)
+                sr.sprite = data.bulletSprite;
+
+            sr.color = data.bulletColor;
+        }
+
+
     }
     void Update()
     {
@@ -93,7 +105,7 @@ public class BulletScript : MonoBehaviour
         {
             if (data.sourcePlayer != null)
                 return;
-            
+
             var player = collision.GetComponentInParent<PlayerController>();
             int damage = Mathf.Max(1, Mathf.RoundToInt(data.baseDamage));
             player.DamagePlayer(damage);

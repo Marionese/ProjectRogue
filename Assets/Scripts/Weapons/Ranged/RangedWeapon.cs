@@ -40,6 +40,9 @@ public class RangedWeapon : WeaponBase
         // Base weapon values
         atk.baseDamage = data.damage;
         atk.speed = data.bulletSpeed;
+        //bullet Sprite aus weapon data
+        atk.bulletSprite = data.bulletSprite;
+        atk.bulletColor = data.bulletColor;
 
         // Initialize pipeline fields
         atk.flatAdd = 0f;

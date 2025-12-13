@@ -173,7 +173,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -2449109871443933174, guid: d534c602fee1d024d918130608cb39d3, type: 3}
   m_Color: {r: 0.6415094, g: 0.4539698, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -199,6 +199,7 @@ MonoBehaviour:
   pickupPrefab: {fileID: 7976658700182948897, guid: 05938c062c4cb8443a8c424ead9c815b, type: 3}
   itemSpawnPoint: {fileID: 5621236622888847181}
   playerFocused: 0
+  chestOpened: {fileID: 5974344645129229820, guid: d534c602fee1d024d918130608cb39d3, type: 3}
   highlightIcon: {fileID: 6302291414945569156}
 --- !u!61 &7776573447347074291
 BoxCollider2D:
@@ -238,7 +239,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

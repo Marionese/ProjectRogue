@@ -24,7 +24,8 @@ public struct AttackData
     public bool isBullet;
     public Vector2 forwardDirection;
     public Vector2 hitPoint;
-
+    public Sprite bulletSprite;
+    public Color bulletColor;
     public PlayerController sourcePlayer;
 
 }
