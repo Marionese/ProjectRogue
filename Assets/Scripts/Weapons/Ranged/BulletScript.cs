@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor.Rendering.Analytics;
+using System.Data.Common;
 
 public class BulletScript : MonoBehaviour
 {
@@ -44,6 +45,8 @@ public class BulletScript : MonoBehaviour
         data.hitPoint = surfaceHit;
         if (collision.CompareTag("EnemyCollider"))
         {
+            if (data.sourcePlayer == null)
+                return;
             EnemyBase enemy = collision.GetComponentInParent<EnemyBase>();
             if (enemy != null)
             {
@@ -85,6 +88,16 @@ public class BulletScript : MonoBehaviour
                 mod.OnHitEnvironment(data);
             BulletPool.Instance.ReturnBullet(gameObject);
 
+        }
+        else if (collision.CompareTag("PlayerHitBox"))
+        {
+            if (data.sourcePlayer != null)
+                return;
+            
+            var player = collision.GetComponentInParent<PlayerController>();
+            int damage = Mathf.Max(1, Mathf.RoundToInt(data.baseDamage));
+            player.DamagePlayer(damage);
+            BulletPool.Instance.ReturnBullet(gameObject);
         }
     }
     void ApplyKnockback(EnemyBase enemy, Vector2 dir)
