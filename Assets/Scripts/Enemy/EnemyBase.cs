@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour
@@ -27,7 +28,7 @@ public abstract class EnemyBase : MonoBehaviour
     /* =========================
      * STATE
      * ========================= */
-    public enum EnemyState { Patrol, Aggressive }
+    public enum EnemyState { Patrol, Aggressive, Attacking }
     public EnemyState CurrentState { get; protected set; } = EnemyState.Patrol;
 
     protected Rigidbody2D rb;
@@ -37,6 +38,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected float currentHealth;
     protected float knockbackTimer;
     protected bool isPaused;
+    protected Coroutine attackCoroutine;
 
     Vector2 patrolTarget;
     float patrolTimer;
@@ -78,6 +80,10 @@ public abstract class EnemyBase : MonoBehaviour
             case EnemyState.Aggressive:
                 Aggro();
                 break;
+            case EnemyState.Attacking:
+                if (attackCoroutine == null)
+                    attackCoroutine = StartCoroutine(Attack());
+                break;
         }
     }
 
@@ -106,7 +112,10 @@ public abstract class EnemyBase : MonoBehaviour
         Move(dir, aggroSpeed);
         lastMovementDirection = dir;
     }
-
+    protected virtual IEnumerator Attack()
+    {
+        yield break;
+    }
     /* =========================
      * MOVEMENT (SINGLE PATH)
      * ========================= */
@@ -161,11 +170,7 @@ public abstract class EnemyBase : MonoBehaviour
      * ========================= */
     public virtual void DamageEnemy(float amount, bool isBullet, PlayerController player)
     {
-        if (CurrentState == EnemyState.Patrol)
-        {
-            currentTargetPlayer = player;
-            SwitchState(EnemyState.Aggressive);
-        }
+        Alert(player);
 
         if (isBullet)
             knockbackTimer = knockbackDuration;
@@ -187,12 +192,6 @@ public abstract class EnemyBase : MonoBehaviour
      * ========================= */
     protected void SwitchState(EnemyState newState)
     {
-        if (newState == EnemyState.Aggressive &&
-            CurrentState != EnemyState.Aggressive)
-        {
-            StartCoroutine(AggroPause());
-        }
-
         CurrentState = newState;
     }
     public void Alert(PlayerController player)
@@ -200,6 +199,26 @@ public abstract class EnemyBase : MonoBehaviour
         if (CurrentState == EnemyState.Patrol)
         {
             currentTargetPlayer = player;
+            StartCoroutine(AggroPause());
+            SwitchState(EnemyState.Aggressive);
+        }
+    }
+    public void PlayerGotInRange(PlayerController player)
+    {
+        if (currentTargetPlayer != player)
+            return;
+        if (CurrentState == EnemyState.Aggressive)
+        {
+            currentTargetPlayer = player;
+            SwitchState(EnemyState.Attacking);
+        }
+    }
+    public void LeftPlayerRange(PlayerController player)
+    {
+        if (currentTargetPlayer != player)
+            return;
+        if (CurrentState == EnemyState.Attacking)
+        {
             SwitchState(EnemyState.Aggressive);
         }
     }
@@ -220,7 +239,6 @@ public abstract class EnemyBase : MonoBehaviour
 
         isPaused = false;
     }
-
     /* =========================
      * HELPERS
      * ========================= */
