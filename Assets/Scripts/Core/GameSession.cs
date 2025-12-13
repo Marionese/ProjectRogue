@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+
 public class GameSession : MonoBehaviour
+
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public bool twoPlayer;
