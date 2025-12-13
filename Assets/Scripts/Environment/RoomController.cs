@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,14 +8,19 @@ public class RoomController : MonoBehaviour
     [SerializeField] List<Transform> spawnPoints;
     [SerializeField] List<EnemyScript> enemyPrefabs;
     [SerializeField] List<Door> doors;
+    public event System.Action<EnemyScript> OnSpawnEnemy;
     private List<EnemyScript> activeEnemies = new List<EnemyScript>();
 
+    void Awake()
+    {
+        GameSession.Instance.RegisterRoom(this);
+    }
     void Start()
     {
         SpawnEnemies();
     }
 
-    void SpawnEnemies()
+    public void SpawnEnemies()
     {
         foreach (var point in spawnPoints)
         {
@@ -24,6 +30,7 @@ public class RoomController : MonoBehaviour
 
             activeEnemies.Add(spawned);
             spawned.OnDeath += HandleEnemyDeath;
+            OnSpawnEnemy.Invoke(spawned);
         }
     }
 

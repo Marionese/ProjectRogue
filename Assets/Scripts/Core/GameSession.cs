@@ -14,6 +14,9 @@ public class GameSession : MonoBehaviour
     public PlayerRuntimeStats.Snapshot player1Snapshot;
     public PlayerRuntimeStats.Snapshot player2Snapshot;
 
+    private LootManager lootManager;
+    private RoomController currentRoom;
+
     public int coins;
     //MetaProgression + SaveSlot
     public int metaCoins;
@@ -26,6 +29,12 @@ public class GameSession : MonoBehaviour
         }
         Instance = this; DontDestroyOnLoad(gameObject);
         BuildRunPool();
+        lootManager = FindFirstObjectByType<LootManager>();
+    }
+
+    public void RegisterRoom(RoomController room)
+    {
+        currentRoom = room;
     }
 
     // Functions
