@@ -105,7 +105,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (currentTargetPlayer == null)
             return;
-        
+
         Vector2 targetPos = currentTargetPlayer.transform.position;
         Vector2 dir = GetAggroDirection(targetPos);
 
@@ -123,7 +123,8 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (isPaused)
         {
-          
+            if (attackCoroutine == null)
+                rb.linearVelocity = Vector2.zero;
             return;
         }
 
