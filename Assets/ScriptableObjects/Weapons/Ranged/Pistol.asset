@@ -18,5 +18,5 @@ MonoBehaviour:
   bulletSpeed: 10
   range: 0.5
   bulletPrefab: {fileID: 0}
-  bulletSprite: {fileID: 7482667652216324306, guid: be22d9105e99e5845a40e170f56f9a66, type: 3}
-  bulletColor: {r: 0, g: 1, b: 0.20784307, a: 1}
+  bulletSprite: {fileID: -7812076412524305034, guid: cfa45e937b1e8c64b86a8758ee3d8e6d, type: 3}
+  bulletColor: {r: 1, g: 1, b: 1, a: 1}

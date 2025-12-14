@@ -6,7 +6,7 @@ public class ShootingEnemy : EnemyBase
 {
     private float dashLag = 0.3f;
     [SerializeField] private Color bulletColor;
-    [SerializeField] private Sprite bulletSprite; 
+    [SerializeField] private Sprite bulletSprite;
     protected override IEnumerator Attack()
     {
         knockbackTimer = 0f;
@@ -23,11 +23,11 @@ public class ShootingEnemy : EnemyBase
         atk.speed = 4f;
         atk.multiplier = 1f;
         atk.isBullet = true;
-        atk.size = 0.2f;
+        atk.size = 1f;
         atk.range = 1f;
         atk.bulletSprite = bulletSprite;
         atk.bulletColor = bulletColor;
-        
+
         Quaternion rot = Quaternion.FromToRotation(Vector3.right, dir);
         GameObject bullet = BulletPool.Instance.GetBullet();
         bullet.transform.position = transform.position;

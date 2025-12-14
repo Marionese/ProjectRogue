@@ -54,7 +54,7 @@ public class RangedWeapon : WeaponBase
         atk.critMultiplier = 2f;
 
         // Bullet properties
-        atk.size = 0.2f;
+        atk.size = 1f;
         atk.knockback = 0f;
         atk.pierce = 0;
         atk.bounce = 0;
@@ -82,7 +82,7 @@ public class RangedWeapon : WeaponBase
         // Bullet Spawn + Initialize
         GameObject bullet = BulletPool.Instance.GetBullet();
         bullet.transform.position = spawnPos;
-        bullet.transform.rotation = rot;  
+        bullet.transform.rotation = rot;
         List<AttackModifier> attackModifiers = modifierManager != null ? modifierManager.GetAttackModifiers() : new List<AttackModifier>();
         bullet.GetComponent<BulletScript>().Initialize(atk, attackModifiers);
 

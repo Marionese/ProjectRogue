@@ -172,8 +172,8 @@ MonoBehaviour:
     m_Bits: 512
   aggroPauseTime: 0.5
   alertIcon: {fileID: 0}
-  bulletColor: {r: 1, g: 0, b: 0, a: 1}
-  bulletSprite: {fileID: 7482667652216324306, guid: be22d9105e99e5845a40e170f56f9a66, type: 3}
+  bulletColor: {r: 1, g: 1, b: 1, a: 1}
+  bulletSprite: {fileID: 2208703988740019828, guid: ce4b33cf5d743204e95788f0dfd97fe3, type: 3}
 --- !u!1 &5536215927911159770
 GameObject:
   m_ObjectHideFlags: 0
