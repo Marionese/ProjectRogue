@@ -1,11 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private Rigidbody rb;
     private PlayerRuntimeStats stats;
 
+    // Input still comes as Vector2 (X,Z)
     private Vector2 moveInput;
 
     public void Initialize(PlayerRuntimeStats runtimeStats)
@@ -15,30 +16,35 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
 
-        // Top-down: no gravity
-        rb.gravityScale = 0;
+        rb.useGravity = false;
 
-        // No physics rotation
-        rb.freezeRotation = true;
+        // Prevent physics from tipping the player over
+        rb.constraints = RigidbodyConstraints.FreezeRotationX
+                       | RigidbodyConstraints.FreezeRotationZ
+                       | RigidbodyConstraints.FreezeRotationY;
     }
 
     void Update()
     {
         if (stats == null) return;
 
-        // Movement ONLY in X/Y plane
-        // No jump, no ground, no gravity
-        rb.linearVelocity = moveInput * stats.moveSpeed;
+        Vector3 moveDir = new Vector3(
+            moveInput.x,
+            0f,
+            moveInput.y
+        );
+
+        rb.linearVelocity = moveDir * stats.moveSpeed;
     }
 
     // Called from PlayerController
     public void SetMoveInput(Vector2 input)
     {
-        moveInput = input.normalized; // normalized for consistent speed
+        moveInput = input.normalized;
     }
 
-    // Top-down: no jump button
+    // Still unused (kept for API compatibility)
     public void SetJump(bool pressed) { }
 }

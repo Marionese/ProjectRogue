@@ -24,11 +24,11 @@ public class CameraManager : MonoBehaviour
 
     public void EnableFixed(Transform cameraPoint)
     {
-        // Assign the camera point dynamically
+        // Move fixed camera to the point (XZ plane, keep height)
         fixedCam.transform.position = new Vector3(
             cameraPoint.position.x,
-            cameraPoint.position.y,
-            fixedCam.transform.position.z // KEEP camera Z
+            fixedCam.transform.position.y, // KEEP height
+            cameraPoint.position.z
         );
 
         followCam.Priority = inactivePriority;
