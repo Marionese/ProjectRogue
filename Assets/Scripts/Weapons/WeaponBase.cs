@@ -34,7 +34,7 @@ public abstract class WeaponBase : MonoBehaviour
     }
     void Update()
     {
-        RotateWeapon();
+
         HandleCooldown();
     }
     void HandleCooldown()
@@ -69,13 +69,30 @@ public abstract class WeaponBase : MonoBehaviour
         {
             return; // keep last controller rotation!
         }
-        Vector2 dir = GetMouseWorldPos() - transform.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        Vector3 dir = GetMouseWorldPos() - transform.position;
+        dir.y = 0f;
+
+        if (dir.sqrMagnitude < 0.001f)
+            return;
+
+        Quaternion rot = Quaternion.LookRotation(dir);
+        transform.rotation = rot;
+
     }
     protected Vector3 GetMouseWorldPos()
     {
-        return cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        float bulletHeight = attackPoint.position.y;
+        Plane aimPlane = new Plane(Vector3.up, new Vector3(0f, bulletHeight, 0f));
+
+
+        if (aimPlane.Raycast(ray, out float enter))
+        {
+            return ray.GetPoint(enter);
+        }
+
+        return transform.position;
     }
 }
 

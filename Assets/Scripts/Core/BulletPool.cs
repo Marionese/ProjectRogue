@@ -36,12 +36,13 @@ public class BulletPool : MonoBehaviour
         if (pool.Count > 0)
         {
             var b = pool.Dequeue();
-            b.SetActive(true);
+
             return b;
         }
 
         // Expand pool
         GameObject nb = Instantiate(bulletPrefab, bulletContainer);
+        nb.SetActive(false);
         return nb;
     }
 

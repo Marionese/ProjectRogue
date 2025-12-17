@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
                        | RigidbodyConstraints.FreezeRotationY;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (stats == null) return;
 

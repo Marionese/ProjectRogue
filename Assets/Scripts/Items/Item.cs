@@ -43,12 +43,20 @@ public class Item : MonoBehaviour, IInteractable
     }
     public void SetHighlight(bool entering)
     {
-        if(entering)
+        if (entering)
             playerFocused++;
         else
-            playerFocused = Mathf.Max(0,playerFocused -1); 
-            
-        highlightIcon.SetActive(playerFocused >0);
+            playerFocused = Mathf.Max(0, playerFocused - 1);
+
+        highlightIcon.SetActive(playerFocused > 0);
+    }
+    void OnDestroy()
+    {
+        PlayerInteraction[] interactions = FindObjectsByType<PlayerInteraction>(FindObjectsSortMode.None);
+        foreach (var interaction in interactions)
+        {
+            interaction.RemoveInteractable(this);
+        }
     }
 
 }

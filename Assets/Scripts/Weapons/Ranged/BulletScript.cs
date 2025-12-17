@@ -5,7 +5,8 @@ using System.Data.Common;
 
 public class BulletScript : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private Rigidbody rb;
+
     private AttackData data;
     private List<AttackModifier> attackModifiers = new();
     private float lifetime;
@@ -15,10 +16,10 @@ public class BulletScript : MonoBehaviour
         this.data = data;
         this.attackModifiers = attackModifiers != null ? new List<AttackModifier>(attackModifiers) : new List<AttackModifier>();
 
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
 
         // Richtung kommt vom Transform (Rotation)
-        rb.linearVelocity = transform.right * data.speed;
+        rb.linearVelocity = transform.forward * data.speed;
         // Skalierung aus AttackData
         transform.localScale = Vector3.one * data.size;
         lifetime = data.range;
@@ -35,6 +36,17 @@ public class BulletScript : MonoBehaviour
 
 
     }
+    void OnEnable()
+    {
+        if (TryGetComponent<Rigidbody>(out var rb))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.Sleep();
+            rb.WakeUp();
+        }
+    }
+
     void Update()
     {
         if (lifetime <= 0)
@@ -51,9 +63,10 @@ public class BulletScript : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        Vector2 surfaceHit = collision.ClosestPoint(transform.position);
+        Vector3 surfaceHit = collision.ClosestPoint(transform.position);
+
         data.hitPoint = surfaceHit;
         if (collision.CompareTag("EnemyCollider"))
         {
@@ -112,9 +125,9 @@ public class BulletScript : MonoBehaviour
             BulletPool.Instance.ReturnBullet(gameObject);
         }
     }
-    void ApplyKnockback(EnemyBase enemy, Vector2 dir)
+    void ApplyKnockback(EnemyBase enemy, Vector3 dir)
     {
-        Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+        Rigidbody rb = enemy.GetComponent<Rigidbody>();
         if (rb == null) return;
 
         // Richtung: vom Bullet zum Enemy (Push-Away)

@@ -12,21 +12,23 @@ public class RangedWeapon : WeaponBase
         canShoot = false;
 
         // Richtungslogik bleibt 100% wie bei dir!
-        Vector2 direction;
+        Vector3 direction;
 
         if (usingController)
         {
-            if (aimInput.sqrMagnitude > 0.1f)
-                direction = aimInput;         // Stick aktiv
-            else
-                direction = transform.right;  // letzte Waffenrotation verwenden
+            if (aimInput.sqrMagnitude < 0.1f)
+                return;
+
+            direction = new Vector3(aimInput.x, 0f, aimInput.y);
         }
         else
         {
-            direction = allowMouse ? (GetMouseWorldPos() - attackPoint.position) : Vector2.zero;
+            direction = GetMouseWorldPos() - attackPoint.position;
+            direction.y = 0f;
         }
 
-        if (direction == Vector2.zero)
+
+        if (direction == Vector3.zero)
             return;
 
         if (direction.sqrMagnitude < 0.22f)
@@ -74,16 +76,20 @@ public class RangedWeapon : WeaponBase
         }
 
         // rotation for bullet direction
-        Quaternion rot = Quaternion.FromToRotation(Vector3.right, direction);
+        Quaternion rot = Quaternion.LookRotation(direction);
+
 
         // spawn position with small offset
-        Vector3 spawnPos = attackPoint.position + (Vector3)(direction * 0.1f);
+        Vector3 spawnPos = attackPoint.position + direction * 0.1f;
+        spawnPos.y = attackPoint.position.y; // keep bullet floating at weapon height
+
 
         // Bullet Spawn + Initialize
         GameObject bullet = BulletPool.Instance.GetBullet();
         bullet.transform.position = spawnPos;
         bullet.transform.rotation = rot;
         List<AttackModifier> attackModifiers = modifierManager != null ? modifierManager.GetAttackModifiers() : new List<AttackModifier>();
+        bullet.SetActive(true); // ENABLE LAST
         bullet.GetComponent<BulletScript>().Initialize(atk, attackModifiers);
 
     }

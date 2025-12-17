@@ -45,5 +45,7 @@ public class WeaponManager : MonoBehaviour
         //set player owner to weapon
         var player = GetComponent<PlayerController>();
         currentWeapon.SetOwner(player);
+        currentWeapon.attackPoint =
+    player.transform.Find("AttackPoint");
     }
 }

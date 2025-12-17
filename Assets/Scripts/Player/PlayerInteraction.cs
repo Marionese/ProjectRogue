@@ -38,4 +38,14 @@ public class PlayerInteraction : MonoBehaviour
         if (currentFocused != null)
             currentFocused.SetHighlight(true);
     }
+    public void RemoveInteractable(IInteractable target)
+    {
+        if (currentFocused == target)
+        {
+            currentFocused.SetHighlight(false);
+            currentFocused = null;
+        }
+
+        interactTargetList.Remove(target);
+    }
 }

@@ -3,9 +3,9 @@ using UnityEngine;
 public class PlayerHitBox : MonoBehaviour
 {
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter(Collider other)
     {
-        PlayerInteraction playerInteraction = GetComponentInParent<PlayerInteraction>();
+        PlayerInteraction playerInteraction = GetComponent<PlayerInteraction>();
         var interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {
@@ -14,9 +14,9 @@ public class PlayerHitBox : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit(Collider other)
     {
-        PlayerInteraction playerInteraction = GetComponentInParent<PlayerInteraction>();
+        PlayerInteraction playerInteraction = GetComponent<PlayerInteraction>();
         var interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {

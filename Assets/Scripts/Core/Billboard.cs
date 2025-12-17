@@ -8,7 +8,7 @@ public class Billboard : MonoBehaviour
         if (!cam) return;
 
         Vector3 camForward = cam.transform.forward;
-        camForward.y = 0f;          // ignore vertical tilt
+        // ignore vertical tilt
         camForward.Normalize();
 
         transform.forward = camForward;

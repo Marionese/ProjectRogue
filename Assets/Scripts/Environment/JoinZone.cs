@@ -13,7 +13,7 @@ public class JoinZone : MonoBehaviour, IInteractable
         PlayerInputManager.instance.EnableJoining();
         Debug.Log("Co-op enabled via interact!");
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("PlayerHitBox")) return;
 
@@ -25,7 +25,7 @@ public class JoinZone : MonoBehaviour, IInteractable
 
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("PlayerHitBox")) return;
 

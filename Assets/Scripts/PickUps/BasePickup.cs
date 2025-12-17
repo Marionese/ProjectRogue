@@ -5,11 +5,11 @@ public abstract class BasePickup : MonoBehaviour
     [Header("Pickup Settings")]
     public bool destroyOnPickup = true;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerHitBox"))
+        if (other.CompareTag("Player"))
         {
-            GameObject player = other.GetComponentInParent<PlayerController>().gameObject;
+            GameObject player = other.GetComponent<PlayerController>().gameObject;
             OnPickup(player);
 
             if (destroyOnPickup)
