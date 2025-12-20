@@ -22,8 +22,8 @@ public struct AttackData
     public int bounce;
     public float range;
     public bool isBullet;
-    public Vector2 forwardDirection;
-    public Vector2 hitPoint;
+    public Vector3 forwardDirection;
+    public Vector3 hitPoint;
     public Sprite bulletSprite;
     public Color bulletColor;
     public PlayerController sourcePlayer;
