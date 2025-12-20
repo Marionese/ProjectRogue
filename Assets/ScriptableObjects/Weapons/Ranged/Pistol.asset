@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponName: Pistol
-  fireRate: 0
+  fireRate: 0.5
   damage: 0
-  bulletSpeed: 20
+  bulletSpeed: 5
   range: 0.5
   bulletPrefab: {fileID: 0}
   bulletSprite: {fileID: -7812076412524305034, guid: cfa45e937b1e8c64b86a8758ee3d8e6d, type: 3}
