@@ -3,10 +3,10 @@ using UnityEngine;
 public class VisionConeTrigger : MonoBehaviour
 {
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter(Collider other)
     {
         EnemyBase enemy = GetComponentInParent<EnemyBase>();
-        if (other.CompareTag("PlayerHitBox"))
+        if (other.CompareTag("Player"))
         {
 
             var player = other.GetComponentInParent<PlayerController>();

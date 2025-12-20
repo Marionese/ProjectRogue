@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public abstract class EnemyBase : MonoBehaviour
@@ -31,16 +30,16 @@ public abstract class EnemyBase : MonoBehaviour
     public enum EnemyState { Patrol, Aggressive, Attacking }
     public EnemyState CurrentState { get; protected set; } = EnemyState.Patrol;
 
-    protected Rigidbody2D rb;
+    protected Rigidbody rb;
     protected PlayerController currentTargetPlayer;
-    protected Vector2 lastMovementDirection;
+    protected Vector3 lastMovementDirection;
 
     protected float currentHealth;
     protected float knockbackTimer;
     protected bool isPaused;
     protected Coroutine attackCoroutine;
 
-    Vector2 patrolTarget;
+    Vector3 patrolTarget;
     float patrolTimer;
 
     public event System.Action<EnemyBase> OnDeath;
@@ -50,7 +49,9 @@ public abstract class EnemyBase : MonoBehaviour
      * ========================= */
     protected virtual void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+
         alertIcon = GetComponentInChildren<AlertIconMarker>(true)?.gameObject;
     }
 
@@ -80,6 +81,7 @@ public abstract class EnemyBase : MonoBehaviour
             case EnemyState.Aggressive:
                 Aggro();
                 break;
+
             case EnemyState.Attacking:
                 if (attackCoroutine == null)
                     attackCoroutine = StartCoroutine(Attack());
@@ -92,8 +94,13 @@ public abstract class EnemyBase : MonoBehaviour
         patrolTimer -= Time.deltaTime;
 
         if (patrolTimer <= 0f ||
-            Vector2.Distance(transform.position, patrolTarget) < arriveDistance ||
-            Physics2D.OverlapBox(patrolTarget, Vector2.one, 0, obstacleMask))
+            Vector3.Distance(transform.position, patrolTarget) < arriveDistance ||
+            Physics.OverlapBox(
+                patrolTarget,
+                Vector3.one * 0.4f,
+                Quaternion.identity,
+                obstacleMask
+            ).Length > 0)
         {
             PickNewPatrolTarget();
         }
@@ -106,25 +113,27 @@ public abstract class EnemyBase : MonoBehaviour
         if (currentTargetPlayer == null)
             return;
 
-        Vector2 targetPos = currentTargetPlayer.transform.position;
-        Vector2 dir = GetAggroDirection(targetPos);
+        Vector3 targetPos = currentTargetPlayer.transform.position;
+        Vector3 dir = GetAggroDirection(targetPos);
 
         Move(dir, aggroSpeed);
         lastMovementDirection = dir;
     }
+
     protected virtual IEnumerator Attack()
     {
         yield break;
     }
+
     /* =========================
      * MOVEMENT (SINGLE PATH)
      * ========================= */
-    protected void Move(Vector2 direction, float speed)
+    protected void Move(Vector3 direction, float speed)
     {
         if (isPaused)
         {
             if (attackCoroutine == null)
-                rb.linearVelocity = Vector2.zero;
+                rb.linearVelocity = Vector3.zero;
             return;
         }
 
@@ -134,20 +143,34 @@ public abstract class EnemyBase : MonoBehaviour
             return;
         }
 
-        Vector2 targetVelocity = direction.normalized * speed;
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.2f);
+        direction.y = 0f;
+        direction.Normalize();
+
+        Vector3 targetVelocity = direction * speed;
+        Vector3 current = rb.linearVelocity;
+
+        Vector3 desired = new Vector3(
+            targetVelocity.x,
+            current.y,        // 🔒 preserve Y
+            targetVelocity.z
+        );
+
+        rb.linearVelocity = Vector3.Lerp(current, desired, 0.2f);
+
     }
 
-    protected void MoveTowards(Vector2 target, float speed)
+    protected void MoveTowards(Vector3 target, float speed)
     {
-        Vector2 dir = (target - (Vector2)transform.position).normalized;
+        Vector3 dir = target - transform.position;
+        dir.y = 0f;
+        dir.Normalize();
+
         lastMovementDirection = dir;
         Move(dir, speed);
     }
 
-    protected virtual Vector2 GetAggroDirection(Vector2 targetPos)
+    protected virtual Vector3 GetAggroDirection(Vector3 targetPos)
     {
-
         FlowField field = null;
 
         if (currentTargetPlayer.PlayerID == 0)
@@ -155,14 +178,16 @@ public abstract class EnemyBase : MonoBehaviour
         else if (currentTargetPlayer.PlayerID == 1)
             field = FlowFieldManager.Instance.flowFieldP2;
 
-        Vector2 flowDir = field != null
+        Vector3 flowDir = field != null
             ? field.GetFlowDirection(transform.position)
-            : Vector2.zero;
+            : Vector3.zero;
 
-        if (flowDir == Vector2.zero)
-            flowDir = (targetPos - (Vector2)transform.position).normalized;
+        if (flowDir == Vector3.zero)
+            flowDir = (targetPos - transform.position).normalized;
 
-        flowDir += Random.insideUnitCircle * 0.1f;
+        flowDir += Random.insideUnitSphere * 0.1f;
+        flowDir.y = 0f;
+
         return flowDir.normalized;
     }
 
@@ -195,6 +220,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         CurrentState = newState;
     }
+
     public void Alert(PlayerController player)
     {
         if (CurrentState == EnemyState.Patrol)
@@ -204,31 +230,29 @@ public abstract class EnemyBase : MonoBehaviour
             SwitchState(EnemyState.Aggressive);
         }
     }
+
     public void PlayerGotInRange(PlayerController player)
     {
         if (currentTargetPlayer != player)
             return;
+
         if (CurrentState == EnemyState.Aggressive)
-        {
-            currentTargetPlayer = player;
             SwitchState(EnemyState.Attacking);
-        }
     }
+
     public void LeftPlayerRange(PlayerController player)
     {
         if (currentTargetPlayer != player)
             return;
-        if (CurrentState == EnemyState.Attacking)
-        {
-            SwitchState(EnemyState.Aggressive);
-        }
-    }
 
+        if (CurrentState == EnemyState.Attacking)
+            SwitchState(EnemyState.Aggressive);
+    }
 
     IEnumerator AggroPause()
     {
         isPaused = true;
-        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = Vector3.zero;
 
         if (alertIcon != null)
             alertIcon.SetActive(true);
@@ -240,14 +264,16 @@ public abstract class EnemyBase : MonoBehaviour
 
         isPaused = false;
     }
+
     /* =========================
      * HELPERS
      * ========================= */
     void PickNewPatrolTarget()
     {
         patrolTimer = patrolChangeTime;
-        patrolTarget = (Vector2)transform.position +
-                       Random.insideUnitCircle * patrolRadius;
+
+        Vector2 rnd = Random.insideUnitCircle * patrolRadius;
+        patrolTarget = transform.position + new Vector3(rnd.x, 0f, rnd.y);
     }
 
     protected virtual void UpdateFacingDirection()
@@ -258,14 +284,13 @@ public abstract class EnemyBase : MonoBehaviour
         float scale = Mathf.Abs(transform.localScale.x);
 
         if (lastMovementDirection.x > 0.1f)
-            transform.localScale = new Vector3(scale, scale, 1);
+            transform.localScale = new Vector3(scale, scale, scale);
         else if (lastMovementDirection.x < -0.1f)
-            transform.localScale = new Vector3(-scale, scale, 1);
+            transform.localScale = new Vector3(-scale, scale, scale);
     }
 
     public bool IsValidForDifficulty(int difficulty)
     {
         return difficulty >= minDifficulty && difficulty <= maxDifficulty;
     }
-
 }
