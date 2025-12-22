@@ -114,7 +114,7 @@ public class BulletScript : MonoBehaviour
             BulletPool.Instance.ReturnBullet(gameObject);
 
         }
-        else if (collision.CompareTag("PlayerHitBox"))
+        else if (collision.CompareTag("Player"))
         {
             if (data.sourcePlayer != null)
                 return;

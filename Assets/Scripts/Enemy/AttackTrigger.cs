@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class AttackTrigger : MonoBehaviour
 {
-
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter(Collider other)
     {
         EnemyBase enemy = GetComponentInParent<EnemyBase>();
-        if (other.CompareTag("PlayerHitBox"))
+        if (other.CompareTag("Player"))
         {
 
             var player = other.GetComponentInParent<PlayerController>();
@@ -16,10 +15,10 @@ public class AttackTrigger : MonoBehaviour
         }
 
     }
-    void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit(Collider other)
     {
         EnemyBase enemy = GetComponentInParent<EnemyBase>();
-        if (other.CompareTag("PlayerHitBox"))
+        if (other.CompareTag("Player"))
         {
             var player = other.GetComponentInParent<PlayerController>();
             if (player != null)

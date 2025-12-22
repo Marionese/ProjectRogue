@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEditor.Experimental;
 using UnityEngine;
 
@@ -11,13 +12,14 @@ public class ShootingEnemy : EnemyBase
     {
         knockbackTimer = 0f;
         isPaused = true;
-        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = Vector3.zero;
         yield return new WaitForSeconds(0.3f);
 
-        Vector2 dir =
-            ((Vector2)currentTargetPlayer.transform.position
-             - (Vector2)transform.position).normalized;
-
+        Vector3 dir =
+            currentTargetPlayer.transform.position
+             - transform.position;
+        dir.y = 0;
+        dir.Normalize();
         AttackData atk = new AttackData();
         atk.baseDamage = 1f;
         atk.speed = 4f;
@@ -27,11 +29,15 @@ public class ShootingEnemy : EnemyBase
         atk.range = 1f;
         atk.bulletSprite = bulletSprite;
         atk.bulletColor = bulletColor;
-
-        Quaternion rot = Quaternion.FromToRotation(Vector3.right, dir);
+        atk.forwardDirection = dir;
+        Quaternion rot = Quaternion.FromToRotation(Vector3.forward, dir);
         GameObject bullet = BulletPool.Instance.GetBullet();
-        bullet.transform.position = transform.position;
+        var spawnpos = transform.position;
+        spawnpos.y = 0.5f;
+        bullet.transform.position = spawnpos;
         bullet.transform.rotation = rot;
+        
+        bullet.SetActive(true);
         bullet.GetComponent<BulletScript>().Initialize(atk, null);
 
         yield return new WaitForSeconds(dashLag);
