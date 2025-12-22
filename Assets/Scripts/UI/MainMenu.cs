@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
         }
 
         // Jetzt wechselst du in die erste Spielszene
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("MainScene3D");
     }
-   
+
 }
