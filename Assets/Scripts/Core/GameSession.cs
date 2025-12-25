@@ -183,7 +183,7 @@ public class GameSession : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f); // verhindert Race-Conditions
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene3D");
     }
 
 
