@@ -9,7 +9,8 @@ public class BulletScript : MonoBehaviour
     private AttackData data;
     private List<AttackModifier> attackModifiers = new();
     private float lifetime;
-
+    [SerializeField] ParticleSystem ps;
+    private ParticleSystem psInstance; 
     public void Initialize(AttackData data, List<AttackModifier> attackModifiers)
     {
         this.data = data;
@@ -81,6 +82,7 @@ public class BulletScript : MonoBehaviour
                 // Schaden anwenden
                 Debug.Log("Damage" + dmg);
                 enemy.DamageEnemy(dmg, data.isBullet, data.sourcePlayer);
+                PlayParticles();
                 ApplyKnockback(enemy, data.forwardDirection);
 
                 // ON-HIT MODIFIERS
@@ -98,8 +100,9 @@ public class BulletScript : MonoBehaviour
         {
             foreach (var mod in attackModifiers)
                 mod.OnHitEnvironment(data);
+            PlayParticles();
             BulletPool.Instance.ReturnBullet(gameObject);
-
+            
         }
         else if (collision.CompareTag("PlayerHitBox"))
         {
@@ -109,6 +112,7 @@ public class BulletScript : MonoBehaviour
             var player = collision.GetComponentInParent<PlayerController>();
             int damage = Mathf.Max(1, Mathf.RoundToInt(data.baseDamage));
             player.DamagePlayer(damage);
+            PlayParticles();
             BulletPool.Instance.ReturnBullet(gameObject);
         }
     }
@@ -122,5 +126,9 @@ public class BulletScript : MonoBehaviour
 
 
         rb.linearVelocity += dir * data.knockback;
+    }
+    void PlayParticles()
+    {
+        psInstance = Instantiate(ps,transform.position,Quaternion.identity);
     }
 }

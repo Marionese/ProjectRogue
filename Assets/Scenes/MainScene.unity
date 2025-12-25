@@ -20410,20 +20410,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1648713996633795168, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
+      propertyPath: orthographic size
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648713996633795168, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
-      value: 0.20623282
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1648713996633795168, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: -0.27038628
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1648713996633795168, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
-      value: 0.58661777
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1648713996633795168, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 1.5450643
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4696193996439590433, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_Name
@@ -20431,11 +20435,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7170079746479477635, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.9863062
+      value: 1.49
       objectReference: {fileID: 0}
     - target: {fileID: 7170079746479477635, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7
+      value: 2.58
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
