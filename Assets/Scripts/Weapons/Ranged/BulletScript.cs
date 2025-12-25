@@ -85,8 +85,6 @@ public class BulletScript : MonoBehaviour
                 PlayParticles();
                 if(data.isBullet)
                     enemy.KnockBackEnemy(data.knockback,data.forwardDirection);
-                ApplyKnockback(enemy, data.forwardDirection);
-
                 // ON-HIT MODIFIERS
                 foreach (var mod in attackModifiers)
                 {
@@ -118,17 +116,7 @@ public class BulletScript : MonoBehaviour
             BulletPool.Instance.ReturnBullet(gameObject);
         }
     }
-    void ApplyKnockback(EnemyBase enemy, Vector2 dir)
-    {
-        Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
-        if (rb == null) return;
-
-        // Richtung: vom Bullet zum Enemy (Push-Away)
-
-
-
-        rb.linearVelocity += dir * data.knockback;
-    }
+    
     void PlayParticles()
     {
         psInstance = Instantiate(ps,transform.position,Quaternion.identity);
