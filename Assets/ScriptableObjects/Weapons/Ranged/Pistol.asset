@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   weaponName: Pistol
-  fireRate: 0.01
-  damage: 5
+  fireRate: 0.5
+  damage: 1
   bulletSpeed: 10
   range: 0.5
   bulletPrefab: {fileID: 0}
