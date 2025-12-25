@@ -8,7 +8,7 @@ public class WeaponData : ScriptableObject
 
     public int damage = 1;
     public float bulletSpeed = 10f;
-    public float range=1;
+    public float range = 1;
     public GameObject bulletPrefab;
     public Sprite bulletSprite;
     public Color bulletColor;
