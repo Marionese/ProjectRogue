@@ -4,13 +4,6 @@ using UnityEngine;
 public class PlayerRuntimeStats
 {
     public float moveSpeed;
-    public float jumpForce;
-    public bool hasDoubleJump;
-    public float gravity;
-    public float fallGravityMultiplier;
-    public float lowJumpGravityMultiplier;
-    public float coyoteTime;
-
     public int maxHP;
     public int currentHP;
 
@@ -46,14 +39,7 @@ public class PlayerRuntimeStats
     public PlayerRuntimeStats(PlayerBaseStats baseStats)
     {
         moveSpeed = baseStats.moveSpeed;
-        jumpForce = baseStats.jumpForce;
-        hasDoubleJump = baseStats.hasDoubleJump;
-        gravity = baseStats.gravity;
-        fallGravityMultiplier = baseStats.fallGravityMultiplier;
-        lowJumpGravityMultiplier = baseStats.lowJumpGravityMultiplier;
-        coyoteTime = baseStats.coyoteTime;
-
-        maxHP = baseStats.maxHP;       // Base Max HP
+        maxHP = baseStats.maxHP;
         currentHP = maxHP;
 
     }

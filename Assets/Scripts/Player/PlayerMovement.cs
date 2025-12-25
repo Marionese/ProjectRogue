@@ -38,7 +38,5 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = input.normalized; // normalized for consistent speed
     }
-
-    // Top-down: no jump button
-    public void SetJump(bool pressed) { }
+    
 }
