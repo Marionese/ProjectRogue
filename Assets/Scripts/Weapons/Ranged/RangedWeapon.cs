@@ -55,10 +55,9 @@ public class RangedWeapon : WeaponBase
 
         // Bullet properties
         atk.size = 1f;
-        atk.knockback = 0f;
         atk.pierce = 0;
         atk.bounce = 0;
-        atk.knockback = 5;
+        atk.knockback = 1f;
         atk.isBullet = true;
         atk.range = data.range;
         atk.forwardDirection = direction;
