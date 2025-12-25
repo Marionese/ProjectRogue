@@ -7,6 +7,7 @@ public class CameraTarget : MonoBehaviour
     public float maxZoom = 12f;
     public float zoomLimiter = 5f;
     public float smoothTime = 0.2f;
+    [SerializeField] private int pixelsPerUnit = 32;
 
     [Header("Framing Offset")]
     [SerializeField] private float zOffset = -2.5f;
@@ -47,6 +48,19 @@ public class CameraTarget : MonoBehaviour
             FollowSingle();
         else
             FollowMultiple();
+
+        transform.position = SnapToPixelGrid(transform.position);
+    }
+
+
+    Vector3 SnapToPixelGrid(Vector3 position)
+    {
+        float unitsPerPixel = 1f / pixelsPerUnit;
+
+        position.x = Mathf.Round(position.x / unitsPerPixel) * unitsPerPixel;
+        position.z = Mathf.Round(position.z / unitsPerPixel) * unitsPerPixel;
+
+        return position;
     }
 
     void FollowSingle()
@@ -59,12 +73,8 @@ public class CameraTarget : MonoBehaviour
             t.position.z + zOffset  // <-- backward offset
         );
 
-        transform.position = Vector3.SmoothDamp(
-            transform.position,
-            pos,
-            ref velocity,
-            smoothTime
-        );
+        transform.position = pos;
+
     }
 
 
