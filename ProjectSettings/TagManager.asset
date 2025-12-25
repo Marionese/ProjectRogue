@@ -49,6 +49,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 1951045177
+    locked: 0
   - name: World
     uniqueID: 3031283361
     locked: 0
@@ -60,9 +63,6 @@ TagManager:
     locked: 0
   - name: EntitiesBehind
     uniqueID: 1584814609
-    locked: 0
-  - name: Floor
-    uniqueID: 1951045177
     locked: 0
   m_RenderingLayers:
   - Default
