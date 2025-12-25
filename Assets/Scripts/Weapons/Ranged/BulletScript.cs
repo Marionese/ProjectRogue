@@ -83,6 +83,8 @@ public class BulletScript : MonoBehaviour
                 Debug.Log("Damage" + dmg);
                 enemy.DamageEnemy(dmg, data.isBullet, data.sourcePlayer);
                 PlayParticles();
+                if(data.isBullet)
+                    enemy.KnockBackEnemy(data.knockback,data.forwardDirection);
                 ApplyKnockback(enemy, data.forwardDirection);
 
                 // ON-HIT MODIFIERS
