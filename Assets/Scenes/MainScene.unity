@@ -233,7 +233,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1263683935
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -1753,57 +1753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
---- !u!1 &312062465 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6550265232815757024, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-  m_PrefabInstance: {fileID: 8587741777410573753}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &312062470
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312062465}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.18}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.24, y: 0.61}
-  m_EdgeRadius: 0
 --- !u!1001 &313689909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2192,7 +2141,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1263683935
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: be22d9105e99e5845a40e170f56f9a66, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -2461,7 +2410,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1263683935
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -9790,7 +9739,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1837546691
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -20466,7 +20415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1648713996633795168, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
-      value: -0.026392963
+      value: -0.27038628
       objectReference: {fileID: 0}
     - target: {fileID: 1648713996633795168, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_NormalizedViewPortRect.width
@@ -20474,7 +20423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1648713996633795168, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_NormalizedViewPortRect.height
-      value: 1.0557184
+      value: 1.5450643
       objectReference: {fileID: 0}
     - target: {fileID: 4696193996439590433, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_Name
@@ -20482,7 +20431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7170079746479477635, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 1.5564098
       objectReference: {fileID: 0}
     - target: {fileID: 7170079746479477635, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_LocalPosition.y
@@ -20664,6 +20613,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 62585278995495764, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 62585278995495764, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2273949650537971759, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_Size.x
       value: 2
@@ -20698,7 +20655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2273949650537971759, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2273949650537971759, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_SortingOrder
@@ -20750,7 +20707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6302291414945569156, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6550265232815757024, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_Name
@@ -20759,18 +20716,6 @@ PrefabInstance:
     - target: {fileID: 6550265232815757024, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_Layer
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6587253288125002287, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6587253288125002287, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6587253288125002287, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6587253288125002287, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20812,22 +20757,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6587253288125002287, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7776573447347074291, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_Size.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7776573447347074291, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_Size.y
-      value: 1.5619078
-      objectReference: {fileID: 0}
-    - target: {fileID: 7776573447347074291, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.21904612
-      objectReference: {fileID: 0}
     - target: {fileID: 7776573447347074291, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
       value: 2
@@ -20836,12 +20765,12 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.newSize.y
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 7776573447347074291, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
+    - target: {fileID: 7910479447390033674, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 7776573447347074291, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
+    - target: {fileID: 7910479447390033674, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8337282656716116652, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
@@ -20870,7 +20799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8337282656716116652, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8337282656716116652, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
       propertyPath: m_SortingOrder
@@ -20887,10 +20816,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6550265232815757024, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 312062470}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e42a5c3be9e5ff4b83161929dd1bc84, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
