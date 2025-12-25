@@ -10,7 +10,6 @@ public class ShootingEnemy : EnemyBase
     protected override IEnumerator Attack()
     {
         knockbackTimer = 0f;
-        isPaused = true;
         rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.3f);
 
@@ -35,8 +34,6 @@ public class ShootingEnemy : EnemyBase
         bullet.GetComponent<BulletScript>().Initialize(atk, null);
 
         yield return new WaitForSeconds(dashLag);
-        isPaused = false;
-
         attackCoroutine = null;
     }
 }

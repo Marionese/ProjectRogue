@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -9,28 +11,16 @@ public abstract class EnemyBase : MonoBehaviour
      * ========================= */
     [Header("Stats")]
     [SerializeField] protected float maxHealth = 10f;
-    [SerializeField] protected float patrolSpeed = 3f;
-    [SerializeField] protected float aggroSpeed = 5f;
-    [SerializeField] protected float knockbackDuration = 0.25f;
+    [SerializeField] protected float movementSpeed = 5f;
+    [SerializeField] protected float knockbackDuration = 0.1f;
     [SerializeField] protected float minDifficulty;
     [SerializeField] protected float maxDifficulty;
-
-    [Header("Patrol")]
-    [SerializeField] protected float patrolRadius = 2.5f;
-    [SerializeField] protected float patrolChangeTime = 1.5f;
-    [SerializeField] protected float arriveDistance = 0.2f;
-    [SerializeField] protected LayerMask obstacleMask;
-
-    [Header("Aggro")]
-    [SerializeField] protected float aggroPauseTime = 0.5f;
-    [SerializeField] protected GameObject alertIcon;
 
     /* =========================
      * STATE
      * ========================= */
-    public enum EnemyState { Patrol, Aggressive, Attacking }
-    public EnemyState CurrentState { get; protected set; } = EnemyState.Patrol;
-
+    public enum EnemyState {Aggressive, Attacking }
+    public EnemyState CurrentState { get; protected set; } = EnemyState.Aggressive;
     protected Rigidbody2D rb;
     protected PlayerController currentTargetPlayer;
     protected Vector2 lastMovementDirection;
@@ -51,17 +41,16 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        alertIcon = GetComponentInChildren<AlertIconMarker>(true)?.gameObject;
     }
 
     protected virtual void Start()
     {
         currentHealth = maxHealth;
-        PickNewPatrolTarget();
     }
 
     protected virtual void Update()
     {
+        PickClosestPlayer();
         UpdateState();
         UpdateFacingDirection();
     }
@@ -73,10 +62,6 @@ public abstract class EnemyBase : MonoBehaviour
     {
         switch (CurrentState)
         {
-            case EnemyState.Patrol:
-                Patrol();
-                break;
-
             case EnemyState.Aggressive:
                 Aggro();
                 break;
@@ -87,20 +72,6 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    protected virtual void Patrol()
-    {
-        patrolTimer -= Time.deltaTime;
-
-        if (patrolTimer <= 0f ||
-            Vector2.Distance(transform.position, patrolTarget) < arriveDistance ||
-            Physics2D.OverlapBox(patrolTarget, Vector2.one, 0, obstacleMask))
-        {
-            PickNewPatrolTarget();
-        }
-
-        MoveTowards(patrolTarget, patrolSpeed);
-    }
-
     protected virtual void Aggro()
     {
         if (currentTargetPlayer == null)
@@ -109,7 +80,7 @@ public abstract class EnemyBase : MonoBehaviour
         Vector2 targetPos = currentTargetPlayer.transform.position;
         Vector2 dir = GetAggroDirection(targetPos);
 
-        Move(dir, aggroSpeed);
+        Move(dir, movementSpeed);
         lastMovementDirection = dir;
     }
     protected virtual IEnumerator Attack()
@@ -137,14 +108,6 @@ public abstract class EnemyBase : MonoBehaviour
         Vector2 targetVelocity = direction.normalized * speed;
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.2f);
     }
-
-    protected void MoveTowards(Vector2 target, float speed)
-    {
-        Vector2 dir = (target - (Vector2)transform.position).normalized;
-        lastMovementDirection = dir;
-        Move(dir, speed);
-    }
-
     protected virtual Vector2 GetAggroDirection(Vector2 targetPos)
     {
 
@@ -171,11 +134,6 @@ public abstract class EnemyBase : MonoBehaviour
      * ========================= */
     public virtual void DamageEnemy(float amount, bool isBullet, PlayerController player)
     {
-        Alert(player);
-
-        if (isBullet)
-            knockbackTimer = knockbackDuration;
-
         currentHealth -= amount;
 
         if (currentHealth <= 0f)
@@ -195,24 +153,10 @@ public abstract class EnemyBase : MonoBehaviour
     {
         CurrentState = newState;
     }
-    public void Alert(PlayerController player)
-    {
-        if (CurrentState == EnemyState.Patrol)
-        {
-            currentTargetPlayer = player;
-            StartCoroutine(AggroPause());
-            SwitchState(EnemyState.Aggressive);
-        }
-    }
     public void PlayerGotInRange(PlayerController player)
     {
-        if (currentTargetPlayer != player)
-            return;
-        if (CurrentState == EnemyState.Aggressive)
-        {
-            currentTargetPlayer = player;
-            SwitchState(EnemyState.Attacking);
-        }
+        currentTargetPlayer = player;
+        SwitchState(EnemyState.Attacking);
     }
     public void LeftPlayerRange(PlayerController player)
     {
@@ -223,33 +167,31 @@ public abstract class EnemyBase : MonoBehaviour
             SwitchState(EnemyState.Aggressive);
         }
     }
-
-
-    IEnumerator AggroPause()
-    {
-        isPaused = true;
-        rb.linearVelocity = Vector2.zero;
-
-        if (alertIcon != null)
-            alertIcon.SetActive(true);
-
-        yield return new WaitForSeconds(aggroPauseTime);
-
-        if (alertIcon != null)
-            alertIcon.SetActive(false);
-
-        isPaused = false;
-    }
     /* =========================
      * HELPERS
      * ========================= */
-    void PickNewPatrolTarget()
-    {
-        patrolTimer = patrolChangeTime;
-        patrolTarget = (Vector2)transform.position +
-                       Random.insideUnitCircle * patrolRadius;
-    }
 
+    void PickClosestPlayer()
+    {
+        var players = FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+        var amount = players.Count<PlayerController>();
+        if (amount == 1)
+        {
+            currentTargetPlayer = players[0];
+            return;
+        }
+        var player1_pos = players[0].transform.position;
+        var player2_pos = players[1].transform.position;
+        if (Vector3.Distance(transform.position, player1_pos) >= Vector3.Distance(transform.position, player2_pos))
+        {
+            currentTargetPlayer = players[0];
+        }
+        else
+        {
+            currentTargetPlayer = players[1];
+        }
+
+    }
     protected virtual void UpdateFacingDirection()
     {
         if (knockbackTimer > 0f)
@@ -261,6 +203,13 @@ public abstract class EnemyBase : MonoBehaviour
             transform.localScale = new Vector3(scale, scale, 1);
         else if (lastMovementDirection.x < -0.1f)
             transform.localScale = new Vector3(-scale, scale, 1);
+    }
+    public virtual void KnockBackEnemy(float force, Vector2 direction)
+    {
+        direction.Normalize();
+        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = direction * force;
+        knockbackTimer = knockbackDuration;
     }
 
     public bool IsValidForDifficulty(int difficulty)

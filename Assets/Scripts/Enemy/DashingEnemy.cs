@@ -6,7 +6,7 @@ public class DashingEnemy : EnemyBase
     // Intentionally empty.
     // All behavior comes from EnemyBase.
     private float dashSpeed = 10f;
-    private float dashDuration = 0.15f;
+    private float dashDuration = 0.5f;
     private float dashLag = 0.3f;
     protected override IEnumerator Attack()
     {
