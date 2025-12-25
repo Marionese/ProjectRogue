@@ -229,6 +229,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 216186829707947393, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
+      propertyPath: BoundingShape2D
+      value: 
+      objectReference: {fileID: 299894021}
     - target: {fileID: 646627261976982422, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.46956
@@ -299,14 +303,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7170079746479477635, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.041286707
+      value: -4.455866
       objectReference: {fileID: 0}
     - target: {fileID: 7170079746479477635, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.919999
+      value: 6.999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4388788436408809974, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddb7847236b7cd24baab183292f43e44, type: 3}
@@ -529,7 +534,7 @@ CompositeCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 1
+  m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
